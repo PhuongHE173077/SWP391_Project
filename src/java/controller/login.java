@@ -5,10 +5,13 @@
 
 package controller;
 
+import dao.menteeDao;
+import entity.Mentee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -68,7 +71,24 @@ public class login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String email = request.getParameter("email");
+        String password =request.getParameter("password");
+        String Rmb = request.getParameter("rem");
+        if (email != null && password != null & Rmb!= null) {
+            Cookie cookie = new Cookie("email", email);
+            
+        }
+        
+        menteeDao md = new menteeDao();
+        Mentee m = md.getMentee(email, password);
+        if (m == null) {
+            String erro = "Email and passworld is not correct";
+            request.setAttribute("erro", erro);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }else{
+            PrintWriter out = response.getWriter();
+            out.print("hello "+m.getName());
+        }
     }
 
     /** 

@@ -24,9 +24,9 @@
                     <div class="row flex-grow">
                         <div class="col-lg-6 d-flex align-items-center justify-content-center">
                             <div class="auth-form-transparent text-left p-3">
-                                <div style="text-align: center; font-size: 40px; font-family:Arial, Helvetica, sans-serif; ">Log in</div>
+                                <div style="text-align: center; font-size: 40px; font-family:Arial, Helvetica, sans-serif; ">LOG IN</div>
                                 
-                                <form class="pt-3">
+                                <form action="login" method="post" class="pt-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail">Email</label>
                                         <div class="input-group">
@@ -35,7 +35,7 @@
                                                     <i class="mdi mdi-account-outline text-primary"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control form-control-lg border-left-0" id="exampleInputEmail" placeholder="Email">
+                                            <input type="text" name="email" class="form-control form-control-lg border-left-0" id="exampleInputEmail" placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -46,7 +46,7 @@
                                                     <i class="mdi mdi-lock-outline text-primary"></i>
                                                 </span>
                                             </div>
-                                            <input type="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">                        
+                                            <input type="password" name="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">                        
                                         </div>
                                     </div>
                                     <div class="my-2 d-flex justify-content-between align-items-center">
@@ -59,7 +59,7 @@
                                         <a href="#" class="auth-link text-black">Forgot password?</a>
                                     </div>
                                     <div class="my-3">
-                                        <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">LOGIN</a>
+                                        <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">LOGIN</button>
                                     </div>
                                     <div class="id" style="text-align: center; justify-content: center">
                                         or
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 login-half-bg d-flex flex-row">
-                            <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2020  All rights reserved.</p>
+                            <p class="text-white font-weight-medium text-center flex-grow align-self-end">SWP391 &copy; Happy Programming.</p>
                         </div>
                     </div>
                 </div>
