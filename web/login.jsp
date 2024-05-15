@@ -56,7 +56,7 @@
                                                 Keep me signed in
                                             </label>
                                         </div>
-                                        <a href="#" class="auth-link text-black">Forgot password?</a>
+                                        <a class="reset-link" href="/reset-password">Forgot password?</a>
                                     </div>
                                     <div class="my-3">
                                         <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">LOGIN</a>
