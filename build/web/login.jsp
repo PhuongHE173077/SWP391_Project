@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,6 +17,23 @@
         <link rel="stylesheet" href="vendors/base/vendor.bundle.base.css">
         <link rel="stylesheet" href="css/style.css">
         <link rel="shortcut icon" href="images/favicon.png" />
+        <style>
+            .id {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+                
+            }
+
+            .id::before,
+            .id::after {
+                content: "";
+                flex: 1;
+                border-bottom: 1px solid grey; 
+                margin: 0 10px; 
+
+        </style>
     </head>
     <body>
         <div class="container-scroller">
@@ -25,7 +43,6 @@
                         <div class="col-lg-6 d-flex align-items-center justify-content-center">
                             <div class="auth-form-transparent text-left p-3">
                                 <div style="text-align: center; font-size: 40px; font-family:Arial, Helvetica, sans-serif; ">LOG IN</div>
-                                
                                 <form action="login" method="post" class="pt-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail">Email</label>
@@ -61,17 +78,18 @@
                                     <div class="my-3">
                                         <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">LOGIN</button>
                                     </div>
-                                    <div class="id" style="text-align: center; justify-content: center">
-                                        or
-                                    </div><a style="text-decoration: none" href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/SWP391_Project/loginServlet&response_type=code
-                                             &client_id=your code&approval_prompt=force">
-                                    <div class="mb-2 d-flex">
-                                        <button type="button" class="btn btn-google auth-form-btn flex-grow ms-1">
-                                            <i class="mdi mdi-google me-2"></i>Login with google
-                                        </button>
-                                    </div></a>
+                                    <div class="id"">
+                                        or sign in with
+                                    </div>
+                                    <a style="text-decoration: none" href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/SWP391_Project/loginServlet&response_type=code
+                                       &client_id=your code&approval_prompt=force">
+                                        <div class="mb-2 d-flex">
+                                            <button type="button" class="btn btn-google auth-form-btn flex-grow ms-1">
+                                                <i class="mdi mdi-google me-2"></i>Login with google
+                                            </button>
+                                        </div></a>
                                     <div class="text-center mt-4 font-weight-light">
-                                        Don't have an account? <a href="register-2.html" class="text-primary">Create</a>
+                                        Don't have an account? <a href="register" class="text-primary">Create</a>
                                     </div>
                                 </form>
                             </div>
@@ -94,6 +112,6 @@
         <script src="js/hoverable-collapse.js"></script>
         <script src="js/template.js"></script>
         <!-- endinject -->
-        
+
     </body>
 </html>
