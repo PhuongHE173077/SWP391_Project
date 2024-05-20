@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author TUF F15
  */
 @WebServlet(name="login", urlPatterns={"/login"})
-public class login extends HttpServlet {
+public class Login extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -74,7 +74,7 @@ public class login extends HttpServlet {
         String email = request.getParameter("email");
         String password =request.getParameter("password");
         String Rmb = request.getParameter("rem");
-        if (email != null && password != null & Rmb!= null) {
+        if (email != null && password != null && Rmb!= null) {
             Cookie cookie = new Cookie("email", email);
             
         }

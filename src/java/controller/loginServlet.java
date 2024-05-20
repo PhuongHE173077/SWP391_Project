@@ -25,7 +25,7 @@ import utils.Constants;
  * @author TUF F15
  */
 @WebServlet(urlPatterns = {"/loginServlet"})
-public class loginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +41,6 @@ public class loginServlet extends HttpServlet {
         String code = request.getParameter("code");
         String accessToken = getToken(code);
         UserGoogle user = getUserInfo(accessToken);
-        System.out.println(user);
         PrintWriter out = response.getWriter();
         out.print(user.toString());
 

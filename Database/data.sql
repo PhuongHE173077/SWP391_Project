@@ -87,6 +87,22 @@ create table class(
 	course_id int references course(id_course),
 	[status] nvarchar(max),
 )
+
+ALTER TABLE skill
+ADD img nvarchar(max) NULL;
+
+create table CategorySkill(
+	id int primary key,
+	CName nvarchar(50)
+)
+ALTER TABLE skill
+ADD cid int references CategorySkill(id);
+INSERT INTO [dbo].[CategorySkill]
+           ([id]
+           ,[CName])
+     VALUES
+	 (1,'Font-End'),
+	 (2,'Back-End')
 --------------------------------------------------
 INSERT INTO [dbo].[roles]
            ([id]
