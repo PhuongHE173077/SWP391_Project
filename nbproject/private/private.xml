@@ -2,12 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="SWP391">
-            <file>file:/D:/semester_5/SWP391/Project/SWP391_Project/src/java/controller/VerifyEmail.java</file>
-        </group>
         <group>
             <file>file:/D:/ki5/swp391/happy%20progaming/SWP391_Project/src/java/dao/SkillDao.java</file>
             <file>file:/D:/ki5/swp391/happy%20progaming/SWP391_Project/web/index.jsp</file>
+        </group>
+        <group name="SWP391">
+            <file>file:/D:/semester_5/SWP391/SWP391_Project/web/index.jsp</file>
         </group>
     </open-files>
 </project-private>
