@@ -8,16 +8,16 @@ package entity;
  *
  * @author Dell
  */
-public class Skill {
+public class CategorySkill {
     private int id;
-    private String skil;
+    private String name;
 
-    public Skill() {
+    public CategorySkill() {
     }
 
-    public Skill(int id, String skil) {
+    public CategorySkill(int id, String name) {
         this.id = id;
-        this.skil = skil;
+        this.name = name;
     }
 
     public int getId() {
@@ -28,14 +28,19 @@ public class Skill {
         this.id = id;
     }
 
-    public String getSkil() {
-        return skil;
+    public String getName() {
+        return name;
     }
 
-    public void setSkil(String skil) {
-        this.skil = skil;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "CategorySkill{" + "id=" + id + ", name=" + name + '}';
+    }
+    
     
     
 }

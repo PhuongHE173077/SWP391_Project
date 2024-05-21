@@ -23,17 +23,17 @@ public class CourseDao extends DBContext{
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             SkillDao sd = new SkillDao();
+            CategorySkillDao csd = new CategorySkillDao();
             
 
             while (rs.next()) {
                 
-                list.add(new Course(rs.getInt(1), rs.getInt(2), rs.getDouble(3), sd.searchSkill(rs.getInt(4))));
+                list.add(new Course(rs.getInt(1), rs.getInt(2), rs.getString(4), rs.getString(5), rs.getDouble(3),sd.searchSkill(rs.getInt(6)),csd.searchCategorySkill(rs.getInt(7))));
             }
         } catch (Exception e) {
         }
         return list;
     }
-
     /**
      * @param args the command line arguments
      */
@@ -41,7 +41,7 @@ public class CourseDao extends DBContext{
         CourseDao sd = new CourseDao();
         List<Course> list = sd.getAllCourse();
         for (Course course : list){
-            System.out.println(course.getSkill_id().getImg());
+            System.out.println(course.getSkill_id().getSkil());
         }
     }
     

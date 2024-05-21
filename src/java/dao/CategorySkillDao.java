@@ -1,11 +1,11 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package dao;
 
 import context.DBContext;
-import entity.Skill;
+import entity.CategorySkill;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,31 +16,31 @@ import java.util.List;
  *
  * @author Dell
  */
-public class SkillDao extends DBContext{
-    public List<Skill> getAllSkill() {
-        List<Skill> list = new ArrayList<>();
-        String query = "select * from skill";
+public class CategorySkillDao extends DBContext{
+    public List<CategorySkill> getAllCategorySkill() {
+        List<CategorySkill> list = new ArrayList<>();
+        String query = "select * from CategorySkill";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                list.add(new Skill(rs.getInt(1), rs.getString(2)));
+                list.add(new CategorySkill(rs.getInt(1) ,rs.getString(2)));
             }
         } catch (SQLException e) {
         }
         return list;
     }
     
-    public Skill searchSkill(int id){
-        String query = "select * from skill where id = ? ";
+    public CategorySkill searchCategorySkill(int id){
+        String query = "select * from CategorySkill where id = ? ";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
-                Skill abc  = new Skill(rs.getInt(1), rs.getString(2));
+                CategorySkill abc  = new CategorySkill(rs.getInt(1),rs.getString(2));
                 return abc;
             }
         } catch (SQLException e) {
@@ -48,11 +48,13 @@ public class SkillDao extends DBContext{
         }
         return null;
     }
-    
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
-        SkillDao sd = new SkillDao();
-        System.out.println(sd.searchSkill(1).getSkil());
+        CategorySkillDao csd = new CategorySkillDao();
+        System.out.println(csd.searchCategorySkill(1).getName());
     }
     
-
 }

@@ -10,18 +10,25 @@ package entity;
  */
 public class Course {
     private int id_course;
-    private int Date_number;
+    private int date_number;
+    private String descpition;
+    private String img;
     private double price;
     private Skill skill_id;
+    private CategorySkill cs;
+    
 
     public Course() {
     }
 
-    public Course(int id_course, int Date_number, double price, Skill skill_id) {
+    public Course(int id_course, int date_number, String descpition, String img, double price, Skill skill_id, CategorySkill cs) {
         this.id_course = id_course;
-        this.Date_number = Date_number;
+        this.date_number = date_number;
+        this.descpition = descpition;
+        this.img = img;
         this.price = price;
         this.skill_id = skill_id;
+        this.cs = cs;
     }
 
     public int getId_course() {
@@ -33,11 +40,27 @@ public class Course {
     }
 
     public int getDate_number() {
-        return Date_number;
+        return date_number;
     }
 
-    public void setDate_number(int Date_number) {
-        this.Date_number = Date_number;
+    public void setDate_number(int date_number) {
+        this.date_number = date_number;
+    }
+
+    public String getDescpition() {
+        return descpition;
+    }
+
+    public void setDescpition(String descpition) {
+        this.descpition = descpition;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public double getPrice() {
@@ -56,12 +79,15 @@ public class Course {
         this.skill_id = skill_id;
     }
 
-    @Override
-    public String toString() {
-        return "Course{" + "id_course=" + id_course + ", Date_number=" + Date_number + ", price=" + price + ", skill_id=" + skill_id + '}';
+    public CategorySkill getCs() {
+        return cs;
     }
-    
 
+    public void setCs(CategorySkill cs) {
+        this.cs = cs;
+    }
+
+    
     
     
 }

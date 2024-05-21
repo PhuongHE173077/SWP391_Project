@@ -63,7 +63,7 @@ public class Homecontrol extends HttpServlet {
         CourseDao cd = new CourseDao();
         List<Course> listC = cd.getAllCourse();
         request.setAttribute("listC", listC);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("AllCourses.jsp").forward(request, response);
     } 
 
     /** 
