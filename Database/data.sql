@@ -1,4 +1,4 @@
-
+drop database SWP391_project
 create database SWP391_project
 
 --------------------
@@ -24,15 +24,20 @@ create table [User](
 create table skill(
 	id int primary key,
 	skill nvarchar(50),
-	descpition nvarchar(max)
+	
 )
-create table course(
+
+create table CategorySkill(
+	id int primary key,
+	CName nvarchar(50)
+)create table course(
 	id_course int primary key,
 	Date_number int,
 	price money,
-	skill_id int references skill(id)
+	descpition nvarchar(max),
+	skill_id int references skill(id),
+	cid int references CategorySkill(id)
 )
-
 create table mentor(
 	mentor_id int IDENTITY (1,1) PRIMARY KEY,
 	userId int references [User](user_id)
@@ -88,21 +93,7 @@ create table class(
 	[status] nvarchar(max),
 )
 
-ALTER TABLE skill
-ADD img nvarchar(max) NULL;
 
-create table CategorySkill(
-	id int primary key,
-	CName nvarchar(50)
-)
-ALTER TABLE skill
-ADD cid int references CategorySkill(id);
-INSERT INTO [dbo].[CategorySkill]
-           ([id]
-           ,[CName])
-     VALUES
-	 (1,'Font-End'),
-	 (2,'Back-End')
 --------------------------------------------------
 INSERT INTO [dbo].[roles]
            ([id]
@@ -124,6 +115,12 @@ INSERT INTO [dbo].[User]
      VALUES
            ('Do Dang Phuong','phuongbg0910@gmail.com','123456p','09-10-2003','122455151',1,0,'abc',0)
 
-
+INSERT INTO [dbo].[CategorySkill]
+           ([id]
+           ,[CName])
+     VALUES
+	 (1,'Font-End'),
+	 (2,'Back-End'),
+	 (3,'DevOps')
 select * from [User]
 where email = 'phuongbg0910@gmail.com' and password ='123456p'
