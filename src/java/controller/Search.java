@@ -5,12 +5,6 @@
 
 package controller;
 
-import dao.CategorySkillDao;
-import dao.CourseDao;
-import dao.SkillDao;
-import entity.CategorySkill;
-import entity.Course;
-import entity.Skill;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,14 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
- * @author Dell
+ * @author TUF F15
  */
-@WebServlet(name="Homecontrol", urlPatterns={"/home"})
-public class Homecontrol extends HttpServlet {
+@WebServlet(name="Search", urlPatterns={"/search"})
+public class Search extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -42,10 +35,10 @@ public class Homecontrol extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Homecontrol</title>");  
+            out.println("<title>Servlet Search</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Homecontrol at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet Search at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,13 +55,7 @@ public class Homecontrol extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        CourseDao cd = new CourseDao();
-        List<Course> listT = cd.getTopCourse();
-        CategorySkillDao csd = new CategorySkillDao();
-        List<CategorySkill> listCs = csd.getAllCategorySkill();
-        request.setAttribute("listCs", listCs);
-        request.setAttribute("listTop", listT);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 

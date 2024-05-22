@@ -41,7 +41,49 @@
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <style>
+            .header-links form#f2 {
+                display: inline-block;
+                margin-right: 15px;
+            }
 
+            .header-links form#f2 select {
+                font-size: 12px;
+                padding: 5px;
+                border: none;
+                background-color: transparent;
+                color: #FFF;
+            }
+
+            .header-links form#f2 select option {
+                background-color: #333;
+                color: #FFF;
+            }
+
+            .header-links form#f2 select:hover {
+                cursor: pointer;
+            }
+
+            .header-links form#f2 select:focus {
+                outline: none;
+            }
+
+            .header-links form#f2 i {
+                color: #D10024;
+                margin-right: 5px;
+            }
+            .aside .category a {
+                border: 1px;
+
+                padding: 10px;
+            }
+
+        </style>
+        <script type="text/javascript">
+            function change() {
+                document.getElementById("f2").submit();
+            }
+        </script>
     </head>
     <body>
         <!-- HEADER -->
@@ -50,14 +92,36 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+                        <li><a href="#"><i class="fa fa-phone"></i> 012346789</a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> phuongddhe173077@fpt.edu.vn</a></li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i> FPT University</a></li>
                     </ul>
                     <ul class="header-links pull-right">
-                        <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                        <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+
+                        <c:set value="${sessionScope.mentee}" var="c"/>
+                        <c:choose>
+                            <c:when test="${empty c}">
+                                <li><a href="login.jsp" style="font-size: 16px;"><i class="fa fa-user-o"> Login </i></a></li>
+                                <li><i style="font-size: 16px;" class="fa "> / </i></li>
+                                <li><a href="login.jsp" style="font-size: 16px;"><i class="fa "> Sing up </i></a></li>
+                                </c:when>
+                                <c:otherwise>
+                                <form id="f2" action="directional">
+                                    <li><i class="fa fa-user-o"></i></li>
+                                    <select name="key" onchange="change()">
+                                        <option value="0">${c.name}</option>
+                                        <option value="1">My Profile</option>
+                                        <option value="2">Change Password</option>
+                                        <option value="3">Logout</option>
+                                    </select>
+                                </form>
+                                <li><a href="#"><i class="fa fa-dollar"></i> USD:</a></li>
+                                </c:otherwise>
+
+                        </c:choose>
+
                     </ul>
+
                 </div>
             </div>
             <!-- /TOP HEADER -->
@@ -71,7 +135,7 @@
                         <!-- LOGO -->
                         <div class="col-md-3">
                             <div class="header-logo">
-                                <a href="#" class="logo">
+                                <a href="home" class="logo">
                                     <img src="./img/logo.png" alt="">
                                 </a>
                             </div>
@@ -83,9 +147,9 @@
                             <div class="header-search">
                                 <form>
                                     <select class="input-select">
-                                        <option value="0">All Categories</option>
-                                        <option value="1">Category 01</option>
-                                        <option value="1">Category 02</option>
+                                        <option value="0">Course Name</option>
+                                        <option value="1">Mentor Name</option>
+
                                     </select>
                                     <input class="input" placeholder="Search here">
                                     <button class="search-btn">Search</button>
@@ -175,19 +239,26 @@
             <!-- container -->
             <div class="container">
                 <!-- responsive-nav -->
-                <div id="responsive-nav">
-                    <!-- NAV -->
-                    <ul class="main-nav nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Hot Deals</a></li>
-                        <li><a href="#">Categories</a></li>
-                        <li><a href="#">Laptops</a></li>
-                        <li><a href="#">Smartphones</a></li>
-                        <li><a href="#">Cameras</a></li>
-                        <li><a href="#">Accessories</a></li>
-                    </ul>
-                    <!-- /NAV -->
-                </div>
+                <ul class="main-nav nav navbar-nav">
+                    <li ><a href="home">Home</a></li>
+                     <c:if test="${cid ==0}">
+                     <li class="active"><a  href="Course?cid=0">All course</a></li>
+                            </c:if>
+                            <c:if test="${cid !=0}">
+                            <li><a href="Course?cid=0">All course</a></li>
+                            </c:if>
+                    <c:set value="${requestScope.cid}" var="cid"/>
+                        <c:forEach items="${requestScope.listCs}" var="lsc">
+                            <c:if test="${lsc.id == cid}">
+                            <li class="active"><a  href="Course?cid=${lsc.id}">${lsc.name}</a></li>
+                            </c:if>
+                            <c:if test="${lsc.id != cid}">
+                            <li><a href="Course?cid=${lsc.id}">${lsc.name}</a></li>
+                            </c:if>
+                        </c:forEach>
+
+
+                </ul>
                 <!-- /responsive-nav -->
             </div>
             <!-- /container -->
@@ -226,176 +297,10 @@
                         <!-- aside Widget -->
                         <div class="aside">
                             <h3 class="aside-title">Categories</h3>
-                            <div class="checkbox-filter">
+                            <a href="url" class="category">FrontEnd</a></br>
+                            <a href="url" class="category" >BackEnd</a></br>
+                            <a href="url" class="category" >DevOps</a></br>
 
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="category-1">
-                                    <label for="category-1">
-                                        <span></span>
-                                        Laptops
-                                        <small>(120)</small>
-                                    </label>
-                                </div>
-
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="category-2">
-                                    <label for="category-2">
-                                        <span></span>
-                                        Smartphones
-                                        <small>(740)</small>
-                                    </label>
-                                </div>
-
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="category-3">
-                                    <label for="category-3">
-                                        <span></span>
-                                        Cameras
-                                        <small>(1450)</small>
-                                    </label>
-                                </div>
-
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="category-4">
-                                    <label for="category-4">
-                                        <span></span>
-                                        Accessories
-                                        <small>(578)</small>
-                                    </label>
-                                </div>
-
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="category-5">
-                                    <label for="category-5">
-                                        <span></span>
-                                        Laptops
-                                        <small>(120)</small>
-                                    </label>
-                                </div>
-
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="category-6">
-                                    <label for="category-6">
-                                        <span></span>
-                                        Smartphones
-                                        <small>(740)</small>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /aside Widget -->
-
-                        <!-- aside Widget -->
-                        <div class="aside">
-                            <h3 class="aside-title">Price</h3>
-                            <div class="price-filter">
-                                <div id="price-slider"></div>
-                                <div class="input-number price-min">
-                                    <input id="price-min" type="number">
-                                    <span class="qty-up">+</span>
-                                    <span class="qty-down">-</span>
-                                </div>
-                                <span>-</span>
-                                <div class="input-number price-max">
-                                    <input id="price-max" type="number">
-                                    <span class="qty-up">+</span>
-                                    <span class="qty-down">-</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /aside Widget -->
-
-                        <!-- aside Widget -->
-                        <div class="aside">
-                            <h3 class="aside-title">Brand</h3>
-                            <div class="checkbox-filter">
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="brand-1">
-                                    <label for="brand-1">
-                                        <span></span>
-                                        SAMSUNG
-                                        <small>(578)</small>
-                                    </label>
-                                </div>
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="brand-2">
-                                    <label for="brand-2">
-                                        <span></span>
-                                        LG
-                                        <small>(125)</small>
-                                    </label>
-                                </div>
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="brand-3">
-                                    <label for="brand-3">
-                                        <span></span>
-                                        SONY
-                                        <small>(755)</small>
-                                    </label>
-                                </div>
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="brand-4">
-                                    <label for="brand-4">
-                                        <span></span>
-                                        SAMSUNG
-                                        <small>(578)</small>
-                                    </label>
-                                </div>
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="brand-5">
-                                    <label for="brand-5">
-                                        <span></span>
-                                        LG
-                                        <small>(125)</small>
-                                    </label>
-                                </div>
-                                <div class="input-checkbox">
-                                    <input type="checkbox" id="brand-6">
-                                    <label for="brand-6">
-                                        <span></span>
-                                        SONY
-                                        <small>(755)</small>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /aside Widget -->
-
-                        <!-- aside Widget -->
-                        <div class="aside">
-                            <h3 class="aside-title">Top selling</h3>
-                            <div class="product-widget">
-                                <div class="product-img">
-                                    <img src="./img/product01.png" alt="">
-                                </div>
-                                <div class="product-body">
-                                    <p class="product-category">Category</p>
-                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                </div>
-                            </div>
-
-                            <div class="product-widget">
-                                <div class="product-img">
-                                    <img src="./img/product02.png" alt="">
-                                </div>
-                                <div class="product-body">
-                                    <p class="product-category">Category</p>
-                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                </div>
-                            </div>
-
-                            <div class="product-widget">
-                                <div class="product-img">
-                                    <img src="./img/product03.png" alt="">
-                                </div>
-                                <div class="product-body">
-                                    <p class="product-category">Category</p>
-                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                </div>
-                            </div>
                         </div>
                         <!-- /aside Widget -->
                     </div>
@@ -447,8 +352,8 @@
                                         <div class="product-body">
                                             <p class="product-category">${lc.cs.name}</p>
                                             <h3 class="product-name"><a href="#">Course ${lc.skill_id.skil}</a></h3>
-                                            
-                                           
+
+
                                             <div class="product-btns">
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>

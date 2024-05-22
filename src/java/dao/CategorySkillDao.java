@@ -48,6 +48,7 @@ public class CategorySkillDao extends DBContext{
         }
         return null;
     }
+    
 
     /**
      * @param args the command line arguments

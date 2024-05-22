@@ -5,27 +5,24 @@
 
 package controller;
 
-import dao.CategorySkillDao;
-import dao.CourseDao;
-import dao.SkillDao;
-import entity.CategorySkill;
-import entity.Course;
-import entity.Skill;
+import dao.menteeDao;
+import entity.Mentee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author Dell
+ * @author TUF F15
  */
-@WebServlet(name="Homecontrol", urlPatterns={"/home"})
-public class Homecontrol extends HttpServlet {
+@WebServlet(name="login", urlPatterns={"/login"})
+public class Login extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -42,10 +39,10 @@ public class Homecontrol extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Homecontrol</title>");  
+            out.println("<title>Servlet login</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Homecontrol at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet login at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,13 +59,7 @@ public class Homecontrol extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        CourseDao cd = new CourseDao();
-        List<Course> listT = cd.getTopCourse();
-        CategorySkillDao csd = new CategorySkillDao();
-        List<CategorySkill> listCs = csd.getAllCategorySkill();
-        request.setAttribute("listCs", listCs);
-        request.setAttribute("listTop", listT);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     } 
 
     /** 
@@ -81,7 +72,20 @@ public class Homecontrol extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String email = request.getParameter("email");
+        String password =request.getParameter("password");
+        String Rmb = request.getParameter("rem");
+        menteeDao md = new menteeDao();
+        Mentee m = md.getMentee(email, password);
+        if (m == null) {
+            String erro = "Email and passworld is not correct";
+            request.setAttribute("erro", erro);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }else{
+            HttpSession session = request.getSession();
+            session.setAttribute("mentee", m);
+            response.sendRedirect("home");
+        }
     }
 
     /** 

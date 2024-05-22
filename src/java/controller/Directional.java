@@ -5,13 +5,10 @@
 
 package controller;
 
-import dao.menteeDao;
-import entity.Mentee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,8 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author TUF F15
  */
-@WebServlet(name="login", urlPatterns={"/login"})
-public class Login extends HttpServlet {
+@WebServlet(name="directional", urlPatterns={"/directional"})
+public class Directional extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +35,10 @@ public class Login extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet login</title>");  
+            out.println("<title>Servlet directional</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet login at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet directional at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +55,16 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        int key = Integer.parseInt(request.getParameter("key"));
+        //my profile
+        if (key == 1) {
+            
+        }else if (key == 2) {//change pass word
+            
+        }else{//log out
+            response.sendRedirect("logout");
+        }
+        
     } 
 
     /** 
@@ -71,24 +77,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password =request.getParameter("password");
-        String Rmb = request.getParameter("rem");
-        if (email != null && password != null && Rmb!= null) {
-            Cookie cookie = new Cookie("email", email);
-            
-        }
-        
-        menteeDao md = new menteeDao();
-        Mentee m = md.getMentee(email, password);
-        if (m == null) {
-            String erro = "Email and passworld is not correct";
-            request.setAttribute("erro", erro);
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }else{
-            PrintWriter out = response.getWriter();
-            out.print("hello "+m.getName());
-        }
+        processRequest(request, response);
     }
 
     /** 
