@@ -6,10 +6,8 @@
 package controller;
 
 import dao.CategorySkillDao;
-import dao.CourseDao;
 import dao.SkillDao;
 import entity.CategorySkill;
-import entity.Course;
 import entity.Skill;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -62,8 +60,8 @@ public class Homecontrol extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        CourseDao cd = new CourseDao();
-        List<Course> listT = cd.getTopCourse();
+        SkillDao s = new SkillDao();
+        List<Skill> listT = s.getTopSkill();
         CategorySkillDao csd = new CategorySkillDao();
         List<CategorySkill> listCs = csd.getAllCategorySkill();
         request.setAttribute("listCs", listCs);

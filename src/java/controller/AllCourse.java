@@ -5,9 +5,9 @@
 package controller;
 
 import dao.CategorySkillDao;
-import dao.CourseDao;
+import dao.SkillDao;
 import entity.CategorySkill;
-import entity.Course;
+import entity.Skill;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,15 +65,15 @@ public class AllCourse extends HttpServlet {
             throws ServletException, IOException {
 
         int cid = Integer.parseInt(request.getParameter("cid"));
-        CourseDao cd = new CourseDao();
-        List<Course> listC = cd.getAllCourse();
+        SkillDao s = new SkillDao();
+        List<Skill> listC = new ArrayList<>();
         CategorySkillDao csd = new CategorySkillDao();
         List<CategorySkill> listCs = csd.getAllCategorySkill();
         
         if (cid == 0) {
-            listC = cd.getAllCourse();
+            listC = s.getAllSkill();
         }else{
-            listC = cd.getCourseByCid(cid);
+            listC = s.getSkillById(cid);
         }
         request.setAttribute("cid", cid);
         request.setAttribute("listCs", listCs);
