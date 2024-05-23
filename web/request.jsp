@@ -36,7 +36,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="e-profile">
-                                        
+                                        <form action="request" method="post">
                                         <div class="row">
                                             <div class="col-12 col-sm-auto mb-3">
                                                 <div class="mx-auto" style="width: 140px;">
@@ -54,7 +54,7 @@
                                                 </div>
                                                 <div class="text-center text-sm-right">
                                                     <span class="badge badge-secondary">Mentor</span>
-                                                    <div class="text-muted"><small></small></div>
+                                                    <div class="text-muted"><small> </small></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -72,7 +72,7 @@
                                                                     <div class="form-group">
                                                                         <label>Subject</label>
                                                                         
-                                                                        <input class="form-control" required>
+                                                                        <input name="subject" class="form-control" required>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -80,13 +80,13 @@
                                                                 <div class="col">
                                                                     <div class="form-group">
                                                                         <label>Deadline date</label>
-                                                                        <input class="form-control" required>
+                                                                        <input type="date" name="deadlineDate" class="form-control" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col">
                                                                     <div  class="form-group">
                                                                         <label>Deadline time</label>
-                                                                        <input class="form-control" required>
+                                                                        <input  name="deadlineTime" class="form-control" required>
                                                                     </div>
                                                                 </div>
                                                                 
@@ -96,7 +96,7 @@
                                                                 <div class="col mb-3">
                                                                     <div class="form-group">
                                                                         <label>Content</label>
-                                                                        <textarea class="form-control" rows="5" required></textarea>
+                                                                        <textarea name="content" class="form-control" rows="5" required></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -109,8 +109,9 @@
                                                                 <div class="col">
                                                                     <div class="form-group">
                                                                         <Select class="form-control" name="time">
-                                                                            <option value="value">text</option>
-                                                                            <option value="value">text</option>
+                                                                            <c:forEach items="${requestScope.listTime}" var="t">
+                                                                                <option value="${t.id}">${t.time_slot}</option>
+                                                                            </c:forEach>
                                                                         </Select>
                                                                        
                                                                     </div>
@@ -120,7 +121,7 @@
                                                                 <div class="col">
                                                                     <div class="form-group">
                                                                         <label>Day number</label>
-                                                                        <input class="form-control" >
+                                                                        <input class="form-control" name="dayNumber" name="day" >
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -134,12 +135,12 @@
                                                                     <div class="custom-controls-stacked px-2">
                                                                         <c:forEach items="${mentor.getSkillList()}" var="list">
                                                                             <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox"   checked="">
+                                                                                <input type="checkbox" name="skill" value="${list.id}"   checked="">
                                                                             <label >${list.skill}</label>
                                                                         </div>
                                                                         </c:forEach>
                                                                         
-                                                                        
+                                                                        <input type="hidden" value="${mentor.id}" name="id"/>
                                                                     </div>
                                                                 </div>
                                                             </div>

@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author TUF F15
  */
-public class menteeDao extends DBContext{
+public class MenteeDao extends DBContext{
 
     public Mentee getMentee(String email, String password) {
         String sql = "select * from [User]\n"
@@ -34,8 +34,24 @@ public class menteeDao extends DBContext{
         }
         return null;
 }
+    public Mentee getMenteeById(int id) {
+        String sql = "select * from [User]\n"
+                + "where user_id =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1,id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Mentee mt = new Mentee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDouble(7), rs.getString(8), 0);
+                return  mt;
+            }
+        } catch (SQLException ex) {
+            
+        }
+        return null;
+    }
     public static void main(String[] args) {
-        menteeDao md = new menteeDao();
+        MenteeDao md = new MenteeDao();
         Mentee m = md.getMentee("phuongbg0910@gmail.com", "123456p");
         System.out.println(m.getName());
     }

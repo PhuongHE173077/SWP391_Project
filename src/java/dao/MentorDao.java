@@ -88,11 +88,9 @@ public class MentorDao extends DBContext {
 
     public static void main(String[] args) {
         MentorDao md = new MentorDao();
-
-        System.out.println(md.getMentorByID(3));
-//        List<Mentor> list = md.getMentorByID(3);
-//        for (Mentor mentor : list) {
-//            System.out.println(mentor.getName());
-//        }
+        List<Mentor> list = md.getAllMentorBySkill(3);
+        for (Mentor mentor : list) {
+            System.out.println(mentor.getName());
+        }
     }
 }

@@ -5,7 +5,7 @@
 
 package controller;
 
-import dao.menteeDao;
+import dao.MenteeDao;
 import entity.Mentee;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,7 +75,7 @@ public class Login extends HttpServlet {
         String email = request.getParameter("email");
         String password =request.getParameter("password");
         String Rmb = request.getParameter("rem");
-        menteeDao md = new menteeDao();
+        MenteeDao md = new MenteeDao();
         Mentee m = md.getMentee(email, password);
         if (m == null) {
             String erro = "Email and passworld is not correct";
