@@ -376,7 +376,7 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-send"></i> create request</button>
+                                            <button class="add-to-cart-btn"><i class="fa fa-send"></i><a href="request?mid=${lm.id}">create request</a></button>
                                         </div>
                                     </div>
                                 </div>
