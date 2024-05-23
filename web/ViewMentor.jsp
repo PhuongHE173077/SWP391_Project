@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -241,13 +242,13 @@
                 <!-- responsive-nav -->
                 <ul class="main-nav nav navbar-nav">
                     <li ><a href="home">Home</a></li>
-                     <c:if test="${cid ==0}">
-                     <li class="active"><a  href="Course?cid=0">All course</a></li>
-                            </c:if>
-                            <c:if test="${cid !=0}">
-                            <li><a href="Course?cid=0">All course</a></li>
-                            </c:if>
-                    <c:set value="${requestScope.cid}" var="cid"/>
+                        <c:if test="${cid ==0}">
+                        <li class="active"><a  href="Course?cid=0">All course</a></li>
+                        </c:if>
+                        <c:if test="${cid !=0}">
+                        <li><a href="Course?cid=0">All course</a></li>
+                        </c:if>
+                        <c:set value="${requestScope.cid}" var="cid"/>
                         <c:forEach items="${requestScope.listCs}" var="lsc">
                             <c:if test="${lsc.id == cid}">
                             <li class="active"><a  href="Course?cid=${lsc.id}">${lsc.name}</a></li>
@@ -273,10 +274,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="breadcrumb-tree">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">All Categories</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li class="active">Headphones (227,490 Results)</li>
+                            <li><a href="home">Home</a></li>
+                            <li><a href="#">Course ${skill.skill}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -294,14 +293,18 @@
                 <div class="row">
                     <!-- ASIDE -->
                     <div id="aside" class="col-md-3">
-                        <!-- aside Widget -->
+                        <c:set value="${requestScope.skill}" var="sk"/>
                         <div class="aside">
-                            <h3 class="aside-title">Categories</h3>
-                            <a href="url" class="category">FrontEnd</a></br>
-                            <a href="url" class="category" >BackEnd</a></br>
-                            <a href="url" class="category" >DevOps</a></br>
-
+                            <h3 class="aside-title">${sk.skill}</h3>
+                            
                         </div>
+                        
+                            <img style="width: 100%; object-fit: cover"src="${sk.images}" alt="alt"/>
+                        
+                            <h5 class="aside-title"> Descprition course ${sk.skill}</h5>
+                            <p class="aside-title">${sk.descpition}
+                            </p>
+                        
                         <!-- /aside Widget -->
                     </div>
                     <!-- /ASIDE -->
@@ -340,18 +343,30 @@
 
 
 
-                            <c:forEach items="${requestScope.listC}" var="lc">
+                            <c:forEach items="${requestScope.listM}" var="lm">
 
                                 <div class="col-md-4 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="${lc.images}" alt="">
+
+                                            <c:if test="${empty lm.picture}">
+                                                <img src="data:image/jpeg;base64,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" alt="">
+                                            </c:if>
+                                            <c:if test="${!empty lm.picture}">
+                                                <img  src="${lm.picture}" alt="">
+                                            </c:if>
+
+
                                             <div class="product-label">
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <p class="product-category">${lc.cs.name}</p>
-                                            <h3 class="product-name"><a href="ViewMentor?id=${lc.id}">Course ${lc.skill}</a></h3>
+                                            <c:forEach var="skl" items="${lm.getSkillList()}" varStatus="status">
+                                                <span class="product-category">${skl.skill}<c:if test="${!status.last}">/</c:if></span>
+                                            </c:forEach>
+
+
+                                            <h3 class="product-name"><a href="#"> ${lm.name}</a></h3>
 
 
                                             <div class="product-btns">
@@ -361,7 +376,7 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                            <button class="add-to-cart-btn"><i class="fa fa-send"></i> create request</button>
                                         </div>
                                     </div>
                                 </div>
@@ -372,7 +387,7 @@
                         </div>
                         <!-- /store products -->
 
-                        <!-- store bottom filter -->
+<!--                         store bottom filter 
                         <div class="store-filter clearfix">
                             <span class="store-qty">Showing 20-100 products</span>
                             <ul class="store-pagination">
@@ -383,7 +398,7 @@
                                 <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
                             </ul>
                         </div>
-                        <!-- /store bottom filter -->
+                         /store bottom filter -->
                     </div>
                     <!-- /STORE -->
                 </div>

@@ -61,7 +61,13 @@ public class Register extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("register.jsp").forward(request, response);
+        String id = request.getParameter("role");
+        if (id.equals("mentee")) {
+            request.getRequestDispatcher("registerMentee.jsp").forward(request, response);
+        }else{
+            request.getRequestDispatcher("registerMentor.jsp").forward(request, response);
+        }
+        
     } 
 
     /** 

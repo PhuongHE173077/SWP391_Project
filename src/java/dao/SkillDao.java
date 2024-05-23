@@ -83,10 +83,32 @@ public class SkillDao extends DBContext{
         }
         return null;
     }
+     public List<Skill> getSkillOfMentor(int id) {
+        List<Skill> list = new ArrayList<>();
+        String query = "select * from skill_detail where mentor_id =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1,    id);
+            ResultSet rs = st.executeQuery();
+            CategorySkillDao cs = new CategorySkillDao();
+            
+
+            while (rs.next()) {
+                Skill skill = searchSkill(rs.getInt(1));
+                list.add(skill);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+    
     
     public static void main(String[] args) {
         SkillDao sd = new SkillDao();
-        System.out.println(sd.getSkillById(1).get(1).getImages());
+        List<Skill> list = sd.getSkillOfMentor(2);
+        for (Skill skill : list) {
+            System.out.println(skill.getSkill());
+        }
     }
     
 
