@@ -101,7 +101,7 @@
                         <c:set value="${sessionScope.mentee}" var="c"/>
                         <c:choose>
                             <c:when test="${empty c}">
-                                <li><a href="login.jsp" style="font-size: 16px;"><i class="fa fa-user-o"> Login </i></a></li>
+                                <li><a href="login.jsp" style="font-size: 16px;"><i class="fa fa-user-o"> Login</i></a></li>
                                 <li><i style="font-size: 16px;" class="fa "> / </i></li>
                                 <li><a href="login.jsp" style="font-size: 16px;"><i class="fa "> Sing up </i></a></li>
                                 </c:when>
@@ -174,33 +174,31 @@
                                 <!-- Cart -->
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <span>Your Cart</span>
+                                        <i class="fa fa-vcard"></i>
+                                        <span>Your Request</span>
                                         <div class="qty">3</div>
                                     </a>
                                     <div class="cart-dropdown">
                                         <div class="cart-list">
                                             <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product01.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
+                                                <c:forEach items="${requestScope.reList}" var="re">
+                                                    <div class="product-img">
+                                                        <img src="${re.mentor.picture}" alt="">
+                                                    </div>
+                                                    <div class="product-body">
+                                                        <h3 class="product-name"><a href="#">This request is ${re.status}</a></h3>
+                                                        <h4 class="product-price">
+                                                            <c:forEach items="${re.skillRequest}" var="skr">
+                                                                <span class="qty">${skr.skill} </span>
+                                                            </c:forEach>
+                                                            </h4>
+                                                    </div>
+                                                </c:forEach>
+
+
                                             </div>
 
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product02.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
+
                                         </div>
                                         <div class="cart-summary">
                                             <small>3 Item(s) selected</small>
@@ -239,31 +237,25 @@
             <!-- container -->
             <div class="container">
                 <!-- responsive-nav -->
-                <ul class="main-nav nav navbar-nav">
-                    <li ><a href="home">Home</a></li>
-                     <c:if test="${cid ==0}">
-                     <li class="active"><a  href="Course?cid=0">All course</a></li>
-                            </c:if>
-                            <c:if test="${cid !=0}">
-                            <li><a href="Course?cid=0">All course</a></li>
-                            </c:if>
-                    <c:set value="${requestScope.cid}" var="cid"/>
-                        <c:forEach items="${requestScope.listCs}" var="lsc">
-                            <c:if test="${lsc.id == cid}">
-                            <li class="active"><a  href="Course?cid=${lsc.id}">${lsc.name}</a></li>
-                            </c:if>
-                            <c:if test="${lsc.id != cid}">
+                <div id="responsive-nav">
+                    <!-- NAV -->
+                    <ul class="main-nav nav navbar-nav">
+                        <li class="active"><a href="home">Home</a></li>
+                        <li><a href="Course?cid=0">All course</a></li>
+                            <c:forEach items="${requestScope.listCs}" var="lsc">
                             <li><a href="Course?cid=${lsc.id}">${lsc.name}</a></li>
-                            </c:if>
-                        </c:forEach>
+                            </c:forEach>
 
 
-                </ul>
+                    </ul>
+                    <!-- /NAV -->
+                </div>
                 <!-- /responsive-nav -->
             </div>
             <!-- /container -->
         </nav>
         <!-- /NAVIGATION -->
+
 
         <!-- BREADCRUMB -->
         <div id="breadcrumb" class="section">

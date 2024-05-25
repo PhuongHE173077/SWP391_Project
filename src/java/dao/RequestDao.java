@@ -31,12 +31,13 @@ public class RequestDao extends DBContext {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             SkillDao sk = new SkillDao();
+            SkillDetailDao sdd = new SkillDetailDao();
             MentorDao mentor = new MentorDao();
             MenteeDao mentee = new MenteeDao();
             TimeSlotDao time = new TimeSlotDao();
             while (rs.next()) {
-                List<Skill> skillList = sk.getSkillOfMentor(rs.getInt(1));
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getString(6), time.searchTimeSlot(7), rs.getInt(8), rs.getString(9), skillList);
+                List<Skill> skillList = sdd.getListkillByRid(rs.getInt(1));
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getString(6),rs.getString(7), time.searchTimeSlot(8), rs.getInt(9), rs.getString(10), skillList);
                 list.add(rq);
             }
 
@@ -46,6 +47,24 @@ public class RequestDao extends DBContext {
 
         return list;
     }
+    
+     public int getCountRequest(int id) {
+        String query = "select count(*) from request where mentee_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RequestDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 0;
+    }
 
     public List<Request> getAllRequestOfMentee(int id) {
         String query = "select * from request where mentee_id = ?";
@@ -54,13 +73,14 @@ public class RequestDao extends DBContext {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
+            SkillDetailDao sdd = new SkillDetailDao();
             SkillDao sk = new SkillDao();
             MentorDao mentor = new MentorDao();
             MenteeDao mentee = new MenteeDao();
             TimeSlotDao time = new TimeSlotDao();
             while (rs.next()) {
-                List<Skill> skillList = sk.getSkillOfMentor(rs.getInt(1));
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getString(6), time.searchTimeSlot(7), rs.getInt(8), rs.getString(9), skillList);
+                List<Skill> skillList = sdd.getListkillByRid(rs.getInt(1));
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getString(6),rs.getString(7), time.searchTimeSlot(8), rs.getInt(9), rs.getString(10), skillList);
                 list.add(rq);
             }
 
@@ -104,14 +124,14 @@ public class RequestDao extends DBContext {
            st.setInt(8, dayNumber);
            st.setString(9, "Processing");
            st.executeUpdate();
-           String sql2 = "select top 1 * from request";
+           String sql2 = "select top 1 * from  request order by id desc";
            PreparedStatement st2 = connection.prepareStatement(sql2);
            ResultSet rs = st2.executeQuery();
            SkillDetailDao sdd = new SkillDetailDao();
             if (rs.next()) {
                 int id = rs.getInt(1);
                 for (Skill skill : list) {
-                    sdd.addSkillDetail(id, skill);
+                    sdd.addRequestkill(id, skill);
                 }
             }
         } catch (Exception e) {
@@ -120,6 +140,6 @@ public class RequestDao extends DBContext {
     }
 
     public static void main(String[] args) {
-
+        RequestDao requestDao =new RequestDao();
     }
 }

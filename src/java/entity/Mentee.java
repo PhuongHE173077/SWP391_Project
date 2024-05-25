@@ -16,14 +16,15 @@ public class Mentee {
     private String dob;
     private String phone;
     private String picture;
+    private int gender;
     private double balance;
     private String address;
-    private int rid;
+  
 
     public Mentee() {
     }
 
-    public Mentee(int id, String name, String email, String pass, String dob, String phone, String picture, double balance, String address, int rid) {
+    public Mentee(int id, String name, String email, String pass, String dob, String phone, String picture, int gender, double balance, String address) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -31,10 +32,21 @@ public class Mentee {
         this.dob = dob;
         this.phone = phone;
         this.picture = picture;
+        this.gender = gender;
         this.balance = balance;
         this.address = address;
-        this.rid = rid;
+        
     }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    
 
     public int getId() {
         return id;
@@ -108,14 +120,7 @@ public class Mentee {
         this.address = address;
     }
 
-    public int getRid() {
-        return rid;
-    }
-
-    public void setRid(int rid) {
-        this.rid = rid;
-    }
-    
+   
                 
 	
 }

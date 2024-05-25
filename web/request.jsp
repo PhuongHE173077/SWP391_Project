@@ -148,7 +148,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-end">
-                                                            <button class="btn btn-primary" type="submit">Save Changes</button>
+                                                            <button class="btn btn-primary" type="submit">Create request</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -166,16 +166,9 @@
                                     <div class="px-xl-3">
                                         <button class="btn btn-block btn-secondary">
                                             <i class="fa fa-sign-out"></i>
-                                            <span>Logout</span>
+                                            <span>Home</span>
                                         </button>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class="card-title font-weight-bold">Support</h6>
-                                    <p class="card-text">Get fast, free help from our friendly assistants.</p>
-                                    <button type="button" class="btn btn-primary">Contact Us</button>
                                 </div>
                             </div>
                         </div>
