@@ -4,6 +4,9 @@
  */
 package controller;
 
+import dao.UserDao;
+import entity.Mentee;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -78,18 +81,22 @@ public class VerifyEmail extends HttpServlet {
                 request.getParameter("fifth") + request.getParameter("sixth");
         HttpSession session = request.getSession();
         String code =(String) session.getAttribute("code");
-        String email = request.getParameter("email");
-        String name = request.getParameter("name");
-        String pass = request.getParameter("pass");
+        
         if(code_ip.equals(code)){
+            UserDao ud = new UserDao();
+            User user = (User)session.getAttribute("user");
+            ud.addUser(user);
+            if(user.getRole_id() == 0){
+                Mentee mentee = new Mentee(user.getId(), user.getName(), user.getEmail(), user.getPass(), user.getDob(), user.getPhone(), user.getPicture(), user.getGender(), 0, user.getAddress());
+                session.setAttribute("mentee", mentee);
+                response.sendRedirect("home");
+            }else{
+                out.print("Wellcome to Happy Progarmming"+user.getName());
+            }
             
-            out.print("hello");
         }else{
             String erro = "The code is not correct!!";
-            request.setAttribute("erro", erro);
-            request.setAttribute("email", email);
-            request.setAttribute("name", name);
-            request.setAttribute("pass", pass);
+            
             request.getRequestDispatcher("Verify_Email.jsp").forward(request, response);
         }
     }

@@ -124,9 +124,7 @@
                             <input class="m-2 text-center form-control rounded" type="number" name="fourth" id="fourth" maxlength="1" />
                             <input class="m-2 text-center form-control rounded" type="number" name="fifth" id="fifth" maxlength="1" />
                             <input class="m-2 text-center form-control rounded" type="number" name="sixth" id="sixth" maxlength="1" /> 
-                            <input type="hidden" name="email" value="${email}"/>
-                            <input type="hidden" name="name" value="${name}"/>
-                            <input type="hidden" name="pass" value="${pass}"/>
+                            
                         </div>
                             <div class="mt-4"> <button type="submit" class="btn btn-danger px-4 validate">Validate</button> </div>
                 

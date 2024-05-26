@@ -40,6 +40,7 @@
                                 <form class="pt-3" action="register" method="post">
 
                                     <div class="form-group">
+                                        <input type="hidden" name="role" value="1"/>
                                         <label>Account Name</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend bg-transparent">

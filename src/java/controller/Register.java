@@ -84,8 +84,14 @@ public class Register extends HttpServlet {
         String email = request.getParameter("email");
         String pass = request.getParameter("pass");
         String passCf = request.getParameter("confirmPass");
+        String phone = request.getParameter("phoneNumber");
+        int gender =Integer.parseInt(request.getParameter("gender"));
+        String dob = request.getParameter("dob");
+        String address =request.getParameter("address");
+        int role = Integer.parseInt(request.getParameter("role"));
+        User user = new User(0, name, email, pass, dob, phone, "null", gender, 0, address, role);
         PrintWriter out = response.getWriter();
-
+        
         UserDao ud = new UserDao();
         List<User> list = ud.getUser();
         // kiem tra xem mail da ton tai ch
@@ -102,12 +108,11 @@ public class Register extends HttpServlet {
             // tạo 1 mã OTP để verify email
             String code = getRandom();
             SendEmail se = new SendEmail();
-            se.sendEmail(email, "", code);
+            se.sendEmail(email, "Your code is :", code);
             HttpSession session = request.getSession();
+            session.setAttribute("user", user);
             session.setAttribute("code", code);
-            request.setAttribute("email", email);
-            request.setAttribute("name", name);
-            request.setAttribute("pass", pass);
+            
           
            
             request.getRequestDispatcher("Verify_Email.jsp").forward(request, response);
