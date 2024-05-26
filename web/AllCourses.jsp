@@ -176,39 +176,41 @@
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                         <i class="fa fa-vcard"></i>
                                         <span>Your Request</span>
-                                        <div class="qty">3</div>
+                                        <div class="qty">${cnt}</div>
                                     </a>
-                                    <div class="cart-dropdown">
-                                        <div class="cart-list">
-                                            <div class="product-widget">
-                                                <c:forEach items="${requestScope.reList}" var="re">
-                                                    <div class="product-img">
-                                                        <img src="${re.mentor.picture}" alt="">
-                                                    </div>
-                                                    <div class="product-body">
-                                                        <h3 class="product-name"><a href="#">This request is ${re.status}</a></h3>
-                                                        <h4 class="product-price">
-                                                            <c:forEach items="${re.skillRequest}" var="skr">
-                                                                <span class="qty">${skr.skill} </span>
-                                                            </c:forEach>
-                                                            </h4>
-                                                    </div>
-                                                </c:forEach>
+                                        <c:if test="${cnt > 0}">
+                                            <div class="cart-dropdown">
+                                                <div class="cart-list">
+                                                    <div class="product-widget">
+                                                        <c:forEach items="${requestScope.reList}" var="re">
+                                                            <div class="product-img">
+                                                                <img src="${re.mentor.picture}" alt="">
+                                                            </div>
+                                                            <div class="product-body">
+                                                                <h3 class="product-name"><a href="#">This request is ${re.status}</a></h3>
+                                                                <h4 class="product-price">
+                                                                    <c:forEach items="${re.skillRequest}" var="skr">
+                                                                        <span class="qty">${skr.skill} </span>
+                                                                    </c:forEach>
+                                                                </h4>
+                                                            </div>
+                                                        </c:forEach>
 
 
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="cart-summary">
+                                                    <small>${cnt} Item(s) selected</small>
+                                                </div>
+                                                <div class="cart-summary">
+                                                   
+                                                    <a href="ViewRequest">View Request  <i class="fa fa-arrow-circle-right"></i></a>
+                                                </div>
                                             </div>
-
-
-                                        </div>
-                                        <div class="cart-summary">
-                                            <small>3 Item(s) selected</small>
-                                            <h5>SUBTOTAL: $2940.00</h5>
-                                        </div>
-                                        <div class="cart-btns">
-                                            <a href="#">View Cart</a>
-                                            <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                                        </div>
-                                    </div>
+                                        </c:if>
+                                    
                                 </div>
                                 <!-- /Cart -->
 
@@ -255,8 +257,6 @@
             <!-- /container -->
         </nav>
         <!-- /NAVIGATION -->
-
-
         <!-- BREADCRUMB -->
         <div id="breadcrumb" class="section">
             <!-- container -->

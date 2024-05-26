@@ -5,6 +5,13 @@
 
 package controller;
 
+import dao.CategorySkillDao;
+import dao.RequestDao;
+import dao.SkillDao;
+import entity.CategorySkill;
+import entity.Mentee;
+import entity.Request;
+import entity.Skill;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +19,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -55,7 +64,25 @@ public class ViewRequest extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+       
+        CategorySkillDao csd = new CategorySkillDao();
+        List<CategorySkill> listCs = csd.getAllCategorySkill();
+        RequestDao rd = new RequestDao();
+        HttpSession session = request.getSession();
+        Mentee mentee = (Mentee) session.getAttribute("mentee");
+        if (mentee != null) {
+            List<Request> reList = rd.getAllRequestOfMentee(mentee.getId());
+            int count = rd.getCountRequest(mentee.getId());
+            int total = getTotalHoure(reList);
+            request.setAttribute("total", total);
+            request.setAttribute("cnt", count);
+            request.setAttribute("reList", reList);
+
+        }
+        
+        request.setAttribute("listCs", listCs);
+       
+        request.getRequestDispatcher("viewRequest.jsp").forward(request, response);
     } 
 
     /** 
@@ -70,7 +97,13 @@ public class ViewRequest extends HttpServlet {
     throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    public int getTotalHoure(List<Request>list){
+        int total = 0;
+        for (Request request : list) {
+            total += request.getDay_number()*2;
+        }
+        return total;
+    }
     /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description

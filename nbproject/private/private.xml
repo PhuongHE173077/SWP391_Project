@@ -7,25 +7,20 @@
             <file>file:/D:/ki5/swp391/happy%20progaming/SWP391_Project/web/index.jsp</file>
         </group>
         <group name="SWP391">
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/web/registerRoles.jsp</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/web/registerMentor.jsp</file>
+            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/controller/ViewRequest.java</file>
+            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/controller/AllCourse.java</file>
+            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/controller/Homecontrol.java</file>
+            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/dao/MentorDao.java</file>
+            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/entity/Request.java</file>
+            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/dao/UserDao.java</file>
             <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/entity/Skill.java</file>
             <file>file:/D:/semester_5/SWP391/SWP391_Project/web/AllCourses.jsp</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/controller/request.java</file>
+            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/dao/SkillDao.java</file>
             <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/entity/Mentor.java</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/controller/Search.java</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/controller/Login.java</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/entity/User.java</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/dao/MenteeDao.java</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/web/request.jsp</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/web/registerMentee.jsp</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/web/ViewMentor.jsp</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/controller/Logout.java</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/controller/Register.java</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/controller/Roles_Register.java</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/web/login.jsp</file>
+            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/dao/RequestDao.java</file>
+            <file>file:/D:/semester_5/SWP391/SWP391_Project/web/viewRequest.jsp</file>
+            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/dao/SkillDetailDao.java</file>
             <file>file:/D:/semester_5/SWP391/SWP391_Project/web/index.jsp</file>
-            <file>file:/D:/semester_5/SWP391/SWP391_Project/src/java/controller/ViewMentor.java</file>
         </group>
     </open-files>
 </project-private>

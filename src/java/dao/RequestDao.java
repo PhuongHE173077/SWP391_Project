@@ -5,6 +5,7 @@
 package dao;
 
 import context.DBContext;
+import controller.request;
 import entity.Mentee;
 import entity.Mentor;
 import entity.Request;
@@ -80,7 +81,7 @@ public class RequestDao extends DBContext {
             TimeSlotDao time = new TimeSlotDao();
             while (rs.next()) {
                 List<Skill> skillList = sdd.getListkillByRid(rs.getInt(1));
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getString(6),rs.getString(7), time.searchTimeSlot(8), rs.getInt(9), rs.getString(10), skillList);
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(6), rs.getString(5),rs.getString(7), time.searchTimeSlot(8), rs.getInt(9), rs.getString(10), skillList);
                 list.add(rq);
             }
 
@@ -141,5 +142,9 @@ public class RequestDao extends DBContext {
 
     public static void main(String[] args) {
         RequestDao requestDao =new RequestDao();
+        List<Request> list = requestDao.getAllRequestOfMentee(1);
+        for (Request request : list) {
+            System.out.println(request.getMentor().getName());
+        }
     }
 }
