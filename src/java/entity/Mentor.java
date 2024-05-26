@@ -1,4 +1,4 @@
-/*
+  /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Mentor {
     private int id;
-    private String name;
+   private String name;
     private String email;
     private String pass;
     private String dob;
@@ -21,7 +21,7 @@ public class Mentor {
     private String picture;
     private Double price;
     private double balance;
-    private String address;
+    private String address; 
     private List<Skill> skillList ; 
 
     public Mentor() {

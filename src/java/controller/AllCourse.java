@@ -5,8 +5,11 @@
 package controller;
 
 import dao.CategorySkillDao;
+import dao.RequestDao;
 import dao.SkillDao;
 import entity.CategorySkill;
+import entity.Mentee;
+import entity.Request;
 import entity.Skill;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +18,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +78,17 @@ public class AllCourse extends HttpServlet {
             listC = s.getAllSkill();
         }else{
             listC = s.getSkillById(cid);
+        }
+        RequestDao rd = new RequestDao();
+        HttpSession session = request.getSession();
+        Mentee mentee = (Mentee) session.getAttribute("mentee");
+        if (mentee != null) {
+            List<Request> reList = rd.getAllRequestOfMentee(mentee.getId());
+            int count = rd.getCountRequest(mentee.getId());
+            request.setAttribute("cnt", count);
+            request.setAttribute("reList", reList);
+            
+
         }
         request.setAttribute("cid", cid);
         request.setAttribute("listCs", listCs);

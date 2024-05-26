@@ -27,7 +27,7 @@ public class MenteeDao extends DBContext {
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                Mentee mt = new Mentee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDouble(7), rs.getString(8), 0);
+                Mentee mt = new Mentee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10));
                 return mt;
             }
         } catch (SQLException ex) {
@@ -44,7 +44,7 @@ public class MenteeDao extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                Mentee mt = new Mentee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getDouble(9), rs.getString(10), rs.getInt(11));
+                Mentee mt = new Mentee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10));
                 return mt;
             }
         } catch (SQLException ex) {

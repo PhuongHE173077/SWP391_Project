@@ -110,7 +110,6 @@ public class request extends HttpServlet {
             TimeSlotDao tm = new TimeSlotDao();
             List<TimeSlot> list = tm.getAllTimeSlot();
             request.setAttribute("listTime", list);
-
             request.setAttribute("mentor", mentor);
             request.getRequestDispatcher("request.jsp").forward(request, response);
         }else{
@@ -118,7 +117,7 @@ public class request extends HttpServlet {
             SkillDao sk = new SkillDao();
             List<Skill> list = new ArrayList<>();
             // Chuyển đổi các giá trị từ chuỗi sang số nguyên
-            for (int i = 0; i < skill.length; i++) {
+            for (int i = 0; i < skillArray.length; i++) {
                 try {
                     int id = Integer.parseInt(skill[i]);
                     Skill s = sk.searchSkill(id);

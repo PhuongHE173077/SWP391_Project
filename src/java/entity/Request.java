@@ -17,6 +17,7 @@ public class Request {
     private String subject;
     private String deadlinehour;
     private String deadlineday;
+    private String content;
     private TimeSlot time;
     private int day_number;
     private String status;
@@ -25,13 +26,14 @@ public class Request {
     public Request() {
     }
 
-    public Request(int id, Mentor mentor, Mentee mentee, String subject, String deadlinehour, String deadlineday, TimeSlot time, int day_number, String status, List<Skill> SkillRequest) {
+    public Request(int id, Mentor mentor, Mentee mentee, String subject, String deadlinehour, String deadlineday, String content, TimeSlot time, int day_number, String status, List<Skill> SkillRequest) {
         this.id = id;
         this.mentor = mentor;
         this.mentee = mentee;
         this.subject = subject;
         this.deadlinehour = deadlinehour;
         this.deadlineday = deadlineday;
+        this.content = content;
         this.time = time;
         this.day_number = day_number;
         this.status = status;
@@ -86,6 +88,14 @@ public class Request {
         this.deadlineday = deadlineday;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public TimeSlot getTime() {
         return time;
     }
@@ -117,5 +127,7 @@ public class Request {
     public void setSkillRequest(List<Skill> SkillRequest) {
         this.SkillRequest = SkillRequest;
     }
+
+    
     
 }

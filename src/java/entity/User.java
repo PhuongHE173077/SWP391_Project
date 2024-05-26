@@ -13,13 +13,28 @@ public class User {
     private String name;
     private String email;
     private String pass;
+    private String dob;
+    private String phone;
+    private String picture;
+    private int gender;
+    private double balance;
+    private String address;
     private int role_id;
 
-    public User(int id, String name, String email, String pass, int  role_id) {
+    public User() {
+    }
+
+    public User(int id, String name, String email, String pass, String dob, String phone, String picture, int gender, double balance, String address, int role_id) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.pass = pass;
+        this.dob = dob;
+        this.phone = phone;
+        this.picture = picture;
+        this.gender = gender;
+        this.balance = balance;
+        this.address = address;
         this.role_id = role_id;
     }
 
@@ -59,6 +74,54 @@ public class User {
         this.pass = pass;
     }
 
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public int getRole_id() {
         return role_id;
     }
@@ -66,5 +129,14 @@ public class User {
     public void setRole_id(int role_id) {
         this.role_id = role_id;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", name=" + name + ", email=" + email + ", pass=" + pass + ", dob=" + dob + ", phone=" + phone + ", picture=" + picture + ", gender=" + gender + ", balance=" + balance + ", address=" + address + ", role_id=" + role_id + '}';
+    }
+
+   
+    
+  
     
 }
