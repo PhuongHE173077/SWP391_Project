@@ -6,11 +6,16 @@ package dao;
 
 import context.DBContext;
 import entity.Mentee;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
@@ -52,11 +57,55 @@ public class MenteeDao extends DBContext {
         }
         return null;
     }
+public void updateUserProfilePicture(String userId, String newPicturePath) throws SQLException {
+        String jdbcURL = "jdbc:sqlserver://localhost:1433;databaseName= SWP391_project";
+        String jdbcUsername = "sa";
+        String jdbcPassword = "123";
+
+        String sql = "update \"User\" set img = ? where user_id = ?";
+
+        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, newPicturePath);
+            statement.setString(2, userId);
+            statement.executeUpdate();
+        }
+    }
+
+
+public boolean updateMentee(Mentee m) {
+    boolean check = false;
+    String query = "UPDATE \"User\" SET name = ?, email = ?, password = ?, dob = ?, phone = ?, img = ?, gender = ?, balance = ?, address = ? WHERE user_id = ?";
+
+    try  {
+        PreparedStatement ps = connection.prepareStatement(query);
+        
+        ps.setString(1, m.getName());
+        ps.setString(2, m.getEmail());
+        ps.setString(3, m.getPass());
+        ps.setString(4, m.getDob());
+        ps.setString(5, m.getPhone());
+        ps.setString(6, m.getPicture());
+        ps.setInt(7, m.getGender());
+        ps.setDouble(8, m.getBalance());
+        ps.setString(9, m.getAddress());
+        ps.setInt(10, m.getId());
+
+        ps.executeUpdate();
+        check = true;
+    } catch (SQLException e) {
+        System.out.print(e.getMessage());
+        // Hoặc sử dụng logging framework để ghi log
+    }
+    return check;
+}
 
     public static void main(String[] args) {
-        MenteeDao md = new MenteeDao();
-//        Mentee m = md.getMentee("phuongbg0910@gmail.com", "123456p");
-//        System.out.println(m.getName());
-//        System.out.println(md.getMenteeById(12).getPass());
+        MenteeDao m = new MenteeDao();
+        Mentee me = m.getMenteeById(2);
+        me.setName("Bao");
+        System.out.println(me.getEmail());
+
+        System.out.println(m.updateMentee(me));
     }
 }

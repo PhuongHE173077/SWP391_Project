@@ -102,12 +102,8 @@ public class UserDao extends DBContext {
             ps.setString(2, pass);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt(1));
-                user.setName(rs.getString(2));
-                user.setEmail(rs.getString(3));
-                user.setPass(rs.getString(4));
-                user.setRole_id(rs.getInt(11));
+                User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10), rs.getInt(11));
+                        
                 return user;
             }
         } catch (SQLException e) {
@@ -138,12 +134,7 @@ public class UserDao extends DBContext {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt(1));
-                user.setName(rs.getString(2));
-                user.setEmail(rs.getString(3));
-                user.setPass(rs.getString(4));
-                user.setRole_id(rs.getInt(11));
+                 User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10), rs.getInt(11));
                 return user;
             }
         } catch (SQLException e) {
@@ -159,12 +150,7 @@ public class UserDao extends DBContext {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt(1));
-                user.setName(rs.getString(2));
-                user.setEmail(rs.getString(3));
-                user.setPass(rs.getString(4));
-                user.setRole_id(rs.getInt(11));
+                 User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10), rs.getInt(11));
                 return user;
             }
         } catch (SQLException e) {

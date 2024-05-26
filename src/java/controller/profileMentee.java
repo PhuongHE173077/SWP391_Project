@@ -5,6 +5,8 @@
 
 package controller;
 
+import dao.profileMenteeDAO;
+import entity.Mentee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,13 +14,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
- * @author TUF F15
+ * @author Acer
  */
-@WebServlet(name="directional", urlPatterns={"/directional"})
-public class Directional extends HttpServlet {
+
+@WebServlet(urlPatterns={"/profile"})
+public class profileMentee extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,10 +40,10 @@ public class Directional extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet directional</title>");  
+            out.println("<title>Servlet profileMentee</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet directional at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet profileMentee at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,16 +60,7 @@ public class Directional extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int key = Integer.parseInt(request.getParameter("key"));
-        //my profile
-        if (key == 1) {
-            response.sendRedirect("profile");
-        }else if (key == 2) {//change pass word
-            response.sendRedirect("change-password");
-        }else{//log out
-            response.sendRedirect("logout");
-        }
-        
+        request.getRequestDispatcher("Profile.jsp").forward(request, response);
     } 
 
     /** 

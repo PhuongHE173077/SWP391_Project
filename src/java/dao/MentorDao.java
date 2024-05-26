@@ -7,6 +7,8 @@ package dao;
 import context.DBContext;
 import entity.Mentor;
 import entity.Skill;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -76,15 +78,30 @@ public class MentorDao extends DBContext {
             st.setInt(1, skillId);
             ResultSet rs = st.executeQuery();
             SkillDao sd = new SkillDao();
-            while(rs.next()) {
-               Mentor mentor = getMentorByID(rs.getInt(2));
-               listMentor.add(mentor);
+            while (rs.next()) {
+                Mentor mentor = getMentorByID(rs.getInt(2));
+                listMentor.add(mentor);
             }
         } catch (SQLException ex) {
             Logger.getLogger(MentorDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listMentor;
     }
+
+    public void updateUserProfilePicture(String userId, String newPicturePath) throws SQLException {
+        String jdbcURL = "jdbc:sqlserver://localhost:1433;databaseName= SWP391_project";
+        String jdbcUsername = "sa";
+        String jdbcPassword = "123";
+
+        String sql = "update \"User\" set img = ? where user_id = ?";
+
+        try (Connection connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword); PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, newPicturePath);
+            statement.setString(2, userId);
+            statement.executeUpdate();
+        }
+    }
+    
 
     public static void main(String[] args) {
         MentorDao md = new MentorDao();
