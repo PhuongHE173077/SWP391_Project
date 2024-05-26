@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                         <form action="change-password" method="POST">
-                            <!<!-- Account name method -->
+                            <!<!-- Account name input -->
                             <div class="d-flex flex-row align-items-center mb-4">
                                 <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                 <input name="email" type="email" id="form1Example23" class="form-control form-control-lg" placeholder="Email"/>
