@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
 
-    public void sendEmail(String toMail, String Sub, String mgs) {
+    public static void sendEmail(String toMail, String Sub, String mgs) {
         // Thiết lập các thuộc tính cho kết nối email
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");

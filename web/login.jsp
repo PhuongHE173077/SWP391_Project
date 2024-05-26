@@ -88,7 +88,7 @@
                                                     Keep me signed in
                                                 </label>
                                             </div>
-                                            <a href="#" class="auth-link text-black">Forgot password?</a>
+                                            <a href="reset-password" class="auth-link text-black">Forgot password?</a>
                                         </div>
                                         <div class="my-3">
                                             <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">LOGIN</button>
