@@ -59,6 +59,7 @@
                                          font-size: 40px;
                                          font-family:Arial, Helvetica, sans-serif; ">LOG IN</div>
                                     <form action="login" method="post" class="pt-3">
+                                        <c:set var="cookie" value="${pageContext.request.cookies}"/>
                                         <div class="form-group">
                                             <label for="exampleInputEmail">Email</label>
                                             <div class="input-group">
@@ -67,7 +68,7 @@
                                                         <i class="mdi mdi-account-outline text-primary"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" name="email" class="form-control form-control-lg border-left-0" id="exampleInputEmail" placeholder="Email">
+                                                <input type="text" name="email" value="${cookie.em}" class="form-control form-control-lg border-left-0" id="exampleInputEmail" placeholder="Email">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -78,13 +79,13 @@
                                                         <i class="mdi mdi-lock-outline text-primary"></i>
                                                     </span>
                                                 </div>
-                                                <input type="password" name="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">                        
+                                                <input type="password" value="${cookie.pas}" name="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">                        
                                             </div>
                                         </div>
                                         <div class="my-2 d-flex justify-content-between align-items-center">
                                             <div class="form-check">
                                                 <label class="form-check-label text-muted">
-                                                    <input type="checkbox" value="ON" name="rem" class="form-check-input">
+                                                    <input type="checkbox" ${(cookie.re !=null?'checked':'')} value="ON" name="rem" class="form-check-input">
                                                     Keep me signed in
                                                 </label>
                                             </div>

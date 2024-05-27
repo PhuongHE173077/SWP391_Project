@@ -98,12 +98,21 @@ public class Register extends HttpServlet {
         if (checkEmail(list, email)) {
             String error = "This mail is Exits";
             request.setAttribute("error", error);
-            request.getRequestDispatcher("register.jsp").forward(request, response);
+            if (role == 0 ) {
+                 request.getRequestDispatcher("registerMentee.jsp").forward(request, response);
+            }else{
+                request.getRequestDispatcher("registerMentor.jsp").forward(request, response);
+            }
+           
         }// kiem tra xem nhap pass và confirm pass có giống nhau ko 
         else if (!pass.equals(passCf)) {
             String error = "Password confirm is different password";
             request.setAttribute("error", error);
-            request.getRequestDispatcher("register.jsp").forward(request, response);
+           if (role == 0 ) {
+                 request.getRequestDispatcher("registerMentee.jsp").forward(request, response);
+            }else{
+                request.getRequestDispatcher("registerMentor.jsp").forward(request, response);
+            }
         }else{
             // tạo 1 mã OTP để verify email
             String code = getRandom();
