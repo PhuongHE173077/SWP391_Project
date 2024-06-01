@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : May 21, 2024, 4:09:43 PM
-    Author     : TUF F15
+    Document   : AllCourses
+    Created on : May 21, 2024, 6:09:09 PM
+    Author     : Dell
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-        <title>Happy programming</title>
+        <title>Happy Programming</title>
 
         <!-- Google font -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -72,6 +72,15 @@
                 color: #D10024;
                 margin-right: 5px;
             }
+            .aside .category a {
+                border: 1px;
+
+                padding: 10px;
+            }
+            .skd{
+                margin: 20px 0 20px 0;
+                color: grey;
+            }
 
         </style>
         <script type="text/javascript">
@@ -96,7 +105,7 @@
                         <c:set value="${sessionScope.mentee}" var="c"/>
                         <c:choose>
                             <c:when test="${empty c}">
-                                <li><a href="login" style="font-size: 16px;"><i class="fa fa-user-o"> Login</i></a></li>
+                                <li><a href="login.jsp" style="font-size: 16px;"><i class="fa fa-user-o"> Login</i></a></li>
                                 <li><i style="font-size: 16px;" class="fa "> / </i></li>
                                 <li><a href="login.jsp" style="font-size: 16px;"><i class="fa "> Sing up </i></a></li>
                                 </c:when>
@@ -173,37 +182,39 @@
                                         <span>Your Request</span>
                                         <div class="qty">${cnt}</div>
                                     </a>
-                                        <c:if test="${cnt > 0}">
-                                            <div class="cart-dropdown">
-                                                <div class="cart-list">
-                                                    <div class="product-widget">
-                                                        <c:forEach items="${requestScope.reList}" var="re">
-                                                            <div class="product-img">
-                                                                <img src="${re.skill.images}" alt="">
-                                                            </div>
-                                                            <div class="product-body">
-                                                                <h3 class="product-name"><a href="#">${re.skill.skill}</a></h3>
-                                                                <h4 class="product-price">
-                                                                        <span class="qty">${re.status} </span>
-                                                                </h4>
-                                                            </div>
-                                                        </c:forEach>
-
-
-                                                    </div>
+                                    <c:if test="${cnt > 0}">
+                                        <div class="cart-dropdown">
+                                            <div class="cart-list">
+                                                <div class="product-widget">
+                                                    <c:forEach items="${requestScope.reList}" var="re">
+                                                        <div class="product-img">
+                                                            <img src="${re.mentor.picture}" alt="">
+                                                        </div>
+                                                        <div class="product-body">
+                                                            <h3 class="product-name"><a href="#">This request is ${re.status}</a></h3>
+                                                            <h4 class="product-price">
+                                                                <c:forEach items="${re.skillRequest}" var="skr">
+                                                                    <span class="qty">${skr.skill} </span>
+                                                                </c:forEach>
+                                                            </h4>
+                                                        </div>
+                                                    </c:forEach>
 
 
                                                 </div>
-                                                <div class="cart-summary">
-                                                    <small>${cnt} Item(s) selected</small>
-                                                </div>
-                                                <div class="cart-summary">
-                                                   
-                                                    <a href="ViewRequest">View Request  <i class="fa fa-arrow-circle-right"></i></a>
-                                                </div>
+
+
                                             </div>
-                                        </c:if>
-                                    
+                                            <div class="cart-summary">
+                                                <small>${cnt} Item(s) selected</small>
+                                            </div>
+                                            <div class="cart-summary">
+
+                                                <a href="ViewRequest">View Request  <i class="fa fa-arrow-circle-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </c:if>
+
                                 </div>
                                 <!-- /Cart -->
 
@@ -250,136 +261,26 @@
             <!-- /container -->
         </nav>
         <!-- /NAVIGATION -->
-
-        <!-- SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <!-- shop -->
-                    <div class="col-md-4 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="./img/fronEnd.png" alt="">
-                            </div>
-                            <div class="shop-body">
-                                <h3>FrontEnd<br>Courses</h3>
-                                <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /shop -->
-
-                    <!-- shop -->
-                    <div class="col-md-4 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="./img/backEnd.png" alt="">
-                            </div>
-                            <div class="shop-body">
-                                <h3>BackEnd<br>Courses</h3>
-                                <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /shop -->
-
-                    <!-- shop -->
-                    <div class="col-md-4 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="./img/devOps.png" alt="">
-                            </div>
-                            <div class="shop-body">
-                                <h3>DevOps<br>Course</h3>
-                                <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /shop -->
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
-
-        <!-- SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-
-                    <!-- section title -->
-                    <div class="col-md-12">
-                        <div class="section-title">
-                            <h3 class="title">Popular Course</h3>
-                            <div class="section-nav">
-                                <ul class="section-tab-nav tab-nav">
-
-                                    <li>   </li>
-                                </ul>
-                                <a style="text-decoration: none" href="Course?cid=0">Load More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /section title -->
-
-                    <!-- Products tab & slick -->
-                    <div class="col-md-12">
+        <!-- BREADCRUMB -->
+        <!--        <div id="breadcrumb" class="section">
+                     container 
+                    <div class="container">
+                         row 
                         <div class="row">
-                            <div class="products-tabs">
-                                <!-- tab -->
-                                <div id="tab1" class="tab-pane active">
-                                    <div class="products-slick" data-nav="#slick-nav-1">
-                                        <c:forEach items="${requestScope.listTop}" var="listtop">
-                                            <!-- product -->
-                                            <div class="product">
-                                                <div class="product-img">
-                                                    <img src="${listtop.images}" alt="">
-                                                    <div class="product-label">
-                                                        <span class="new">HOT</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-body">
-                                                    <p class="product-category">${listtop.cs.name}</p>
-                                                    <h3 class="product-name"><a href="ViewMentor?id=${listtop.id}">Course ${listtop.skill}</a></h3><!--view file-->
-                                                    <div class="product-btns">
-                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                        <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                    </div>
-                                                </div>
-                                                <div class="add-to-cart">
-                                                    <a href="ViewMentor?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> BOOk Course</button> </a>
-                                                   
-                                                </div>
-                                            </div>
-                                            <!-- /product -->
-
-                                            <!-- product -->
-                                        </c:forEach>
-
-
-                                    </div>
-                                    <div id="slick-nav-1" class="products-slick-nav"></div>
-                                </div>
-                                <!-- /tab -->
+                            <div class="col-md-12">
+                                <ul class="breadcrumb-tree">
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">All Categories</a></li>
+                                    <li><a href="#">Accessories</a></li>
+                                    <li class="active">Headphones (227,490 Results)</li>
+                                </ul>
                             </div>
                         </div>
+                         /row 
                     </div>
-                    <!-- Products tab & slick -->
+                     /container 
                 </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
-
-
-        <!-- /HOT DEAL SECTION -->
+                 /BREADCRUMB -->
 
         <!-- SECTION -->
         <div class="section">
@@ -387,74 +288,97 @@
             <div class="container">
                 <!-- row -->
                 <div class="row">
+                    <!-- ASIDE -->
+                    <div id="aside" class="col-md-3">
+                        <!-- aside Widget -->
+                        <div class="aside">
+                            <h3 class="aside-title">Categories</h3>
+                            <a href="url" class="category">FrontEnd</a></br>
+                            <a href="url" class="category" >BackEnd</a></br>
+                            <a href="url" class="category" >DevOps</a></br>
 
-                    <!-- section title -->
-                    <div class="col-md-12">
-                        <div class="section-title">
-                            <h3 class="title">Top selling</h3>
-                            <div class="section-nav">
-                                <ul class="section-tab-nav tab-nav">
-
-                                    <li>   </li>
-                                </ul>
-                                <a style="text-decoration: none" href="Course?cid=0">Load More</a>
-                            </div>
                         </div>
+                        <!-- /aside Widget -->
                     </div>
-                    <!-- /section title -->
+                    <!-- /ASIDE -->
 
-                    <!-- Products tab & slick -->
-                    <div class="col-md-12">
+                    <!-- STORE -->
+                    <div id="store" class="col-md-9">
+                        <!-- store top filter -->
+                        <div class="store-filter clearfix">
+                            <div class="store-sort">
+                                <label>
+                                    Sort By:
+                                    <select class="input-select">
+                                        <option value="0">Popular</option>
+                                        <option value="1">Position</option>
+                                    </select>
+                                </label>
+
+                                <label>
+                                    Show:
+                                    <select class="input-select">
+                                        <option value="0">20</option>
+                                        <option value="1">50</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <ul class="store-grid">
+                                <li class="active"><i class="fa fa-th"></i></li>
+                                <li><a href="#"><i class="fa fa-th-list"></i></a></li>
+                            </ul>
+                        </div>
+                        <!-- /store top filter -->
+
+                        <!-- store products -->
                         <div class="row">
-                            <div class="products-tabs">
-                                <!-- tab -->
-                                <div id="tab2" class="tab-pane fade in active">
-                                    <div class="products-slick" data-nav="#slick-nav-2">
-                                        <c:forEach items="${requestScope.listTop}" var="listtop">
-                                            <!-- product -->
-                                            <div class="product">
-                                                <div class="product-img">
-                                                    <img src="${listtop.images}" alt="">
-                                                    <div class="product-label">
-                                                        <span class="new">HOT</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-body">
-                                                    <p class="product-category">${listtop.cs.name}</p>
-                                                    <h3 class="product-name"><a href="ViewMentor?id=${listtop.id}">Course ${listtop.skill}</a></h3>
-                                                    <div class="product-btns">
-                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                        <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                    </div>
-                                                </div>
-                                                <div class="add-to-cart">
-                                                    <button class="add-to-cart-btn"><i class="fa fa-book"></i> BOOk Course</button>
-                                                </div>
-                                            </div>
-                                            <!-- /product -->
-
-                                            <!-- product -->
-                                        </c:forEach>
-                                    </div>
-                                    <div id="slick-nav-2" class="products-slick-nav"></div>
+                            <!-- product -->
+                            <div style="font-family: arial;font-size: 20px">
+                                <p><h1>Giới thiệu về ReactJS</h1>
+                                <div class="skd">
+                                    ReactJS là một thư viện JavaScript phát triển bởi Facebook, được sử dụng rộng rãi để xây dựng giao diện người dùng động và tương tác trong các ứng dụng web. Đây là một công cụ mạnh mẽ cho việc phát triển ứng dụng web động với hiệu suất cao và dễ bảo trì. Bài viết này sẽ giới thiệu bạn vào thế giới của ReactJS, từ các khái niệm cơ bản đến lợi ích và ứng dụng thực tế.
                                 </div>
-                                <!-- /tab -->
+                                    
+
+                                    <h3>Lợi ích của việc sử dụng ReactJS</h3>
+                                    <h4>Hiệu suất cao</h4>
+                                    <div class="skd">
+                                            ReactJS sử dụng một cơ chế gọi là "Virtual DOM" để cải thiện hiệu suất. Thay vì cập nhật toàn bộ giao diện người dùng mỗi khi có thay đổi, React sẽ cập nhật chỉ những phần tử có thay đổi. Điều này giúp giảm tải cho trình duyệt và tăng tốc độ của ứng dụng.
+                                    </div>
+                                    <h4>Thư viện phong phú</h4>
+                                   <div class="skd">
+                                    ReactJS đi kèm với một cộng đồng lớn và nhiều thư viện mở rộng hỗ trợ. Bạn có thể dễ dàng tích hợp React với các thư viện và công cụ khác để phát triển các tính năng phức tạp.
+                                   </div>
+                                    <h4>Quản lý trạng thái tốt</h4>
+                                    <div class="skd">
+                                    React sử dụng mô hình quản lý trạng thái (state) rất tốt. Trạng thái của ứng dụng được quản lý một cách có hệ thống, dễ dàng theo dõi và bảo trì.
+                                    </div>
+                                   
                             </div>
+                                    </div>>
+
+
+
+
                         </div>
+                        <!-- /store products -->
+
+                        <!-- store bottom filter -->
+                        <div class="store-filter clearfix">
+                            <span class="store-qty">Showing 20-100 products</span>
+                            <ul class="store-pagination">
+                                <li class="active">1</li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                            </ul>
+                        </div>
+                        <!-- /store bottom filter -->
                     </div>
-                    <!-- /Products tab & slick -->
+                    <!-- /STORE -->
                 </div>
                 <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
-
-        <!-- SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
             </div>
             <!-- /container -->
         </div>
@@ -602,3 +526,4 @@
 
     </body>
 </html>
+

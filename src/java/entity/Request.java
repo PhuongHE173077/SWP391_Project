@@ -15,18 +15,17 @@ public class Request {
     private Mentor mentor;
     private Mentee mentee;
     private String subject;
-    private String deadlinehour;
-    private String deadlineday;
+    private int deadlinehour;
+    private int deadlineday;
     private String content;
-    private TimeSlot time;
-    private int day_number;
     private String status;
-    private List<Skill> SkillRequest;
+    private Skill skill;
+    private String dateRq;
 
     public Request() {
     }
 
-    public Request(int id, Mentor mentor, Mentee mentee, String subject, String deadlinehour, String deadlineday, String content, TimeSlot time, int day_number, String status, List<Skill> SkillRequest) {
+    public Request(int id, Mentor mentor, Mentee mentee, String subject, int deadlinehour, int deadlineday, String content, String status, Skill skill, String dateRq) {
         this.id = id;
         this.mentor = mentor;
         this.mentee = mentee;
@@ -34,10 +33,9 @@ public class Request {
         this.deadlinehour = deadlinehour;
         this.deadlineday = deadlineday;
         this.content = content;
-        this.time = time;
-        this.day_number = day_number;
         this.status = status;
-        this.SkillRequest = SkillRequest;
+        this.skill = skill;
+        this.dateRq = dateRq;
     }
 
     public int getId() {
@@ -72,19 +70,19 @@ public class Request {
         this.subject = subject;
     }
 
-    public String getDeadlinehour() {
+    public int getDeadlinehour() {
         return deadlinehour;
     }
 
-    public void setDeadlinehour(String deadlinehour) {
+    public void setDeadlinehour(int deadlinehour) {
         this.deadlinehour = deadlinehour;
     }
 
-    public String getDeadlineday() {
+    public int getDeadlineday() {
         return deadlineday;
     }
 
-    public void setDeadlineday(String deadlineday) {
+    public void setDeadlineday(int deadlineday) {
         this.deadlineday = deadlineday;
     }
 
@@ -96,22 +94,6 @@ public class Request {
         this.content = content;
     }
 
-    public TimeSlot getTime() {
-        return time;
-    }
-
-    public void setTime(TimeSlot time) {
-        this.time = time;
-    }
-
-    public int getDay_number() {
-        return day_number;
-    }
-
-    public void setDay_number(int day_number) {
-        this.day_number = day_number;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -120,14 +102,29 @@ public class Request {
         this.status = status;
     }
 
-    public List<Skill> getSkillRequest() {
-        return SkillRequest;
+    public Skill getSkill() {
+        return skill;
     }
 
-    public void setSkillRequest(List<Skill> SkillRequest) {
-        this.SkillRequest = SkillRequest;
+    public void setSkill(Skill skill) {
+        this.skill = skill;
     }
 
+    public String getDateRq() {
+        return dateRq;
+    }
+
+    public void setDateRq(String dateRq) {
+        this.dateRq = dateRq;
+    }
+    
+    public int total(){
+        return deadlinehour*deadlineday;
+    }
+    
+    
+
+    
     
     
 }

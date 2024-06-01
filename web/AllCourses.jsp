@@ -258,10 +258,10 @@
         </nav>
         <!-- /NAVIGATION -->
         <!-- BREADCRUMB -->
-        <div id="breadcrumb" class="section">
-            <!-- container -->
+<!--        <div id="breadcrumb" class="section">
+             container 
             <div class="container">
-                <!-- row -->
+                 row 
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="breadcrumb-tree">
@@ -272,11 +272,11 @@
                         </ul>
                     </div>
                 </div>
-                <!-- /row -->
+                 /row 
             </div>
-            <!-- /container -->
+             /container 
         </div>
-        <!-- /BREADCRUMB -->
+         /BREADCRUMB -->
 
         <!-- SECTION -->
         <div class="section">

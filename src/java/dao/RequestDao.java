@@ -10,10 +10,11 @@ import entity.Mentee;
 import entity.Mentor;
 import entity.Request;
 import entity.Skill;
-import entity.TimeSlot;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -35,10 +36,9 @@ public class RequestDao extends DBContext {
             SkillDetailDao sdd = new SkillDetailDao();
             MentorDao mentor = new MentorDao();
             MenteeDao mentee = new MenteeDao();
-            TimeSlotDao time = new TimeSlotDao();
             while (rs.next()) {
-                List<Skill> skillList = sdd.getListkillByRid(rs.getInt(1));
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getString(6),rs.getString(7), time.searchTimeSlot(8), rs.getInt(9), rs.getString(10), skillList);
+                Skill skill = sk.searchSkill(rs.getInt(8));
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getInt(6), rs.getInt(5), rs.getString(7), rs.getString(9), skill, rs.getString(10));
                 list.add(rq);
             }
 
@@ -48,14 +48,14 @@ public class RequestDao extends DBContext {
 
         return list;
     }
-    
-     public int getCountRequest(int id) {
+
+    public int getCountRequest(int id) {
         String query = "select count(*) from request where mentee_id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            
+
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -74,14 +74,13 @@ public class RequestDao extends DBContext {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            SkillDetailDao sdd = new SkillDetailDao();
             SkillDao sk = new SkillDao();
+            SkillDetailDao sdd = new SkillDetailDao();
             MentorDao mentor = new MentorDao();
             MenteeDao mentee = new MenteeDao();
-            TimeSlotDao time = new TimeSlotDao();
             while (rs.next()) {
-                List<Skill> skillList = sdd.getListkillByRid(rs.getInt(1));
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(6), rs.getString(5),rs.getString(7), time.searchTimeSlot(8), rs.getInt(9), rs.getString(10), skillList);
+                Skill skill = sk.searchSkill(rs.getInt(8));
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getInt(6), rs.getInt(5), rs.getString(7), rs.getString(9), skill, rs.getString(10));
                 list.add(rq);
             }
 
@@ -92,59 +91,46 @@ public class RequestDao extends DBContext {
         return list;
     }
 
-    public void addRequest(Mentee mentee, int mentor_id,String subject,String dday,String dtime,String content, int dayNumber,List<Skill> list, int timeId) {
+    public void addRequest(Request r) {
         String sql = "INSERT INTO [dbo].[request]\n"
                 + "           ([subject]\n"
                 + "           ,[mentee_id]\n"
                 + "           ,[mentor_id]\n"
-                + "           ,[deadlineDay]\n"
-                + "           ,[deadlineHours]\n"
+                + "           ,[DeadlineDay]\n"
+                + "           ,[DeadlineHours]\n"
                 + "           ,[content]\n"
-                + "           ,[time_slot_id]\n"
-                + "           ,[day_number]\n"
-                + "           ,[status])\n"
+                + "           ,[skillId]\n"
+                + "           ,[status]"
+                + ",[dateRequest])\n"
                 + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?)";
+                + "           (?,?,? ,? ,?,?,?,?,?)";
         try {
-           PreparedStatement st = connection.prepareStatement(sql);
-           st.setString(1, subject);
-           st.setInt(2, mentee.getId());
-           st.setInt(3, mentor_id);
-           st.setString(4, dday);
-           st.setString(5, dtime);
-           st.setString(6, content);
-           st.setInt(7, timeId);
-           st.setInt(8, dayNumber);
-           st.setString(9, "Processing");
-           st.executeUpdate();
-           String sql2 = "select top 1 * from  request order by id desc";
-           PreparedStatement st2 = connection.prepareStatement(sql2);
-           ResultSet rs = st2.executeQuery();
-           SkillDetailDao sdd = new SkillDetailDao();
-            if (rs.next()) {
-                int id = rs.getInt(1);
-                for (Skill skill : list) {
-                    sdd.addRequestkill(id, skill);
-                }
-            }
-        } catch (Exception e) {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, r.getSubject());
+            st.setInt(2, r.getMentee().getId());
+            st.setInt(3, r.getMentor().getId());
+            st.setInt(4, r.getDeadlineday());
+            st.setInt(5, r.getDeadlinehour());
+            st.setString(6, r.getContent());
+            st.setInt(7, r.getSkill().getId());
+            st.setString(8, r.getStatus());
+            st.setString(9, r.getDateRq());
+            st.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(RequestDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     public static void main(String[] args) {
-        RequestDao requestDao =new RequestDao();
-        List<Request> list = requestDao.getAllRequestOfMentee(1);
-        for (Request request : list) {
-            System.out.println(request.getMentor().getName());
-        }
+        MentorDao mentorDao = new MentorDao();
+        SkillDao sd = new SkillDao();
+        MenteeDao md = new MenteeDao();
+        RequestDao rqDao = new RequestDao();
+        LocalDate dateRq = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String dateString = dateRq.format(formatter);
+        Request r = new Request(0, mentorDao.getMentorByID(2), md.getMenteeById(1), "abc", 10, 2, "abc", "Processing", sd.searchSkill(1), dateString);
+        rqDao.addRequest(r);
     }
 }

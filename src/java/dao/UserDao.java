@@ -10,6 +10,7 @@ import entity.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -82,18 +83,10 @@ public class UserDao extends DBContext {
 
     public static void main(String[] args) {
         UserDao ud = new UserDao();
-//        List<User> list = ud.getUser();
-//        for (User user : list) {
-//            System.out.println(user.getRole_id());
-//        }
-        List<User> list = ud.getUser();
-        for (User user : list) {
-            System.out.println(user.getRole_id());
-        }
-        User user = new User(5, "phuong", "phuongddhe173077@fpt.edu.vn", "123456", "20/2/2003", "0123505412", "null", 1, 0, "bg", 0);
-        System.out.println(ud.addUser(user));
+        LocalDate dateRq = LocalDate.now();
+        System.out.println(dateRq);
     }
-    
+
     public User checkLogin(String email, String pass) {
         String sql = "select * from [User] where [email] = ? and [password] = ?;";
         try {
@@ -103,7 +96,7 @@ public class UserDao extends DBContext {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10), rs.getInt(11));
-                        
+
                 return user;
             }
         } catch (SQLException e) {
@@ -111,7 +104,7 @@ public class UserDao extends DBContext {
         }
         return null;
     }
-    
+
     public boolean changePassword(String email, String pass) {
         boolean check = false;
         String sql = "update [User] SET [password] = ? WHERE [email] = ?;";
@@ -126,7 +119,7 @@ public class UserDao extends DBContext {
         }
         return check;
     }
-    
+
     public User checkEmail(String email) {
         String sql = "SELECT * from [User] WHERE [email] = ?;";
         try {
@@ -134,7 +127,7 @@ public class UserDao extends DBContext {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                 User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10), rs.getInt(11));
+                User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10), rs.getInt(11));
                 return user;
             }
         } catch (SQLException e) {
@@ -142,7 +135,7 @@ public class UserDao extends DBContext {
         }
         return null;
     }
-    
+
     public User getUserByEmail(String email) {
         String sql = "select * from [User] where [email] = ?;";
         try {
@@ -150,7 +143,7 @@ public class UserDao extends DBContext {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                 User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10), rs.getInt(11));
+                User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10), rs.getInt(11));
                 return user;
             }
         } catch (SQLException e) {

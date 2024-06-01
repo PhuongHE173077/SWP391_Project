@@ -18,9 +18,7 @@ public class UserGoogle {
 
 	private String given_name;
         
-	private String family_name;
-        
-        private String dob;
+	private String family_name;      
         
         private String phone;
         
@@ -28,7 +26,6 @@ public class UserGoogle {
                 
 	private String picture;
         
-        private int role_id;
 
 	public UserGoogle() {
 	}
@@ -38,11 +35,9 @@ public class UserGoogle {
         this.email = email;
         this.given_name = given_name;
         this.family_name = family_name;
-        this.dob = dob;
         this.phone = phone;
         this.address = address;
         this.picture = picture;
-        this.role_id = role_id;
     }
 
     public String getId() {
@@ -76,15 +71,6 @@ public class UserGoogle {
     public void setFamily_name(String family_name) {
         this.family_name = family_name;
     }
-
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -109,25 +95,6 @@ public class UserGoogle {
         this.picture = picture;
     }
 
-    public int getRole_id() {
-        return role_id;
-    }
-
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
-    }
-
-    @Override
-    public String toString() {
-        return "UserGoogle{" + "id=" + id + ", email=" + email + ", given_name=" + given_name + ", family_name=" + family_name + ", dob=" + dob + ", phone=" + phone + ", address=" + address + ", picture=" + picture + ", role_id=" + role_id + '}';
-    }
-        
-        
-        
-
-    
-
-    
 	
     
 

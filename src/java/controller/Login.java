@@ -5,7 +5,9 @@
 package controller;
 
 import dao.MenteeDao;
+import dao.UserDao;
 import entity.Mentee;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -78,8 +80,10 @@ public class Login extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String Rmb = request.getParameter("rem");
+        UserDao ud = new UserDao();
         MenteeDao md = new MenteeDao();
-        Mentee m = md.getMentee(email, password);
+        PrintWriter out = response.getWriter();
+        User m = ud.checkLogin(email, password);
         if (m == null) {
             String erro = "Email and passworld is not correct";
             request.setAttribute("erro", erro);
@@ -99,11 +103,26 @@ public class Login extends HttpServlet {
                 pas.setMaxAge(0);
                 re.setMaxAge(0);
             }
+            response.addCookie(em);
+            response.addCookie(pas);
             response.addCookie(re);
-            response.addCookie(pas);    
-            response.addCookie(re);
-            session.setAttribute("mentee", m);
-            response.sendRedirect("home");
+            switch (m.getRole_id()) {
+                case 0: // Mentee
+                    Mentee mentee = md.getMenteeById(m.getId());
+                    session.setAttribute("mentee", mentee);
+                    response.sendRedirect("home");
+                    break;
+                case 1: // Mentor
+                    out.print("Mentor");
+                    break;
+                case 2: // Admin
+                    out.print("Admin");
+                    break;
+                default: // Manager or other roles
+                    out.print("Manager");
+                    break;
+            }
+
         }
     }
 

@@ -1,5 +1,5 @@
-﻿
-
+﻿drop database SWP391_project
+create database SWP391_project
 
 create table roles(
 	id int primary key,
@@ -58,28 +58,18 @@ create table skill_detail(
 	mentor_id int references mentor(mentor_id),
 	primary key (skill_id,mentor_id)
 )
-create table time_slot(
-	id int primary key,
-	time_slot nvarchar(max)
-)
 create table request(
 	id int IDENTITY (1,1) PRIMARY KEY,
 	[subject] nvarchar(max),
 	mentee_id int references [User](user_id),
 	mentor_id int references mentor(mentor_id),
-	DeadlineTime nvarchar(max),
-	DeadTime nvarchar(max),
+	DeadlineDay int,
+	DeadlineHours int,
 	content nvarchar(max),
-	time_slot_id int references time_slot(id),
-	day_number int ,
+	skillId int references skill(id),
 	[status] nvarchar(max)
 	
 )
-create table requestSkill(
-	rid int references request(id),
-	skid int references skill(id)
-)
-
 create table feedback(
 	id int IDENTITY (1,1) PRIMARY KEY,
 	mentee_id int references [User](user_id),
@@ -315,109 +305,4 @@ INSERT INTO [dbo].[Cv_Mentor]
      VALUES
            (2,1),(6,1),(9,1),(4,2),(5,2),(1,2),(3,3),(7,3),(8,4),(10,4),(11,4)
 
-	select * from skill
-UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Get acquainted with Angular</br>  2. Introduction to Angular</br>  3. Learn about RxJS</br>  4. Angular Router</br>  5. Angular Forms</br>  6. Expand more about Angular'
-      
- WHERE id =1
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Introduce and install Docker</br>  2. Knowledge of docker</br>  3. Practice with Docker'
-      
- WHERE id =2
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Introducing react native</br>  2. React Native Basics</br>  3. Core Components in React Native</br>  4. Android Components and APIs</br>  5. iOS Components and APIs</br>  6. Other themes in React Native'
-      
- WHERE id =3
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Introducing Go Lang</br>  2. Basic Go Lang</br>  3. Control statements in Go Lang</br>  4. Maps, Arrays and Slices in Go Lang</br>  5. How to organize source code in Go Lang</br>  6. Other topics in Go Lang'
-      
- WHERE id =4
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Overview of Spring</br>  2. Basic concepts about Spring</br>  3. Basic Spring Boot</br>  4. Thymeleaf</br>  5. Spring JPA and Hibernate</br>  6. Testing</br>  7. RESTful API Document</br>  8. Spring security'
-      
- WHERE id =5
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Overview of the C++ course</br>  2. Get familiar with C++ language</br>  3. Structures in C++'
-      
- WHERE id =6
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Introduction</br>  2. Installation</br>  3. Interface in Reactjs</br>  4. Interaction in Reactjs</br>  5. State management in React</br>  6. Advanced React'
-      
- WHERE id =7
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Introduction</br>  2. Introduction C</br>  3. Conditional sentences</br>  4. Loop</br>  5. Jaw</br>  6. Array</br>  7. Pointer</br>  8. Strings'
-      
- WHERE id =8
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Introducing Javascript</br>  2. Basic Javascript</br>  3. Objects in Javascript</br>  4. Data types in Javascript</br>  5. Advanced knowledge of functions</br>  6. Configure object properties</br>  7. Prototype and prototype inheritance</br>  8. ES6 Class</br>  9. Callback, Promise, async/awai</br>  10. ES6 Modules</br>  11. Test and ensure code quality</br>  12. Regular expressions</br>  13. DOM  14. Network requests</br>  15. Data storage</br>  16. Javascript workers</br>  17. Design patterns in Javascript</br>  18. Algorithm with Javascript'
-      
- WHERE id =9
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Introducing Java</br>  2. Introduction to Java</br>  3. Object-oriented programming</br>  4. Java collections</br>  5. Exception handling</br>  6. Multi-threaded programming</br>  7. Design Patterns'
-      
- WHERE id =10
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Introducing AWS</br>  2. Elastic Compute Cloud</br>  3. High Availability</br>  4. Virtual Private Cloud</br>  5. Databases</br>  6. Simple Storage Service</br>  7. Route 53</br>  8. Cloudfront, Accelerator</br>  9. Expand storage</br>  10. Decoupling in AWS</br>  11. Serverless</br>  12. Monitoring & Auditing</br>  13. Security & Encryption'
-      
- WHERE id =11
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Knowledge About Blockchain</br>  2. Smart Contracts</br>  3. Install Solidity Compiler</br>  4. Solidity Programming</br>  5. Contract Metadata</br>  6. Contract ABI Specification</br>  7. Ethereum Request For Comment (ERC)</br>  8. Build & Operate ICO yourself</br>  9. FrontEnd Programming</br>  10. Deploy ICO'
-      
- WHERE id =12
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Introducing Ruby</br>  2. Basic ruby ??knowledge</br>  3. Data types in Ruby</br>  4. Advanced ruby ??knowledge'
-      
- WHERE id =13
-
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Introducing Python</br>  2. Basic Python</br>  3. Control statements in Python</br>  4. Functions & Modules in Python</br>  5. Strings in Python</br>  6. Lists in Python</br>  7. Tuples in Python</br>  8. Sets in Python</br>  9. Dictionaries in Python</br>  10. Arrays in Python</br>  11. File processing in Python</br>  12. Object-oriented programming in Python</br>  13. Handling Exceptions in Python</br>  14. Multithreading in Python</br>  15. Synchronization in Python</br>  16. Networking in Python</br>  17. Libraries in Python'
-      
- WHERE id =14
-
- UPDATE [dbo].[skill]
-   SET 
-      
-      [descpition] = '1. Introduction to C#</br>  2. Basic concepts</br>  3. Conditions and loops</br>  4. Functions and methods</br>  5. Object-oriented programming (OOP)</br>  6. Error and exception handling</br>  7. Work with data'
-      
- WHERE id =15
+	

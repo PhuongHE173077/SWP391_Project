@@ -7,11 +7,10 @@ package controller;
 import dao.MentorDao;
 import dao.RequestDao;
 import dao.SkillDao;
-import dao.TimeSlotDao;
 import entity.Mentee;
 import entity.Mentor;
+import entity.Request;
 import entity.Skill;
-import entity.TimeSlot;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,7 +19,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,13 +70,13 @@ public class request extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("mid"));
+        int mid = Integer.parseInt(request.getParameter("mid"));
+        int id = Integer.parseInt(request.getParameter("id"));
         MentorDao md = new MentorDao();
-        Mentor mentor = md.getMentorByID(id);
-        TimeSlotDao tm = new TimeSlotDao();
-        List<TimeSlot> list = tm.getAllTimeSlot();
-        request.setAttribute("listTime", list);
-
+        Mentor mentor = md.getMentorByID(mid);
+        SkillDao sd = new SkillDao();
+        Skill skill = sd.searchSkill(id);
+        request.setAttribute("skill", skill);
         request.setAttribute("mentor", mentor);
         request.getRequestDispatcher("request.jsp").forward(request, response);
     }
@@ -92,44 +94,23 @@ public class request extends HttpServlet {
             throws ServletException, IOException {
         int mentor_id = Integer.parseInt(request.getParameter("id"));
         String subject = request.getParameter("subject");
-        String deadlineTime = request.getParameter("deadlineTime");
-        String deadLineDay = request.getParameter("deadlineDate");
+        int deadlineTime = Integer.parseInt(request.getParameter("deadlineTime"));
+        int deadLineDay = Integer.parseInt(request.getParameter("deadlineDate"));
         String content = request.getParameter("content");
-        int time_slot = Integer.parseInt(request.getParameter("time"));
-        int dayNumber = Integer.parseInt(request.getParameter("dayNumber"));
-        String skill[] = request.getParameterValues("skill");
+        int skill = Integer.parseInt(request.getParameter("skill"));
         HttpSession session = request.getSession();
         Mentee mentee = (Mentee) session.getAttribute("mentee");
         if (mentee == null) {
             response.sendRedirect("login");
-        } else if (skill.length < 1 || skill.length > 3) {
-            String erro = "You must be choice least 1 course !";
-            request.setAttribute("erro", erro);
-            MentorDao md = new MentorDao();
-            Mentor mentor = md.getMentorByID(mentor_id);
-            TimeSlotDao tm = new TimeSlotDao();
-            List<TimeSlot> list = tm.getAllTimeSlot();
-            request.setAttribute("listTime", list);
-            request.setAttribute("mentor", mentor);
-            request.getRequestDispatcher("request.jsp").forward(request, response);
-        }else{
-            int[] skillArray = new int[skill.length];
-            SkillDao sk = new SkillDao();
-            List<Skill> list = new ArrayList<>();
-            // Chuyển đổi các giá trị từ chuỗi sang số nguyên
-            for (int i = 0; i < skillArray.length; i++) {
-                try {
-                    int id = Integer.parseInt(skill[i]);
-                    Skill s = sk.searchSkill(id);
-                    list.add(s);
-                } catch (NumberFormatException e) {
-                    // Xử lý lỗi chuyển đổi (nếu có)
-                    e.printStackTrace();
-                }
-            }
+        } else{
+            MentorDao mentorDao = new MentorDao();
+            SkillDao sd = new SkillDao();
             RequestDao rqDao = new RequestDao();
-            
-            rqDao.addRequest(mentee, mentor_id, subject, deadLineDay, deadlineTime,content , dayNumber, list, time_slot);
+            LocalDate dateRq = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+             String dateString = dateRq.format(formatter);
+            Request r = new Request(0, mentorDao.getMentorByID(mentor_id), mentee, subject, deadlineTime, deadLineDay, content, "Processing", sd.searchSkill(skill), dateString);
+            rqDao.addRequest(r);
             response.sendRedirect("home");
         }
     }

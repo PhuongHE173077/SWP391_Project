@@ -100,7 +100,7 @@ public class ViewRequest extends HttpServlet {
     public int getTotalHoure(List<Request>list){
         int total = 0;
         for (Request request : list) {
-            total += request.getDay_number()*2;
+            total += request.total();
         }
         return total;
     }

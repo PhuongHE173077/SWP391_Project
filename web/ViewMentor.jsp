@@ -118,9 +118,7 @@
                                 </form>
                                 <li><a href="#"><i class="fa fa-dollar"></i> USD: ${c.balance} $</a></li>
                                 </c:otherwise>
-
                         </c:choose>
-
                     </ul>
 
                 </div>
@@ -376,7 +374,7 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-send"></i><a href="request?mid=${lm.id}">create request</a></button>
+                                            <button class="add-to-cart-btn"><i class="fa fa-send"></i><a href="request?mid=${lm.id}&id=${id}">create request</a></button>
                                         </div>
                                     </div>
                                 </div>

@@ -68,7 +68,7 @@
                                                         <i class="mdi mdi-account-outline text-primary"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" name="email" value="${cookie.em}" class="form-control form-control-lg border-left-0" id="exampleInputEmail" placeholder="Email">
+                                                <input type="text" name="email" value="${cookie.email.value}" class="form-control form-control-lg border-left-0" id="exampleInputEmail" placeholder="Email">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -79,7 +79,7 @@
                                                         <i class="mdi mdi-lock-outline text-primary"></i>
                                                     </span>
                                                 </div>
-                                                <input type="password" value="${cookie.pas}" name="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">                        
+                                                <input type="password" value="${cookie.cpass.value}" name="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">                        
                                             </div>
                                         </div>
                                         <div class="my-2 d-flex justify-content-between align-items-center">
@@ -98,7 +98,7 @@
                                             or sign in with
                                         </div>
                                         <a style="text-decoration: none" href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/SWP391_Project/loginServlet&response_type=code
-                                           &client_id=your code&approval_prompt=force">
+                                           &client_id=&approval_prompt=force">
                                                 <div class="mb-2 d-flex">
                                                     <button type="button" class="btn btn-google auth-form-btn flex-grow ms-1">
                                                         <i class="mdi mdi-google me-2"></i>Login with google

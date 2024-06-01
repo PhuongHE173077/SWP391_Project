@@ -7,6 +7,10 @@ package controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import dao.MenteeDao;
+import dao.UserDao;
+import entity.Mentee;
+import entity.User;
 import entity.UserGoogle;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +19,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Form;
@@ -41,8 +46,34 @@ public class LoginServlet extends HttpServlet {
         String code = request.getParameter("code");
         String accessToken = getToken(code);
         UserGoogle user = getUserInfo(accessToken);
+        MenteeDao md = new MenteeDao();
         PrintWriter out = response.getWriter();
-        out.print(user.toString());
+        UserDao ud = new UserDao();
+        User m = ud.getUserByEmail(user.getEmail());
+        if (m == null) {
+            String erro = "Not find user";
+            request.setAttribute("erro", erro);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else {
+            HttpSession session = request.getSession();
+            switch (m.getRole_id()) {
+                case 0: // Mentee
+                    Mentee mentee = md.getMenteeById(m.getId());
+                    session.setAttribute("mentee", mentee);
+                    response.sendRedirect("home");
+                    break;
+                case 1: // Mentor
+                    out.print("Mentor");
+                    break;
+                case 2: // Admin
+                    out.print("Admin");
+                    break;
+                default: // Manager or other roles
+                    out.print("Manager");
+                    break;
+            }
+            
+        }
 
     }
 

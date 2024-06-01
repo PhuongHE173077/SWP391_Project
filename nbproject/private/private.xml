@@ -9,20 +9,11 @@
             <file>file:/E:/SWP391_project/SWP391_Project/web/Profile.jsp</file>
         </group>
         <group name="SWP391">
+            <file>file:/D:/Ilter1/SWP391_Project/src/java/dao/RequestDao.java</file>
             <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/ViewRequest.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/web/registerMentee.jsp</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/Register.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/ViewMentor.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/utils/Constants.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/Login.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/web/registerRoles.jsp</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/Search.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/LoginServlet.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/Logout.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/Roles_Register.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/web/registerMentor.jsp</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/changePasswordController.java</file>
+            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/request.java</file>
             <file>file:/D:/Ilter1/SWP391_Project/web/request.jsp</file>
+            <file>file:/D:/Ilter1/SWP391_Project/src/java/entity/Skill.java</file>
         </group>
     </open-files>
 </project-private>

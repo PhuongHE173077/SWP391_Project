@@ -10,9 +10,9 @@ package utils;
  * @author TUF F15
  */
 public class Constants {
-    public static String GOOGLE_CLIENT_ID = "your code";
+    public static String GOOGLE_CLIENT_ID = "";
 
-	public static String GOOGLE_CLIENT_SECRET = "your code";
+	public static String GOOGLE_CLIENT_SECRET = "";
 
 	public static String GOOGLE_REDIRECT_URI = "http://localhost:8080/SWP391_Project/loginServlet";
 

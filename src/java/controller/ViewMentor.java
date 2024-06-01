@@ -69,6 +69,7 @@ public class ViewMentor extends HttpServlet {
         Skill skill = sd.searchSkill(id);
         CategorySkillDao csd = new CategorySkillDao();
         List<CategorySkill> listCs = csd.getAllCategorySkill();
+        request.setAttribute("id", id);
         request.setAttribute("listCs", listCs);
         request.setAttribute("listM", listM);
         request.setAttribute("skill", skill);
