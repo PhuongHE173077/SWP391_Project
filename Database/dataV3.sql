@@ -19,7 +19,7 @@ create table [User](
 	rid int references roles(id)
 )
 create table skill(
-	id int primary key,
+	id int IDENTITY (1,1) primary key,
 	skill nvarchar(50),
 	images nvarchar(max)
 	
@@ -29,7 +29,7 @@ create table mentor(
 	userId int references [User](user_id)
 )
 create table Cv_Mentor(
-	cv_id int primary key,
+	cv_id int IDENTITY (1,1) primary key,
 	metor_id int references mentor(mentor_id),
 	full_name nvarchar(max),
 	email nvarchar(max),
@@ -49,7 +49,7 @@ create table skill_detail(
 	primary key (skill_id,mentor_id)
 )
 create table course(
-	id int primary key,
+	id int IDENTITY (1,1) primary key,
 	courseName nvarchar(max),
 	description nvarchar(max),
 	price money,
@@ -87,18 +87,18 @@ create table feedback(
 
 )
 create table payment(
-	id int primary key,
+	id int IDENTITY (1,1) primary key,
 	request_id int references request(id),
 	amount money,
 	date_payment nvarchar (max),
 	status nvarchar(max)
 	)
 	create table class(
-		id int primary key,
+		id int IDENTITY (1,1)primary key,
 		request_id int references request(id),
 		schedul_id int references schedul(id),
 		status nvarchar(max)
-
+		 
 	)
 	alter table schedul 
 	add created int references mentor(mentor_id)

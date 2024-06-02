@@ -19,13 +19,13 @@ public class Request {
     private int deadlineday;
     private String content;
     private String status;
-    private Skill skill;
+    private Course course;
     private String dateRq;
 
     public Request() {
     }
 
-    public Request(int id, Mentor mentor, Mentee mentee, String subject, int deadlinehour, int deadlineday, String content, String status, Skill skill, String dateRq) {
+    public Request(int id, Mentor mentor, Mentee mentee, String subject, int deadlinehour, int deadlineday, String content, String status, Course course, String dateRq) {
         this.id = id;
         this.mentor = mentor;
         this.mentee = mentee;
@@ -34,7 +34,7 @@ public class Request {
         this.deadlineday = deadlineday;
         this.content = content;
         this.status = status;
-        this.skill = skill;
+        this.course = course;
         this.dateRq = dateRq;
     }
 
@@ -102,12 +102,12 @@ public class Request {
         this.status = status;
     }
 
-    public Skill getSkill() {
-        return skill;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setSkill(Skill skill) {
-        this.skill = skill;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public String getDateRq() {
@@ -117,10 +117,7 @@ public class Request {
     public void setDateRq(String dateRq) {
         this.dateRq = dateRq;
     }
-    
-    public int total(){
-        return deadlinehour*deadlineday;
-    }
+
     
     
 

@@ -11,17 +11,15 @@ package entity;
 public class Skill {
     private int id;
     private String skill;
-    private String descpition;
     private String images;
     private CategorySkill cs;
 
     public Skill() {
     }
 
-    public Skill(int id, String skill, String descpition, String images, CategorySkill cs) {
+    public Skill(int id, String skill, String images, CategorySkill cs) {
         this.id = id;
         this.skill = skill;
-        this.descpition = descpition;
         this.images = images;
         this.cs = cs;
     }
@@ -42,14 +40,6 @@ public class Skill {
         this.skill = skill;
     }
 
-    public String getDescpition() {
-        return descpition;
-    }
-
-    public void setDescpition(String descpition) {
-        this.descpition = descpition;
-    }
-
     public String getImages() {
         return images;
     }
@@ -66,10 +56,6 @@ public class Skill {
         this.cs = cs;
     }
 
-    @Override
-    public String toString() {
-        return "Skill{" + "id=" + id + ", skill=" + skill + ", descpition=" + descpition + ", images=" + images + ", cs=" + cs + '}';
-    }
-    
+        
     
 }

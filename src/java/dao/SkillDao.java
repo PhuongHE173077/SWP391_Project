@@ -26,7 +26,7 @@ public class SkillDao extends DBContext{
             CategorySkillDao cs = new CategorySkillDao();
 
             while (rs.next()) {
-                list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), cs.searchCategorySkill(rs.getInt(5))));
+                list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3), cs.searchCategorySkill(rs.getInt(4))));
             }
         } catch (SQLException e) {
         }
@@ -42,7 +42,7 @@ public class SkillDao extends DBContext{
             CategorySkillDao cs = new CategorySkillDao();
 
             while (rs.next()) {
-                list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), cs.searchCategorySkill(rs.getInt(5))));
+                list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3), cs.searchCategorySkill(rs.getInt(4))));
             }
         } catch (SQLException e) {
         }
@@ -59,7 +59,7 @@ public class SkillDao extends DBContext{
             CategorySkillDao cs = new CategorySkillDao();
 
             while (rs.next()) {
-                list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), cs.searchCategorySkill(rs.getInt(5))));
+                list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3), cs.searchCategorySkill(rs.getInt(4))));
             }
         } catch (SQLException e) {
         }
@@ -75,7 +75,7 @@ public class SkillDao extends DBContext{
             CategorySkillDao cs = new CategorySkillDao();
 
             if (rs.next()) {
-                Skill abc  = new Skill(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), cs.searchCategorySkill(rs.getInt(5)));
+                Skill abc  = new Skill(rs.getInt(1), rs.getString(2), rs.getString(3), cs.searchCategorySkill(rs.getInt(4)));
                 return abc;
             }
         } catch (SQLException e) {
@@ -100,7 +100,7 @@ public class SkillDao extends DBContext{
         } catch (SQLException e) {
         }
         return list;
-    }
+    }  
     
     
     public static void main(String[] args) {
