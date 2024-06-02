@@ -104,3 +104,9 @@ create table payment(
 	add created int references mentor(mentor_id)
 	alter table course
 	add skill_id int references skill(id)
+	create table categorySkill(
+		id int primary key,
+		categoryName nvarchar(max)
+	)
+	alter table skill
+	add cid int references categorySkill(id)
