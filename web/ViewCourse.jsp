@@ -102,7 +102,7 @@
                         <c:set value="${sessionScope.mentee}" var="c"/>
                         <c:choose>
                             <c:when test="${empty c}">
-                                <li><a href="login.jsp" style="font-size: 16px;"><i class="fa fa-user-o"> Login </i></a></li>
+                                <li><a href="login" style="font-size: 16px;"><i class="fa fa-user-o"> Login</i></a></li>
                                 <li><i style="font-size: 16px;" class="fa "> / </i></li>
                                 <li><a href="login.jsp" style="font-size: 16px;"><i class="fa "> Sing up </i></a></li>
                                 </c:when>
@@ -118,7 +118,9 @@
                                 </form>
                                 <li><a href="#"><i class="fa fa-dollar"></i> USD: ${c.balance} $</a></li>
                                 </c:otherwise>
+
                         </c:choose>
+
                     </ul>
 
                 </div>
@@ -173,43 +175,41 @@
                                 <!-- Cart -->
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <span>Your Cart</span>
-                                        <div class="qty">3</div>
+                                        <i class="fa fa-vcard"></i>
+                                        <span>Your Request</span>
+                                        <div class="qty">${cnt}</div>
                                     </a>
-                                    <div class="cart-dropdown">
-                                        <div class="cart-list">
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product01.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
+                                    <c:if test="${cnt > 0}">
+                                        <div class="cart-dropdown">
+                                            <div class="cart-list">
+                                                <div class="product-widget">
+                                                    <c:forEach items="${requestScope.reList}" var="re">
+                                                        <div class="product-img">
+                                                            <img src="${re.course.skill.images}" alt="">
+                                                        </div>
+                                                        <div class="product-body">
+                                                            <h3 class="product-name"><a href="#">${re.course.courseName}</a></h3>
+                                                            <h4 class="product-price">
+                                                                <span class="qty">${re.status} </span>
+                                                            </h4>
+                                                        </div>
+                                                    </c:forEach>
 
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product02.png" alt="">
+
                                                 </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
+
+
+                                            </div>
+                                            <div class="cart-summary">
+                                                <small>${cnt} Item(s) selected</small>
+                                            </div>
+                                            <div class="cart-summary">
+
+                                                <a href="ViewRequest">View Request  <i class="fa fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
-                                        <div class="cart-summary">
-                                            <small>3 Item(s) selected</small>
-                                            <h5>SUBTOTAL: $2940.00</h5>
-                                        </div>
-                                        <div class="cart-btns">
-                                            <a href="#">View Cart</a>
-                                            <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                                        </div>
-                                    </div>
+                                    </c:if>
+
                                 </div>
                                 <!-- /Cart -->
 
@@ -299,8 +299,8 @@
                         
                             <img style="width: 100%; object-fit: cover"src="${sk.images}" alt="alt"/>
                         
-                            <h5 class="aside-title"> Descprition course ${sk.skill}</h5>
-                            <p class="aside-title">${sk.descpition}
+                            <h5 class="aside-title"> All course of ${sk.skill}</h5>
+                            <p class="aside-title">
                             </p>
                         
                         <!-- /aside Widget -->
@@ -341,45 +341,35 @@
 
 
 
-                            <c:forEach items="${requestScope.listM}" var="lm">
+                             <c:forEach items="${requestScope.listC}" var="listtop">
+                                 <div class="col-md-4 col-xs-6">
+                                            <!-- product -->
+                                            <div class="product">
+                                                <div class="product-img">
+                                                    <img src="${listtop.skill.images}" alt="">
+                                                    <div class="product-label">
+                                                        <span class="sale">${listtop.timeSlot}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-body">
+                                                    <a href="url"><p class="product-category"><i class="fa fa-user"></i> ${listtop.mentor.name}</p></a>
+                                                    <h3 class="product-name"><a href="ViewMentor?id=${listtop.id}">${listtop.courseName}</a></h3><!--view file-->
+                                                    <h4 class="product-price">${listtop.price} $</h4>
+                                                    <div class="product-btns">
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                        <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                                    </div>
+                                                </div>
+                                                <div class="add-to-cart">
+                                                    <a href="ViewMentor?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> BOOk Course</button> </a>
 
-                                <div class="col-md-4 col-xs-6">
-                                    <div class="product">
-                                        <div class="product-img">
-
-                                            <c:if test="${empty lm.picture}">
-                                                <img src="data:image/jpeg;base64,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" alt="">
-                                            </c:if>
-                                            <c:if test="${!empty lm.picture}">
-                                                <img  src="${lm.picture}" alt="">
-                                            </c:if>
-
-
-                                            <div class="product-label">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <c:forEach var="skl" items="${lm.getSkillList()}" varStatus="status">
-                                                <span class="product-category">${skl.skill}<c:if test="${!status.last}">/</c:if></span>
-                                            </c:forEach>
-
-
-                                            <h3 class="product-name"><a href="#"> ${lm.name}</a></h3>
-
-
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-send"></i><a href="request?mid=${lm.id}&id=${id}">create request</a></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /product -->
-                            </c:forEach>
+                                            <!-- /product -->
+                                 </div>
+                                            <!-- product -->
+                                        </c:forEach>
 
 
                         </div>

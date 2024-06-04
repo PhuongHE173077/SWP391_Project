@@ -73,8 +73,6 @@ public class ViewRequest extends HttpServlet {
         if (mentee != null) {
             List<Request> reList = rd.getAllRequestOfMentee(mentee.getId());
             int count = rd.getCountRequest(mentee.getId());
-            int total = getTotalHoure(reList);
-            request.setAttribute("total", total);
             request.setAttribute("cnt", count);
             request.setAttribute("reList", reList);
 
@@ -97,13 +95,7 @@ public class ViewRequest extends HttpServlet {
     throws ServletException, IOException {
         processRequest(request, response);
     }
-    public int getTotalHoure(List<Request>list){
-        int total = 0;
-        for (Request request : list) {
-            total += request.total();
-        }
-        return total;
-    }
+   
     /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description

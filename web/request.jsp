@@ -41,19 +41,19 @@
                                                 <div class="col-12 col-sm-auto mb-3">
                                                     <div class="mx-auto" style="width: 140px;">
                                                         <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                                                            <img style="width: 140px;height: 140px;" src="${skill.images}" alt="alt"/>
+                                                            <img style="width: 140px;height: 140px;" src="${course.skill.images}" alt="alt"/>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                                                     <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                        <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">${skill.skill}</h4>
-    <!--                                                    <p class="mb-0">${mentor.email}</p>-->
+                                                        <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">${course.courseName}</h4>
+                                                        <p class="mb-0">${course.timeSlot}</p>
                                                         <div class="text-muted"><small></small></div>
 
                                                     </div>
                                                     <div class="text-center text-sm-right">
-                                                        <span class="badge badge-secondary">${skill.cs.name}</span>
+                                                        <span class="badge badge-secondary">${course.price} $</span>
                                                         <div class="text-muted"><small> </small></div>
                                                     </div>
                                                 </div>
@@ -66,7 +66,7 @@
                                                     <form class="form" novalidate="">
                                                         <div class="row">
                                                             <div class="col">
-                                                                <input type="hidden" name="skill" value="${skill.id}"/>
+                                                                <input type="hidden" name="id" value="${course.id}"/>
                                                                 <div class="row">
                                                                     <div class="col">
                                                                         <div class="form-group">
@@ -81,12 +81,6 @@
                                                                         <div class="form-group">
                                                                             <label>Deadline Day</label>
                                                                             <input type="number" name="deadlineDate" class="form-control" required>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <div  class="form-group">
-                                                                            <label>Deadline Hourse</label>
-                                                                            <input  name="deadlineTime" type="number" class="form-control" required>
                                                                         </div>
                                                                     </div>
 
@@ -132,13 +126,14 @@
                             </div>
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title font-weight-bold">Request to Mentor</h6>
-                                    <p class="card-text">${mentor.name}
-                                        ${mentor.email}
+                                    <h6 class="card-title font-weight-bold">Course of Mentor</h6>
+                                    <img style="width:140px " src="${course.mentor.picture}" alt="alt"/>
+                                    <p class="card-text">${course.mentor.name}
+                                       
 
                                     </p>
 
-                                    <a href="ViewMentor?id=${skill.id}"><button type="button" class="btn btn-primary">Change mentor</button></a>
+                                    <a href="ViewMentor?id=${course.mentor.id}"><button type="button" class="btn btn-primary">View cv mentor</button></a>
                                 </div>
                             </div>
                         </div>

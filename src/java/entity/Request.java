@@ -15,27 +15,24 @@ public class Request {
     private Mentor mentor;
     private Mentee mentee;
     private String subject;
-    private int deadlinehour;
     private int deadlineday;
     private String content;
     private String status;
     private Course course;
-    private String dateRq;
+
 
     public Request() {
     }
 
-    public Request(int id, Mentor mentor, Mentee mentee, String subject, int deadlinehour, int deadlineday, String content, String status, Course course, String dateRq) {
+    public Request(int id, Mentor mentor, Mentee mentee, String subject, int deadlineday, String content, String status, Course course) {
         this.id = id;
         this.mentor = mentor;
         this.mentee = mentee;
         this.subject = subject;
-        this.deadlinehour = deadlinehour;
         this.deadlineday = deadlineday;
         this.content = content;
         this.status = status;
         this.course = course;
-        this.dateRq = dateRq;
     }
 
     public int getId() {
@@ -70,14 +67,6 @@ public class Request {
         this.subject = subject;
     }
 
-    public int getDeadlinehour() {
-        return deadlinehour;
-    }
-
-    public void setDeadlinehour(int deadlinehour) {
-        this.deadlinehour = deadlinehour;
-    }
-
     public int getDeadlineday() {
         return deadlineday;
     }
@@ -110,14 +99,9 @@ public class Request {
         this.course = course;
     }
 
-    public String getDateRq() {
-        return dateRq;
-    }
+    
 
-    public void setDateRq(String dateRq) {
-        this.dateRq = dateRq;
-    }
-
+    
     
     
 

@@ -136,3 +136,60 @@ VALUES
            ('Blockchain Basics', 'Introduction to blockchain technology', 160.00, 'active', 4, 'Mon-Wed 17:00-18:30', 12),
            ('C++ Masterclass', 'Mastering C++ programming', 170.00, 'active', 5, 'Tue-Thu 08:00-09:30', 6);
 	
+	
+UPDATE [dbo].[User]
+   SET 
+      [img] = 'img/namnv.png'
+      
+ WHERE user_id = 2
+
+
+UPDATE [dbo].[User]
+   SET 
+      [img] = 'img/khoand.png'
+      
+ WHERE user_id = 3
+
+
+ UPDATE [dbo].[User]
+   SET 
+      [img] = 'img/anhhnm.png'
+      
+ WHERE user_id = 4
+
+ UPDATE [dbo].[User]
+   SET 
+      [img] = 'img/chint.png'
+      
+ WHERE user_id =5 
+
+ UPDATE [dbo].[User]
+   SET 
+      [img] = 'img/trangnq.png'
+      
+ WHERE user_id = 6
+ UPDATE [dbo].[User]
+   SET 
+      [img] = 'img/quynhbd.png'
+      
+ WHERE user_id = 7 
+ UPDATE [dbo].[User]
+   SET 
+      [img] = 'img/linhpt.png'
+      
+ WHERE user_id = 8
+ UPDATE [dbo].[User]
+   SET 
+      [img] = 'img/quybv.png'
+      
+ WHERE user_id = 9
+ UPDATE [dbo].[User]
+   SET 
+      [img] = 'img/ducnx.png'
+      
+ WHERE user_id = 10
+ UPDATE [dbo].[User]
+   SET 
+      [img] = 'img/dungtt.png'
+      
+ WHERE user_id = 11

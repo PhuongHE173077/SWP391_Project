@@ -19,16 +19,17 @@ public class Mentor {
     private String dob;
     private String phone;
     private String picture;
-    private Double price;
+    private int render;
     private double balance;
     private String address; 
+    private CvMentor cv;
     private List<Skill> skillList ; 
 
     public Mentor() {
         skillList = new ArrayList<>();
     }
 
-    public Mentor(int id, String name, String email, String pass, String dob, String phone, String picture, Double price, double balance, String address, List<Skill> skillList) {
+    public Mentor(int id, String name, String email, String pass, String dob, String phone, String picture, int render, double balance, String address, CvMentor cv, List<Skill> skillList) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -36,9 +37,10 @@ public class Mentor {
         this.dob = dob;
         this.phone = phone;
         this.picture = picture;
-        this.price = price;
+        this.render = render;
         this.balance = balance;
         this.address = address;
+        this.cv = cv;
         this.skillList = skillList;
     }
 
@@ -98,12 +100,12 @@ public class Mentor {
         this.picture = picture;
     }
 
-    public Double getPrice() {
-        return price;
+    public int getRender() {
+        return render;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setRender(int render) {
+        this.render = render;
     }
 
     public double getBalance() {
@@ -122,6 +124,14 @@ public class Mentor {
         this.address = address;
     }
 
+    public CvMentor getCv() {
+        return cv;
+    }
+
+    public void setCv(CvMentor cv) {
+        this.cv = cv;
+    }
+
     public List<Skill> getSkillList() {
         return skillList;
     }
@@ -129,6 +139,11 @@ public class Mentor {
     public void setSkillList(List<Skill> skillList) {
         this.skillList = skillList;
     }
+
+    
+
+   
+    
 
    
     

@@ -173,37 +173,37 @@
                                         <span>Your Request</span>
                                         <div class="qty">${cnt}</div>
                                     </a>
-                                        <c:if test="${cnt > 0}">
-                                            <div class="cart-dropdown">
-                                                <div class="cart-list">
-                                                    <div class="product-widget">
-                                                        <c:forEach items="${requestScope.reList}" var="re">
-                                                            <div class="product-img">
-                                                                <img src="${re.skill.images}" alt="">
-                                                            </div>
-                                                            <div class="product-body">
-                                                                <h3 class="product-name"><a href="#">${re.skill.skill}</a></h3>
-                                                                <h4 class="product-price">
-                                                                        <span class="qty">${re.status} </span>
-                                                                </h4>
-                                                            </div>
-                                                        </c:forEach>
-
-
-                                                    </div>
+                                    <c:if test="${cnt > 0}">
+                                        <div class="cart-dropdown">
+                                            <div class="cart-list">
+                                                <div class="product-widget">
+                                                    <c:forEach items="${requestScope.reList}" var="re">
+                                                        <div class="product-img">
+                                                            <img src="${re.course.skill.images}" alt="">
+                                                        </div>
+                                                        <div class="product-body">
+                                                            <h3 class="product-name"><a href="#">${re.course.courseName}</a></h3>
+                                                            <h4 class="product-price">
+                                                                <span class="qty">${re.status} </span>
+                                                            </h4>
+                                                        </div>
+                                                    </c:forEach>
 
 
                                                 </div>
-                                                <div class="cart-summary">
-                                                    <small>${cnt} Item(s) selected</small>
-                                                </div>
-                                                <div class="cart-summary">
-                                                   
-                                                    <a href="ViewRequest">View Request  <i class="fa fa-arrow-circle-right"></i></a>
-                                                </div>
+
+
                                             </div>
-                                        </c:if>
-                                    
+                                            <div class="cart-summary">
+                                                <small>${cnt} Item(s) selected</small>
+                                            </div>
+                                            <div class="cart-summary">
+
+                                                <a href="ViewRequest">View Request  <i class="fa fa-arrow-circle-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </c:if>
+
                                 </div>
                                 <!-- /Cart -->
 
@@ -265,7 +265,7 @@
                             </div>
                             <div class="shop-body">
                                 <h3>FrontEnd<br>Courses</h3>
-                                <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                                <a href="Course?cid=1" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -279,7 +279,7 @@
                             </div>
                             <div class="shop-body">
                                 <h3>BackEnd<br>Courses</h3>
-                                <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                                <a href="Course?cid=2" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -293,7 +293,7 @@
                             </div>
                             <div class="shop-body">
                                 <h3>DevOps<br>Course</h3>
-                                <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                                <a href="Course?cid=3" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -315,7 +315,7 @@
                     <!-- section title -->
                     <div class="col-md-12">
                         <div class="section-title">
-                            <h3 class="title">Popular Course</h3>
+                            <h3 class="title">Popular Skill</h3>
                             <div class="section-nav">
                                 <ul class="section-tab-nav tab-nav">
 
@@ -334,7 +334,7 @@
                                 <!-- tab -->
                                 <div id="tab1" class="tab-pane active">
                                     <div class="products-slick" data-nav="#slick-nav-1">
-                                        <c:forEach items="${requestScope.listTop}" var="listtop">
+                                        <c:forEach items="${requestScope.listT}" var="listtop">
                                             <!-- product -->
                                             <div class="product">
                                                 <div class="product-img">
@@ -344,8 +344,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="product-body">
-                                                    <p class="product-category">${listtop.cs.name}</p>
-                                                    <h3 class="product-name"><a href="ViewMentor?id=${listtop.id}">Course ${listtop.skill}</a></h3><!--view file-->
+                                                    <a href="url"><p class="product-category"> ${listtop.cs.name}</p></a>
+                                                    <h3 class="product-name"><a href="ViewMentor?id=${listtop.id}">${listtop.skill}</a></h3><!--view file-->
+
                                                     <div class="product-btns">
                                                         <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                         <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
@@ -353,8 +354,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="add-to-cart">
-                                                    <a href="ViewMentor?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> BOOk Course</button> </a>
-                                                   
+                                                    <a href="ViewCourse?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> View all Course</button> </a>
+
                                                 </div>
                                             </div>
                                             <!-- /product -->
@@ -391,7 +392,7 @@
                     <!-- section title -->
                     <div class="col-md-12">
                         <div class="section-title">
-                            <h3 class="title">Top selling</h3>
+                            <h3 class="title">New Course</h3>
                             <div class="section-nav">
                                 <ul class="section-tab-nav tab-nav">
 
@@ -414,14 +415,15 @@
                                             <!-- product -->
                                             <div class="product">
                                                 <div class="product-img">
-                                                    <img src="${listtop.images}" alt="">
+                                                    <img src="${listtop.skill.images}" alt="">
                                                     <div class="product-label">
-                                                        <span class="new">HOT</span>
+                                                        <span class="sale">${listtop.timeSlot}</span>
                                                     </div>
                                                 </div>
                                                 <div class="product-body">
-                                                    <p class="product-category">${listtop.cs.name}</p>
-                                                    <h3 class="product-name"><a href="ViewMentor?id=${listtop.id}">Course ${listtop.skill}</a></h3>
+                                                    <a href="url"><p class="product-category"><i class="fa fa-user"></i> ${listtop.mentor.name}</p></a>
+                                                    <h3 class="product-name"><a href="ViewMentor?id=${listtop.id}">${listtop.courseName}</a></h3><!--view file-->
+                                                    <h4 class="product-price">${listtop.price} $</h4>
                                                     <div class="product-btns">
                                                         <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                         <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
@@ -429,7 +431,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="add-to-cart">
-                                                    <button class="add-to-cart-btn"><i class="fa fa-book"></i> BOOk Course</button>
+                                                    <a href="ViewMentor?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> BOOk Course</button> </a>
+
                                                 </div>
                                             </div>
                                             <!-- /product -->
@@ -468,10 +471,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="newsletter">
-                            <p>Sign Up for the <strong>NEWSLETTER</strong></p>
+                            <p>Feed back for wed <strong>SWP391_Group6</strong></p>
                             <form>
-                                <input class="input" type="email" placeholder="Enter Your Email">
-                                <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+                                <input class="input" type="text" placeholder="Enter your feedback">
+                                <button class="newsletter-btn"><i class="fa fa-envelope"></i> Sent</button>
                             </form>
                             <ul class="newsletter-follow">
                                 <li>
@@ -507,11 +510,11 @@
                         <div class="col-md-3 col-xs-6">
                             <div class="footer">
                                 <h3 class="footer-title">About Us</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+                                <p>Welcome you to Happy programming of SWP391_Group6</p>
                                 <ul class="footer-links">
-                                    <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
-                                    <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-                                    <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+                                    <li><a href="#"><i class="fa fa-map-marker"></i>Fpt university</a></li>
+                                    <li><a href="#"><i class="fa fa-phone"></i>0123456789</a></li>
+                                    <li><a href="#"><i class="fa fa-envelope-o"></i>phuongddhe173077@fpt.edu.vn</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -520,11 +523,9 @@
                             <div class="footer">
                                 <h3 class="footer-title">Categories</h3>
                                 <ul class="footer-links">
-                                    <li><a href="#">Hot deals</a></li>
-                                    <li><a href="#">Laptops</a></li>
-                                    <li><a href="#">Smartphones</a></li>
-                                    <li><a href="#">Cameras</a></li>
-                                    <li><a href="#">Accessories</a></li>
+                                    <c:forEach items="${requestScope.listCs}" var="lsc">
+                                        <li><a href="Course?cid=${lsc.id}">${lsc.name}</a></li>
+                                        </c:forEach>
                                 </ul>
                             </div>
                         </div>
@@ -549,9 +550,9 @@
                                 <h3 class="footer-title">Service</h3>
                                 <ul class="footer-links">
                                     <li><a href="#">My Account</a></li>
-                                    <li><a href="#">View Cart</a></li>
+                                    <li><a href="#">View request</a></li>
                                     <li><a href="#">Wishlist</a></li>
-                                    <li><a href="#">Track My Order</a></li>
+                                    <li><a href="#">Track My class</a></li>
                                     <li><a href="#">Help</a></li>
                                 </ul>
                             </div>

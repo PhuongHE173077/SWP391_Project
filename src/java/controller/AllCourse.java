@@ -5,9 +5,11 @@
 package controller;
 
 import dao.CategorySkillDao;
+import dao.CourseDao;
 import dao.RequestDao;
 import dao.SkillDao;
 import entity.CategorySkill;
+import entity.Course;
 import entity.Mentee;
 import entity.Request;
 import entity.Skill;
@@ -69,15 +71,19 @@ public class AllCourse extends HttpServlet {
             throws ServletException, IOException {
 
         int cid = Integer.parseInt(request.getParameter("cid"));
-        SkillDao s = new SkillDao();
-        List<Skill> listC = new ArrayList<>();
+        SkillDao sd = new SkillDao();
+        CourseDao cd = new CourseDao();
+        List<Course> listC = new ArrayList<>();
         CategorySkillDao csd = new CategorySkillDao();
         List<CategorySkill> listCs = csd.getAllCategorySkill();
+        List<Skill> listS = new ArrayList<>();
         
         if (cid == 0) {
-            listC = s.getAllSkill();
+            listC = cd.getAll();
+            listS = sd.getAllSkill();
         }else{
-            listC = s.getSkillById(cid);
+            listC = cd.getCourseByCid(cid);
+            listS = sd.getSkillById(cid);
         }
         RequestDao rd = new RequestDao();
         HttpSession session = request.getSession();
@@ -90,6 +96,7 @@ public class AllCourse extends HttpServlet {
             
 
         }
+        request.setAttribute("listS", listS);
         request.setAttribute("cid", cid);
         request.setAttribute("listCs", listCs);
         request.setAttribute("listC", listC);

@@ -110,3 +110,5 @@ create table payment(
 	)
 	alter table skill
 	add cid int references categorySkill(id)
+	alter table course
+	add img nvarchar(max)

@@ -10,17 +10,9 @@
         </group>
         <group name="SWP391">
             <file>file:/D:/Ilter1/SWP391_Project/src/java/dao/CourseDao.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/dao/RequestDao.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/ViewRequest.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/entity/Request.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/entity/Course.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/dao/SkillDao.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/Homecontrol.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/dao/MentorDao.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/entity/Mentee.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/request.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/web/request.jsp</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/entity/Skill.java</file>
+            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/AllCourse.java</file>
+            <file>file:/D:/Ilter1/SWP391_Project/web/index.jsp</file>
+            <file>file:/D:/Ilter1/SWP391_Project/web/AllCourses.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -4,9 +4,11 @@
  */
 package controller;
 
+import dao.CourseDao;
 import dao.MentorDao;
 import dao.RequestDao;
 import dao.SkillDao;
+import entity.Course;
 import entity.Mentee;
 import entity.Mentor;
 import entity.Request;
@@ -70,14 +72,12 @@ public class request extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int mid = Integer.parseInt(request.getParameter("mid"));
+        
         int id = Integer.parseInt(request.getParameter("id"));
-        MentorDao md = new MentorDao();
-        Mentor mentor = md.getMentorByID(mid);
-        SkillDao sd = new SkillDao();
-        Skill skill = sd.searchSkill(id);
-        request.setAttribute("skill", skill);
-        request.setAttribute("mentor", mentor);
+        CourseDao cd = new CourseDao();
+        Course course = cd.getCourse(id);
+        request.setAttribute("course", course);
+        
         request.getRequestDispatcher("request.jsp").forward(request, response);
     }
 
@@ -92,24 +92,22 @@ public class request extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int mentor_id = Integer.parseInt(request.getParameter("id"));
+        int course_id = Integer.parseInt(request.getParameter("id"));
         String subject = request.getParameter("subject");
-        int deadlineTime = Integer.parseInt(request.getParameter("deadlineTime"));
         int deadLineDay = Integer.parseInt(request.getParameter("deadlineDate"));
         String content = request.getParameter("content");
-        int skill = Integer.parseInt(request.getParameter("skill"));
         HttpSession session = request.getSession();
         Mentee mentee = (Mentee) session.getAttribute("mentee");
         if (mentee == null) {
             response.sendRedirect("login");
         } else{
             MentorDao mentorDao = new MentorDao();
-            SkillDao sd = new SkillDao();
+            CourseDao cd = new CourseDao();
             RequestDao rqDao = new RequestDao();
-            LocalDate dateRq = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-             String dateString = dateRq.format(formatter);
-            Request r = new Request(0, mentorDao.getMentorByID(mentor_id), mentee, subject, deadlineTime, deadLineDay, content, "Processing", sd.searchSkill(skill), dateString);
+            
+            Course course = cd.getCourse(course_id);
+            
+            Request r = new Request(0,course.getMentor(), mentee, subject,deadLineDay, content, "Processing", course);
             rqDao.addRequest(r);
             response.sendRedirect("home");
         }

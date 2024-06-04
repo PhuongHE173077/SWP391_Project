@@ -77,6 +77,20 @@
 
                 padding: 10px;
             }
+            .col-md-3 .aside a {
+                display: block;
+                border: 1px solid #000;
+                padding: 10px;
+                margin-bottom: 10px;
+                text-decoration: none;
+                color: #000;
+            }
+            .col-md-3 .aside a.active {
+                text-decoration: underline;
+                text-decoration-color: red;
+                text-decoration-thickness: 3px;
+                margin-top: 2px;
+            }
 
         </style>
         <script type="text/javascript">
@@ -86,7 +100,7 @@
         </script>
     </head>
     <body>
-        <!-- HEADER -->
+             <!-- HEADER -->
         <header>
             <!-- TOP HEADER -->
             <div id="top-header">
@@ -101,7 +115,7 @@
                         <c:set value="${sessionScope.mentee}" var="c"/>
                         <c:choose>
                             <c:when test="${empty c}">
-                                <li><a href="login.jsp" style="font-size: 16px;"><i class="fa fa-user-o"> Login</i></a></li>
+                                <li><a href="login" style="font-size: 16px;"><i class="fa fa-user-o"> Login</i></a></li>
                                 <li><i style="font-size: 16px;" class="fa "> / </i></li>
                                 <li><a href="login.jsp" style="font-size: 16px;"><i class="fa "> Sing up </i></a></li>
                                 </c:when>
@@ -178,39 +192,37 @@
                                         <span>Your Request</span>
                                         <div class="qty">${cnt}</div>
                                     </a>
-                                        <c:if test="${cnt > 0}">
-                                            <div class="cart-dropdown">
-                                                <div class="cart-list">
-                                                    <div class="product-widget">
-                                                        <c:forEach items="${requestScope.reList}" var="re">
-                                                            <div class="product-img">
-                                                                <img src="${re.mentor.picture}" alt="">
-                                                            </div>
-                                                            <div class="product-body">
-                                                                <h3 class="product-name"><a href="#">This request is ${re.status}</a></h3>
-                                                                <h4 class="product-price">
-                                                                    <c:forEach items="${re.skillRequest}" var="skr">
-                                                                        <span class="qty">${skr.skill} </span>
-                                                                    </c:forEach>
-                                                                </h4>
-                                                            </div>
-                                                        </c:forEach>
-
-
-                                                    </div>
+                                    <c:if test="${cnt > 0}">
+                                        <div class="cart-dropdown">
+                                            <div class="cart-list">
+                                                <div class="product-widget">
+                                                    <c:forEach items="${requestScope.reList}" var="re">
+                                                        <div class="product-img">
+                                                            <img src="${re.course.skill.images}" alt="">
+                                                        </div>
+                                                        <div class="product-body">
+                                                            <h3 class="product-name"><a href="#">${re.course.courseName}</a></h3>
+                                                            <h4 class="product-price">
+                                                                <span class="qty">${re.status} </span>
+                                                            </h4>
+                                                        </div>
+                                                    </c:forEach>
 
 
                                                 </div>
-                                                <div class="cart-summary">
-                                                    <small>${cnt} Item(s) selected</small>
-                                                </div>
-                                                <div class="cart-summary">
-                                                   
-                                                    <a href="ViewRequest">View Request  <i class="fa fa-arrow-circle-right"></i></a>
-                                                </div>
+
+
                                             </div>
-                                        </c:if>
-                                    
+                                            <div class="cart-summary">
+                                                <small>${cnt} Item(s) selected</small>
+                                            </div>
+                                            <div class="cart-summary">
+
+                                                <a href="ViewRequest">View Request  <i class="fa fa-arrow-circle-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </c:if>
+
                                 </div>
                                 <!-- /Cart -->
 
@@ -233,7 +245,6 @@
             <!-- /MAIN HEADER -->
         </header>
         <!-- /HEADER -->
-
         <!-- NAVIGATION -->
         <nav id="navigation">
             <!-- container -->
@@ -258,25 +269,25 @@
         </nav>
         <!-- /NAVIGATION -->
         <!-- BREADCRUMB -->
-<!--        <div id="breadcrumb" class="section">
-             container 
-            <div class="container">
-                 row 
-                <div class="row">
-                    <div class="col-md-12">
-                        <ul class="breadcrumb-tree">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">All Categories</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li class="active">Headphones (227,490 Results)</li>
-                        </ul>
+        <!--        <div id="breadcrumb" class="section">
+                     container 
+                    <div class="container">
+                         row 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="breadcrumb-tree">
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">All Categories</a></li>
+                                    <li><a href="#">Accessories</a></li>
+                                    <li class="active">Headphones (227,490 Results)</li>
+                                </ul>
+                            </div>
+                        </div>
+                         /row 
                     </div>
+                     /container 
                 </div>
-                 /row 
-            </div>
-             /container 
-        </div>
-         /BREADCRUMB -->
+                 /BREADCRUMB -->
 
         <!-- SECTION -->
         <div class="section">
@@ -285,13 +296,14 @@
                 <!-- row -->
                 <div class="row">
                     <!-- ASIDE -->
-                    <div id="aside" class="col-md-3">
+                    <div id="aside" class="col-md-3" style="padding: 10px;">
                         <!-- aside Widget -->
                         <div class="aside">
-                            <h3 class="aside-title">Categories</h3>
-                            <a href="url" class="category">FrontEnd</a></br>
-                            <a href="url" class="category" >BackEnd</a></br>
-                            <a href="url" class="category" >DevOps</a></br>
+                            <h3 class="aside-title">skills</h3>
+                            ̣<c:forEach items="${requestScope.listS}" var="ls">
+                                <a href="url" >${ls.skill}</a></br>
+                            </c:forEach>
+                            
 
                         </div>
                         <!-- /aside Widget -->
@@ -311,13 +323,7 @@
                                     </select>
                                 </label>
 
-                                <label>
-                                    Show:
-                                    <select class="input-select">
-                                        <option value="0">20</option>
-                                        <option value="1">50</option>
-                                    </select>
-                                </label>
+
                             </div>
                             <ul class="store-grid">
                                 <li class="active"><i class="fa fa-th"></i></li>
@@ -337,15 +343,15 @@
                                 <div class="col-md-4 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="${lc.images}" alt="">
+                                            <img src="${lc.skill.images}" alt="">
                                             <div class="product-label">
+                                                <span class="sale">${lc.timeSlot}</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <p class="product-category">${lc.cs.name}</p>
-                                            <h3 class="product-name"><a href="ViewMentor?id=${lc.id}">Course ${lc.skill}</a></h3>
-
-
+                                            <a href="url"><p class="product-category"><i class="fa fa-user"></i> ${lc.mentor.name}</p></a>
+                                            <h3 class="product-name"><a href="ViewMentor?id=${lc.id}">${lc.courseName}</a></h3><!--view file-->
+                                            <h4 class="product-price">${lc.price} $</h4>
                                             <div class="product-btns">
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
@@ -353,7 +359,8 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                            <a href="request?id=${lc.id}" > <button class="add-to-cart-btn"><i class="fa fa-send"></i> Create Request</button> </a>
+
                                         </div>
                                     </div>
                                 </div>
