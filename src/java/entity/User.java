@@ -20,11 +20,12 @@ public class User {
     private double balance;
     private String address;
     private int role_id;
+    private String status;
 
     public User() {
     }
 
-    public User(int id, String name, String email, String pass, String dob, String phone, String picture, int gender, double balance, String address, int role_id) {
+    public User(int id, String name, String email, String pass, String dob, String phone, String picture, int gender, double balance, String address, int role_id, String status) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -36,10 +37,9 @@ public class User {
         this.balance = balance;
         this.address = address;
         this.role_id = role_id;
+        this.status = status;
     }
-
-
-
+    
     public int getId() {
         return id;
     }
@@ -128,10 +128,15 @@ public class User {
         this.role_id = role_id;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", name=" + name + ", email=" + email + ", pass=" + pass + ", dob=" + dob + ", phone=" + phone + ", picture=" + picture + ", gender=" + gender + ", balance=" + balance + ", address=" + address + ", role_id=" + role_id + '}';
+    public String getStatus() {
+        return status;
     }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    
 
    
     

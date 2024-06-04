@@ -112,3 +112,6 @@ create table payment(
 	add cid int references categorySkill(id)
 	alter table course
 	add img nvarchar(max)
+	/*Status of user : Active, Block, Processing*/
+	alter table [User]
+	add status nvarchar(max)

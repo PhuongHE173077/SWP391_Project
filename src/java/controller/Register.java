@@ -89,7 +89,7 @@ public class Register extends HttpServlet {
         String dob = request.getParameter("dob");
         String address =request.getParameter("address");
         int role = Integer.parseInt(request.getParameter("role"));
-        User user = new User(0, name, email, pass, dob, phone, "null", gender, 0, address, role);
+        User user = new User(0, name, email, pass, dob, phone, "null", gender, 0, address, role,"Active");
         PrintWriter out = response.getWriter();
         
         UserDao ud = new UserDao();
