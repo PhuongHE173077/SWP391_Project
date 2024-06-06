@@ -110,8 +110,34 @@ create table payment(
 	)
 	alter table skill
 	add cid int references categorySkill(id)
+
 	alter table course
 	add img nvarchar(max)
 	/*Status of user : Active, Block, Processing*/
 	alter table [User]
 	add status nvarchar(max)
+
+
+	ALTER TABLE course
+	DROP COLUMN timeSlot;
+	
+	create table timeSlot(
+		id int primary key,
+		timeSlot nvarchar(max)
+	)
+	create table weeksday(
+		id int primary key,
+		name nvarchar(max),
+		
+	)
+	create table  WeeksCourse(
+		cid int references course(id),
+		wid int references  weeksday(id),
+		primary key (cid,wid)
+	
+	
+	)
+	
+	alter table course
+	add time_id int references timeSlot(id);
+

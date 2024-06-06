@@ -28,8 +28,10 @@ public class CourseDao extends DBContext {
             ResultSet rs = st.executeQuery();
             MentorDao md = new MentorDao();
             SkillDao sd = new SkillDao();
+            WeeksDao wd = new WeeksDao();
+            TimeSlotDao tsd = new TimeSlotDao();
             while (rs.next()) {
-                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)), rs.getString(7), sd.searchSkill(rs.getInt(8)));
+                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)),tsd.getTimeSlotByid(rs.getInt(9)), sd.searchSkill(rs.getInt(7)),rs.getString(8),wd.getListWeeksDayByCid(rs.getInt(1)));
                 list.add(course);
             }
         } catch (SQLException ex) {
@@ -37,41 +39,34 @@ public class CourseDao extends DBContext {
         }
         return list;
     }
-
-    public List<Course> getTop5CoursePopular() {
-        String sql = "SELECT TOP 5 \n"
-                + "    c.id,\n"
-                + "    c.courseName,\n"
-                + "    c.description,\n"
-                + "    c.price,\n"
-                + "    c.status,\n"
-                + "	c.mentor_id,\n"
-                + "	c.timeSlot,\n"
-                + "	c.skill_id,\n"
-                + "    COUNT(r.id) AS request_count\n"
-                + "FROM \n"
-                + "    course c\n"
-                + "JOIN \n"
-                + "    request r ON c.id = r.course_id\n"
-                + "GROUP BY \n"
-                + "    c.id, c.courseName, c.description, c.price, c.status,c.mentor_id,c.timeSlot,c.skill_id\n"
-                + "ORDER BY \n"
-                + "    request_count DESC;";
-        List<Course> list = new ArrayList<>();
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            MentorDao md = new MentorDao();
-            SkillDao sd = new SkillDao();
-            while (rs.next()) {
-                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)), rs.getString(7), sd.searchSkill(rs.getInt(8)));
-                list.add(course);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
-    }
+// Dee lam sau
+//    public List<Course> getTop5CoursePopular() {
+//        String sql = "SELECT TOP 5 \n"
+//                + "    c.*"
+//                + "    COUNT(r.id) AS request_count\n"
+//                + "FROM \n"
+//                + "    course c\n"
+//                + "JOIN \n"
+//                + "    request r ON c.id = r.course_id\n"
+//                + "GROUP BY \n"
+//                + "    c.id, c.courseName, c.description, c.price, c.status,c.mentor_id,c.timeSlot,c.skill_id\n"
+//                + "ORDER BY \n"
+//                + "    request_count DESC;";
+//        List<Course> list = new ArrayList<>();
+//        try {
+//            PreparedStatement st = connection.prepareStatement(sql);
+//            ResultSet rs = st.executeQuery();
+//            MentorDao md = new MentorDao();
+//            SkillDao sd = new SkillDao();
+//            while (rs.next()) {
+//                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)), rs.getString(7), sd.searchSkill(rs.getInt(8)));
+//                list.add(course);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return list;
+//    }
 
     public List<Course> getTop5Course() {
         String sql = "select top 5 * from course";
@@ -81,8 +76,10 @@ public class CourseDao extends DBContext {
             ResultSet rs = st.executeQuery();
             MentorDao md = new MentorDao();
             SkillDao sd = new SkillDao();
+            WeeksDao wd = new WeeksDao();
+            TimeSlotDao tsd = new TimeSlotDao();
             while (rs.next()) {
-                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)), rs.getString(7), sd.searchSkill(rs.getInt(8)));
+                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)),tsd.getTimeSlotByid(rs.getInt(9)), sd.searchSkill(rs.getInt(7)),rs.getString(8),wd.getListWeeksDayByCid(rs.getInt(1)));
                 list.add(course);
             }
         } catch (SQLException ex) {
@@ -98,11 +95,12 @@ public class CourseDao extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            
-            MentorDao md = new MentorDao();
+             MentorDao md = new MentorDao();
             SkillDao sd = new SkillDao();
+            WeeksDao wd = new WeeksDao();
+            TimeSlotDao tsd = new TimeSlotDao();
             while (rs.next()) {
-                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)), rs.getString(7), sd.searchSkill(rs.getInt(8)));
+                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)),tsd.getTimeSlotByid(rs.getInt(9)), sd.searchSkill(rs.getInt(7)),rs.getString(8),wd.getListWeeksDayByCid(rs.getInt(1)));
                 list.add(course);
             }
         } catch (SQLException ex) {
@@ -119,10 +117,12 @@ public class CourseDao extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, course_id);
             ResultSet rs = st.executeQuery();
-            MentorDao md = new MentorDao();
+             MentorDao md = new MentorDao();
             SkillDao sd = new SkillDao();
+            WeeksDao wd = new WeeksDao();
+            TimeSlotDao tsd = new TimeSlotDao();
             if (rs.next()) {
-                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)), rs.getString(7), sd.searchSkill(rs.getInt(8)));
+                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)),tsd.getTimeSlotByid(rs.getInt(9)), sd.searchSkill(rs.getInt(7)),rs.getString(8),wd.getListWeeksDayByCid(rs.getInt(1)));
                 return course;
             }
         } catch (SQLException ex) {
@@ -142,11 +142,12 @@ public class CourseDao extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, cid);
             ResultSet rs = st.executeQuery();
-            
             MentorDao md = new MentorDao();
             SkillDao sd = new SkillDao();
+            WeeksDao wd = new WeeksDao();
+            TimeSlotDao tsd = new TimeSlotDao();
             while (rs.next()) {
-                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)), rs.getString(7), sd.searchSkill(rs.getInt(8)));
+                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)),tsd.getTimeSlotByid(rs.getInt(9)), sd.searchSkill(rs.getInt(7)),rs.getString(8),wd.getListWeeksDayByCid(rs.getInt(1)));
                 list.add(course);
             }
         } catch (SQLException ex) {

@@ -9,10 +9,12 @@
             <file>file:/E:/SWP391_project/SWP391_Project/web/Profile.jsp</file>
         </group>
         <group name="SWP391">
+            <file>file:/D:/Ilter1/SWP391_Project/src/java/entity/TimeSlot.java</file>
             <file>file:/D:/Ilter1/SWP391_Project/src/java/dao/CourseDao.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/src/java/controller/AllCourse.java</file>
-            <file>file:/D:/Ilter1/SWP391_Project/web/index.jsp</file>
-            <file>file:/D:/Ilter1/SWP391_Project/web/AllCourses.jsp</file>
+            <file>file:/D:/Ilter1/SWP391_Project/src/java/dao/WeeksDao.java</file>
+            <file>file:/D:/Ilter1/SWP391_Project/src/java/dao/SkillDetailDao.java</file>
+            <file>file:/D:/Ilter1/SWP391_Project/src/java/entity/Course.java</file>
+            <file>file:/D:/Ilter1/SWP391_Project/src/java/dao/TimeSlotDao.java</file>
         </group>
     </open-files>
 </project-private>

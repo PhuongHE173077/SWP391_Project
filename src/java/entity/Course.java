@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.util.List;
+
 /**
  *
  * @author TUF F15
@@ -15,13 +17,15 @@ public class Course {
     private double price;
     private String status;
     private Mentor mentor;
-    private String timeSlot;
+    private TimeSlot timeSlot;
     private Skill skill;
+    private String img;
+    private List<WeeksDay> listWeek;
 
     public Course() {
     }
 
-    public Course(int id, String courseName, String description, double price, String status, Mentor mentor, String timeSlot, Skill skill) {
+    public Course(int id, String courseName, String description, double price, String status, Mentor mentor, TimeSlot timeSlot, Skill skill, String img, List<WeeksDay> listWeek) {
         this.id = id;
         this.courseName = courseName;
         this.description = description;
@@ -30,8 +34,10 @@ public class Course {
         this.mentor = mentor;
         this.timeSlot = timeSlot;
         this.skill = skill;
+        this.img = img;
+        this.listWeek = listWeek;
     }
-
+    
     public int getId() {
         return id;
     }
@@ -80,11 +86,11 @@ public class Course {
         this.mentor = mentor;
     }
 
-    public String getTimeSlot() {
+    public TimeSlot getTimeSlot() {
         return timeSlot;
     }
 
-    public void setTimeSlot(String timeSlot) {
+    public void setTimeSlot(TimeSlot timeSlot) {
         this.timeSlot = timeSlot;
     }
 
@@ -95,6 +101,26 @@ public class Course {
     public void setSkill(Skill skill) {
         this.skill = skill;
     }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public List<WeeksDay> getListWeek() {
+        return listWeek;
+    }
+
+    public void setListWeek(List<WeeksDay> listWeek) {
+        this.listWeek = listWeek;
+    }
+
+    
+    
+    
     
             
 }

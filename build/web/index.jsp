@@ -417,7 +417,11 @@
                                                 <div class="product-img">
                                                     <img src="${listtop.skill.images}" alt="">
                                                     <div class="product-label">
-                                                        <span class="sale">${listtop.timeSlot}</span>
+                                                        <span class="sale">
+                                                            <c:forEach items="${listtop.listWeek}" var="lw">
+                                                                ${lw.name}
+                                                            </c:forEach>
+                                                            ${listtop.timeSlot.name}</span>
                                                     </div>
                                                 </div>
                                                 <div class="product-body">
@@ -431,7 +435,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="add-to-cart">
-                                                    <a href="ViewMentor?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> BOOk Course</button> </a>
+                                                    <a href="request?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> BOOk Course</button> </a>
 
                                                 </div>
                                             </div>

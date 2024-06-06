@@ -4,6 +4,8 @@ INSERT INTO [dbo].[roles]
      VALUES
            (0,'mentee'),(1,'mentor'),(2,'manager')
 
+
+
 INSERT INTO [dbo].[User]
            ([name]
            ,[email]
@@ -80,6 +82,17 @@ INSERT INTO [dbo].[mentor]
 			(5),
 			(6)
 
+			INSERT INTO [dbo].[timeSlot]
+           ([id]
+           ,[timeSlot])
+     VALUES
+          (1, '7:30 - 9:30'),
+		  (2, '9:50 - 10:50'),
+		  (3, '11:00 - 13:00'),
+		  (4, '13:15 - 15:15'),
+		  (5, '15:30 - 17:30'),
+		  (6, '18:00 - 20:00')
+
 /*Cv  mentor co 3 trang thai do la processing, reject, approve*/
 INSERT INTO [dbo].[Cv_Mentor]
            (
@@ -116,27 +129,61 @@ VALUES
     (8, 4),
     (11, 4);
 
+	INSERT INTO [dbo].[weeksday]
+           ([id]
+           ,[name])
+     VALUES
+           (1,'Mon'),
+		   (2,'Tus'),
+		   (3,'Wen'),
+		   (4,'Thus'),
+		   (5,'Fri'),
+		   (6,'Sat'),
+		   (7,'Sun')
+
+
+
 	INSERT INTO [dbo].[course]
            ([courseName],
             [description],
             [price],
             [status],
             [mentor_id],
-            [timeSlot],
+            [time_id],
             [skill_id])
      VALUES
-           ('Java Basics', 'Introduction to Java programming for beginners', 100.00, 'active', 1, 'Mon-Wed-Fri 10:00-11:00', 10),
-           ('Advanced Docker', 'Deep dive into Docker and containerization', 150.00, 'active', 2, 'Tue-Thu 14:00-15:30', 2),
-           ('React Native Essentials', 'Building mobile apps with React Native', 120.00, 'active', 3, 'Mon-Wed 16:00-17:30', 3),
-           ('Go Lang Intermediate', 'Intermediate level Go Lang programming', 130.00, 'active', 4, 'Tue-Thu 10:00-11:30', 4),
-           ('Spring Boot Fundamentals', 'Developing applications with Spring Boot', 140.00, 'active', 5, 'Mon-Wed-Fri 11:00-12:30', 5),
-           ('JavaScript for Beginners', 'Basic concepts of JavaScript', 90.00, 'active', 1, 'Mon-Fri 09:00-10:00', 9),
-           ('Python Advanced', 'Advanced techniques in Python programming', 200.00, 'active', 2, 'Mon-Wed 13:00-14:30', 14),
-           ('AWS Certification Prep', 'Preparation for AWS certification exams', 180.00, 'active', 3, 'Tue-Thu 15:00-16:30', 11),
-           ('Blockchain Basics', 'Introduction to blockchain technology', 160.00, 'active', 4, 'Mon-Wed 17:00-18:30', 12),
-           ('C++ Masterclass', 'Mastering C++ programming', 170.00, 'active', 5, 'Tue-Thu 08:00-09:30', 6);
+           ('Java Basics', 'Introduction to Java programming for beginners', 100.00, 'active', 1, 1, 10),
+           ('Advanced Docker', 'Deep dive into Docker and containerization', 150.00, 'active', 2, 2, 2),
+           ('React Native Essentials', 'Building mobile apps with React Native', 120.00, 'active', 3, 3, 3),
+           ('Go Lang Intermediate', 'Intermediate level Go Lang programming', 130.00, 'active', 4, 4, 4),
+           ('Spring Boot Fundamentals', 'Developing applications with Spring Boot', 140.00, 'active', 5, 5, 5),
+           ('JavaScript for Beginners', 'Basic concepts of JavaScript', 90.00, 'active', 1, 6, 9),
+           ('Python Advanced', 'Advanced techniques in Python programming', 200.00, 'active', 2, 5, 14),
+           ('AWS Certification Prep', 'Preparation for AWS certification exams', 180.00, 'active', 3, 5, 11),
+           ('Blockchain Basics', 'Introduction to blockchain technology', 160.00, 'active', 4, 6, 12),
+           ('C++ Masterclass', 'Mastering C++ programming', 170.00, 'active', 5, 5, 6);
 	
-	
+	INSERT INTO [dbo].[WeeksCourse]
+           ([cid]
+           ,[wid])
+     VALUES
+           (1,1),
+		   (1,2),
+		   (2,2),
+		   (2,3),
+		   (3,4),
+		   (3,2),
+		   (4,2),
+		   (4,3),
+		   (5,2),
+		   (5,6),
+		   (7,1),
+		   (7,2),
+		   (8,7),
+		   (8,2),
+		   (9,7),
+		   (10,6)
+
 UPDATE [dbo].[User]
    SET 
       [img] = 'img/namnv.png'

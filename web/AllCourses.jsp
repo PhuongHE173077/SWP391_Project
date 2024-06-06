@@ -345,7 +345,10 @@
                                         <div class="product-img">
                                             <img src="${lc.skill.images}" alt="">
                                             <div class="product-label">
-                                                <span class="sale">${lc.timeSlot}</span>
+                                                <span class="sale"><c:forEach items="${lc.listWeek}" var="lw">
+                                                                ${lw.name}
+                                                            </c:forEach>
+                                                            ${lc.timeSlot.name}</span>
                                             </div>
                                         </div>
                                         <div class="product-body">
