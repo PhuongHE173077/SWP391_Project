@@ -91,8 +91,6 @@ public class SkillDao extends DBContext{
             st.setInt(1,    id);
             ResultSet rs = st.executeQuery();
             CategorySkillDao cs = new CategorySkillDao();
-            
-
             while (rs.next()) {
                 Skill skill = searchSkill(rs.getInt(1));
                 list.add(skill);

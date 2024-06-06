@@ -5,8 +5,10 @@
 package controller;
 
 import dao.MenteeDao;
+import dao.MentorDao;
 import dao.UserDao;
 import entity.Mentee;
+import entity.Mentor;
 import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -113,7 +115,21 @@ public class Login extends HttpServlet {
                     response.sendRedirect("home");
                     break;
                 case 1: // Mentor
-                    out.print("Mentor");
+                    String status = m.getStatus();
+                    if ("Block".equals(status)) {
+                        String error = "The Account is blocked! Please contact admin via phone number: 0123456789";
+                        request.setAttribute("error", error);
+                        request.getRequestDispatcher("login.jsp").forward(request, response);
+                    } else if ("Processing".equals(status)) {
+                        String error = "Your CV is under review by management. Please wait!";
+                        request.setAttribute("error", error);
+                        request.getRequestDispatcher("login.jsp").forward(request, response);
+                    } else {
+                        MentorDao mod = new MentorDao();
+                        Mentor mentor = mod.getMentorByUserID(m.getId());
+                        session.setAttribute("mentor", mentor);
+                        response.sendRedirect("HomeMentor");
+                    }
                     break;
                 case 2: // Admin
                     out.print("Admin");

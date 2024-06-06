@@ -69,6 +69,30 @@ public class MentorDao extends DBContext {
 
         return null;
     }
+    
+        public Mentor getMentorByUserID(int id) {
+        String sql = "SELECT    mentor.*, [User].*\n"
+                + "FROM         mentor INNER JOIN\n"
+                + "                      [User] ON mentor.userId = [User].user_id"
+                + " where [User].user_id =?";
+        PreparedStatement st;
+        try {
+            st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            CvDao cvd = new CvDao();
+            SkillDao sd = new SkillDao();
+            while (rs.next()) {
+                List<Skill> list = sd.getSkillOfMentor(rs.getInt(1));
+                Mentor mentor = new Mentor(rs.getInt(1),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getInt(10),rs.getDouble(11),rs.getString(12),cvd.getCvMentorByID(rs.getInt(1)), list);
+                return mentor;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MentorDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
 
     public List<Mentor> getAllMentorBySkill(int skillId) {
         String sql = "SELECT * from skill_detail\n"
