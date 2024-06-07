@@ -32,7 +32,7 @@ public class RequestDao extends DBContext {
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
-            CourseDao cd = new CourseDao();
+
             MentorDao mentor = new MentorDao();
             MenteeDao mentee = new MenteeDao();
             while (rs.next()) {

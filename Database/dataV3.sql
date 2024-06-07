@@ -18,65 +18,61 @@ create table [User](
 	[address] nvarchar(max) null,
 	rid int references roles(id)
 )
+
 create table skill(
 	id int IDENTITY (1,1) primary key,
 	skill nvarchar(50),
+	descpition nvarchar(max),
 	images nvarchar(max)
 	
 )
 create table mentor(
 	mentor_id int IDENTITY (1,1) PRIMARY KEY,
-	userId int references [User](user_id)
+	userId int references [User](user_id),
+	price money
 )
-create table Cv_Mentor(
-	cv_id int IDENTITY (1,1) primary key,
-	metor_id int references mentor(mentor_id),
-	full_name nvarchar(max),
-	email nvarchar(max),
-	dob nvarchar(max),
-	gender int,
-	phone nvarchar(max),
-	[address] nvarchar(max),
-	img nvarchar(max),
-	education nvarchar(max),
-	word_experice nvarchar(max),
-	achievements nvarchar(max),
-	[status] nvarchar(max)
-)
+ 
 create table skill_detail(
 	skill_id int references skill(id),
 	mentor_id int references mentor(mentor_id),
 	primary key (skill_id,mentor_id)
 )
-create table course(
+
+create table timeSlot(
+		id int primary key,
+		timeSlot nvarchar(max)
+	)
+	create table weeksday(
+		id int primary key,
+		name nvarchar(max),
+		
+	)
+create table schedul_mentor(
 	id int IDENTITY (1,1) primary key,
-	courseName nvarchar(max),
-	description nvarchar(max),
-	price money,
-	status nvarchar(max)
-)
-alter table course 
-add mentor_id int references mentor(mentor_id)
-create table schedul(
-	id int primary key,
-	startDate nvarchar(max),
-	endDate nvarchar(max),
-	course_id int references course(id)
+	WeeksDayId int references weeksday(id),
+	timeId int references timeSlot(id),
+	mid int references mentor(mentor_id),
+	status nvarchar(max), 
 )
 
 
-alter table course
-add timeSlot nvarchar(max)
+
 create table request(
 	id int IDENTITY (1,1) PRIMARY KEY,
 	[subject] nvarchar(max),
 	mentee_id int references [User](user_id),
 	mentor_id int references mentor(mentor_id),
-	DeadlineDay int,
+	DeadlineDay nvarchar(max),
 	content nvarchar(max),
-	course_id int references course(id),
+	skill_id int references skill(id),
 	[status] nvarchar(max)
 	
+)
+create table schedul_request(
+	id int IDENTITY (1,1) primary key,
+	WeeksDayId int references weeksday(id),
+	timeId int references timeSlot(id),
+	rid int references request(id),	
 )
 create table feedback(
 	id int IDENTITY (1,1) PRIMARY KEY,
@@ -100,10 +96,7 @@ create table payment(
 		status nvarchar(max)
 		 
 	)
-	alter table schedul 
-	add created int references mentor(mentor_id)
-	alter table course
-	add skill_id int references skill(id)
+	
 	create table categorySkill(
 		id int primary key,
 		categoryName nvarchar(max)
@@ -111,33 +104,11 @@ create table payment(
 	alter table skill
 	add cid int references categorySkill(id)
 
-	alter table course
-	add img nvarchar(max)
+
 	/*Status of user : Active, Block, Processing*/
 	alter table [User]
 	add status nvarchar(max)
 
 
-	ALTER TABLE course
-	DROP COLUMN timeSlot;
 	
-	create table timeSlot(
-		id int primary key,
-		timeSlot nvarchar(max)
-	)
-	create table weeksday(
-		id int primary key,
-		name nvarchar(max),
-		
-	)
-	create table  WeeksCourse(
-		cid int references course(id),
-		wid int references  weeksday(id),
-		primary key (cid,wid)
-	
-	
-	)
-	
-	alter table course
-	add time_id int references timeSlot(id);
 

@@ -4,6 +4,7 @@
  */
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,13 +19,14 @@ public class Request {
     private int deadlineday;
     private String content;
     private String status;
-    private Course course;
+    private List<Schedule>schedule;
 
 
     public Request() {
+        schedule = new ArrayList<>();
     }
 
-    public Request(int id, Mentor mentor, Mentee mentee, String subject, int deadlineday, String content, String status, Course course) {
+    public Request(int id, Mentor mentor, Mentee mentee, String subject, int deadlineday, String content, String status, List<Schedule> schedule) {
         this.id = id;
         this.mentor = mentor;
         this.mentee = mentee;
@@ -32,7 +34,7 @@ public class Request {
         this.deadlineday = deadlineday;
         this.content = content;
         this.status = status;
-        this.course = course;
+        this.schedule = schedule;
     }
 
     public int getId() {
@@ -91,13 +93,16 @@ public class Request {
         this.status = status;
     }
 
-    public Course getCourse() {
-        return course;
+    public List<Schedule> getSchedule() {
+        return schedule;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setSchedule(List<Schedule> schedule) {
+        this.schedule = schedule;
     }
+    
+
+   
 
     
 

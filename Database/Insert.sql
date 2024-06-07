@@ -1,4 +1,4 @@
-INSERT INTO [dbo].[roles]
+﻿INSERT INTO [dbo].[roles]
            ([id]
            ,[roleName])
      VALUES
@@ -15,9 +15,10 @@ INSERT INTO [dbo].[User]
            ,[gender]
            ,[balance]
            ,[address]
-           ,[rid])
+           ,[rid]
+		   ,[status])
      VALUES
-           ('Do Dang Phuong','phuongbg0910@gmail.com','123456p','09-10-2003','122455151',1,0,'abc',0)
+           ('Do Dang Phuong','phuongbg0910@gmail.com','123456p','09-10-2003','122455151',1,0,'abc',0,'active')
 
 INSERT INTO [dbo].[categorySkill]
            ([id]
@@ -31,26 +32,132 @@ INSERT INTO [dbo].[categorySkill]
 INSERT INTO [dbo].[skill]
            (
            [skill]
+           ,[descpition]
            ,[images]
            ,[cid])
      VALUES
-	 
-	 ('Angular', 'img/Angular.png',1 ),
-		   ( 'Docker', 'img/Docker.png' ,3 ),
-		   ( 'React Native', 'img/React_Native.png' ,1 ),
-		   ( 'Go Lang', 'img/Go_Lang.png' ,2),
-		   ( 'Java Spring boot', 'img/Java_spring_boot.png' ,2),
-		   ( 'C++' ,'img/C++.png' ,2 ),
-		   ('Reactjs','img/reactjs.png' ,1 ),
-		   ('C', 'img/C.png' ,2 ),
-		   ( 'Javascript', 'img/Java.png' ,2),
-		   ( 'Java', 'img/Java.png' ,2),
-		   
-		   ( 'AWS','img/Amazon_Web_Service.png' ,3),
-		   ( 'Blockchain', 'img/Blockchain.png' ,2),
-		   ( 'Ruby','img/Ruby.png' ,2),
-		   ( 'Python','img/Python.png' ,2),
-		   ('C#','img/Csap.png' ,2)
+           ( 'Angular','1. Get acquainted with Angular
+2. Introduction to Angular
+3. Learn about RxJS
+4. Angular Router
+5. Angular Forms
+6. Expand more about Angular', 'img/Angular.png',1 ),
+		   ( 'Docker','1. Introduce and install Docker
+2. Knowledge of docker
+3. Practice with Docker', 'img/Docker.png' ,3 ),
+		   ( 'React Native','1. Introducing react native
+2. React Native Basics
+3. Core Components in React Native
+4. Android Components and APIs
+5. iOS Components and APIs
+6. Other themes in React Native' , 'img/React_Native.png' ,1 ),
+		   ( 'Go Lang','1. Introducing Go Lang
+2. Basic Go Lang
+3. Control statements in Go Lang
+4. Maps, Arrays and Slices in Go Lang
+5. How to organize source code in Go Lang
+6. Other topics in Go Lang' , 'img/Go_Lang.png' ,2),
+		   ( 'Java Spring boot', '1. Overview of Spring
+2. Basic concepts about Spring
+3. Basic Spring Boot
+4. Thymeleaf
+5. Spring JPA and Hibernate
+6. Testing
+7. RESTful API Document
+8. Spring security' , 'img/Java_spring_boot.png' ,2),
+		   ( 'C++', '1. Overview of the C++ course
+2. Get familiar with C++ language
+3. Structures in C++' , 'img/C++.png' ,2 ),
+		   ( 'Reactjs', '1. Introduction
+2. Installation
+3. Interface in Reactjs
+4. Interaction in Reactjs
+5. State management in React
+6. Advanced React' , 'img/reactjs.png' ,1 ),
+		   ('C','1. Introduction
+2. Introduction C
+3. Conditional sentences
+4. Loop
+5. Jaw
+6. Array
+7. Pointer
+8. Strings' , 'img/C.png' ,2 ),
+		   ( 'Javascript', '1. Introducing Javascript
+2. Basic Javascript
+3. Objects in Javascript
+4. Data types in Javascript
+5. Advanced knowledge of functions
+6. Configure object properties
+7. Prototype and prototype inheritance
+8. ES6 Class
+9. Callback, Promise, async/awai
+10. ES6 Modules
+11. Test and ensure code quality
+12. Regular expressions
+13. DOM
+14. Network requests
+15. Data storage
+16. Javascript workers
+17. Design patterns in Javascript
+18. Algorithm with Javascript' , 'img/JavaScript.png' ,1 ),
+		   ( 'Java', '1. Introducing Java
+2. Introduction to Java
+3. Object-oriented programming
+4. Java collections
+5. Exception handling
+6. Multi-threaded programming
+7. Design Patterns' , 'img/Java.png' ,2),
+		   ( 'AWS', '1. Introducing AWS
+2. Elastic Compute Cloud
+3. High Availability
+4. Virtual Private Cloud
+5. Databases
+6. Simple Storage Service
+7. Route 53
+8. Cloudfront, Accelerator
+9. Expand storage
+10. Decoupling in AWS
+11. Serverless
+12. Monitoring & Auditing
+13. Security & Encryption', 'img/Amazon_Web_Service.png' ,3),
+		   ( 'Blockchain','1. Knowledge About Blockchain
+2. Smart Contracts
+3. Install Solidity Compiler
+4. Solidity Programming
+5. Contract Metadata
+6. Contract ABI Specification
+7. Ethereum Request For Comment (ERC)
+8. Build & Operate ICO yourself
+9. FrontEnd Programming
+10. Deploy ICO' , 'img/Blockchain.png' ,2),
+		   ( 'Ruby', '1. Introducing Ruby
+2. Basic ruby ​​knowledge
+3. Data types in Ruby
+4. Advanced ruby ​​knowledge','img/Ruby.png' ,2),
+		   ( 'Python', '1. Introducing Python
+2. Basic Python
+3. Control statements in Python
+4. Functions & Modules in Python
+5. Strings in Python
+6. Lists in Python
+7. Tuples in Python
+8. Sets in Python
+9. Dictionaries in Python
+10. Arrays in Python
+11. File processing in Python
+12. Object-oriented programming in Python
+13. Handling Exceptions in Python
+14. Multithreading in Python
+15. Synchronization in Python
+16. Networking in Python
+17. Libraries in Python','img/Python.png' ,2),
+		   ( 'C#', '1. Introduction to C#
+2. Basic concepts
+3. Conditions and loops
+4. Functions and methods
+5. Object-oriented programming (OOP)
+6. Error and exception handling
+7. Work with data', 'img/Csap.png' ,2)
 
 INSERT INTO [dbo].[User]
            ([name]
@@ -61,28 +168,34 @@ INSERT INTO [dbo].[User]
            ,[gender]
            ,[balance]
            ,[address]
-           ,[rid])
+           ,[rid]
+		   ,[status])
      VALUES
-           ('Nguyen Van Nam', 'namnn@gmail.com', '123', '18-08-1988', '0139472817', '1', '0', 'Ha Noi', '1');
-		  INSERT INTO [dbo].[User] ([name] ,[email] ,[password] ,[dob] ,[phone] ,[gender] ,[balance] ,[address] ,[rid]) Values ('Ngueyn Dang Khoa', 'khoand23@gmail.com', '123', '23-03-2003', '0683928174', '1', '0', 'Ha Noi', 1);
-		   INSERT INTO [dbo].[User] ([name] ,[email] ,[password] ,[dob] ,[phone] ,[gender] ,[balance] ,[address] ,[rid]) Values ('Nguyen Minh Anh', 'anhnm08@gmail.com', '123', '08-08-2003', '0134398075', '2', '0', 'Thai Binh', 1);
-		   INSERT INTO [dbo].[User] ([name] ,[email] ,[password] ,[dob] ,[phone] ,[gender] ,[balance] ,[address] ,[rid]) Values ('Nguyen Thanh Chi', 'chint01@gmail.com', '123', '01-04-1991', '0133472837', '2', '0', 'Hai Phong', 1);
-		   INSERT INTO [dbo].[User] ([name] ,[email] ,[password] ,[dob] ,[phone] ,[gender] ,[balance] ,[address] ,[rid]) Values ('Nguyen Quynh Trang', 'trangnq@gmail.com', '123', '01-02-2000', '0139472892', '2', '0', 'Nghe An', 1);
-		   INSERT INTO [dbo].[User] ([name] ,[email] ,[password] ,[dob] ,[phone] ,[gender] ,[balance] ,[address] ,[rid]) Values ('Bui Diem Quynh', 'quynhbd22@gmail.com', '123', '22-05-2005', '0827519065', '2', '0', 'Hue', 1);
-		  INSERT INTO [dbo].[User] ([name] ,[email] ,[password] ,[dob] ,[phone] ,[gender] ,[balance] ,[address] ,[rid]) Values ('Phan Thuy Linh', 'linhphan03@gmail.com', '123', '03-01-2004', '0875189064', '2', '0', 'Ho Chi Minh', 1);
-		  INSERT INTO [dbo].[User] ([name] ,[email] ,[password] ,[dob] ,[phone] ,[gender] ,[balance] ,[address] ,[rid]) Values ('Bui Van Quy', 'quybv26@gmail.com', '123', '26-09-2001', '0856297462', '1', '0', 'Da Lat', 1);
-		  INSERT INTO [dbo].[User] ([name] ,[email] ,[password] ,[dob] ,[phone] ,[gender] ,[balance] ,[address] ,[rid]) Values ('Nguyen Xuan Duc', 'ducnx14@gmail.com', '123', '14-07-2003', '098746724', '1', '0', 'Thanh Hoa', 1);
-		  INSERT INTO [dbo].[User] ([name] ,[email] ,[password] ,[dob] ,[phone] ,[gender] ,[balance] ,[address] ,[rid]) Values ('Tran Thi Dung', 'dungtt@gmail.com', '123', '01-01-2003', '0984373678', '2', '0', 'Ha Noi', 1);
+           ('Nguyen Van Nam', 'namnn@gmail.com', '123', '18-08-1988', '0139472817', '1', '0', 'Ha Noi', 1,'active'),
+		  ('Ngueyn Dang Khoa', 'khoand23@gmail.com', '123', '23-03-2000', '0683928174', '1', '0', 'Ha Noi', 1,'active'),
+		   ('Nguyen Minh Anh', 'anhnm08@gmail.com', '123', '08-08-1997', '0134398075', '2', '0', 'Thai Binh', 1,'active'),
+		   ('Nguyen Thanh Chi', 'chint01@gmail.com', '123', '01-04-1991', '0133472837', '2', '0', 'Hai Phong', 1,'active'),
+		   ('Nguyen Quynh Trang', 'trangnq@gmail.com', '123', '01-02-2000', '0139472892', '2', '0', 'Nghe An', 1,'active'),
+		    ('Bui Diem Quynh', 'quynhbd22@gmail.com', '123', '22-05-1995', '0827519065', '2', '0', 'Hue', 1,'active'),
+		   ('Phan Thuy Linh', 'linhphan03@gmail.com', '123', '03-01-1994', '0875189064', '2', '0', 'Ho Chi Minh', 1,'active'),
+		   ('Bui Van Quy', 'quybv26@gmail.com', '123', '26-09-1991', '0856297462', '1', '0', 'Da Lat', 1,'active'),
+		   ('Nguyen Xuan Duc', 'ducnx14@gmail.com', '123', '14-07-1993', '098746724', '1', '0', 'Thanh Hoa', 1,'active'),
+		  ('Tran Thi Dung', 'dungtt@gmail.com', '123', '01-01-1993', '0984373678', '2', '0', 'Ha Noi', 1,'active');
 INSERT INTO [dbo].[mentor]
            ([userId])
-     VALUES
+     VALUES	
             (2),
 			(3),
 			(4),
 			(5),
-			(6)
+			(6),
+			(7),
+	 (8),
+	 (9),
+	 (10),
+	 (11)
 
-			INSERT INTO [dbo].[timeSlot]
+			 INSERT INTO [dbo].[timeSlot]
            ([id]
            ,[timeSlot])
      VALUES
@@ -90,8 +203,10 @@ INSERT INTO [dbo].[mentor]
 		  (2, '9:50 - 10:50'),
 		  (3, '11:00 - 13:00'),
 		  (4, '13:15 - 15:15'),
-		  (5, '15:30 - 17:30'),
-		  (6, '18:00 - 20:00')
+		  (5, '15:20 - 17:20'),
+		  (6, '17:30 - 19:30'),
+		  (7,'19:45-21:45'),
+		  (8,'21:50-23:50')
 
 /*Cv  mentor co 3 trang thai do la processing, reject, approve*/
 INSERT INTO [dbo].[Cv_Mentor]
@@ -115,7 +230,7 @@ INSERT INTO [dbo].[Cv_Mentor]
            ( 4 , 'Nguyen Thanh Chi', 'chint01@gmail.com', '01-04-1991', 2, '0133472837', 'Hai Phong', 'img/chint.png', 'FPT University', '7', 'Top performer 2019','approve'),
            ( 5 , 'Nguyen Quynh Trang', 'trangnq@gmail.com', '01-02-2000', 0, '0139472892', 'Nghe An', 'img/trangnq.png', 'FPT University', '10', 'Excellence in leadership 2021','approve')
 
-		   INSERT INTO skill_detail (skill_id, mentor_id)
+INSERT INTO skill_detail (skill_id, mentor_id)
 VALUES
 (10,4),
     (2, 1),
@@ -141,49 +256,32 @@ VALUES
 		   (6,'Sat'),
 		   (7,'Sun')
 
-
-
-	INSERT INTO [dbo].[course]
-           ([courseName],
-            [description],
-            [price],
-            [status],
-            [mentor_id],
-            [time_id],
-            [skill_id])
+		   INSERT INTO [dbo].[schedul_mentor]
+           ([WeeksDayId]
+           ,[timeId]
+           ,[mid]
+           ,[status])
      VALUES
-           ('Java Basics', 'Introduction to Java programming for beginners', 100.00, 'active', 1, 1, 10),
-           ('Advanced Docker', 'Deep dive into Docker and containerization', 150.00, 'active', 2, 2, 2),
-           ('React Native Essentials', 'Building mobile apps with React Native', 120.00, 'active', 3, 3, 3),
-           ('Go Lang Intermediate', 'Intermediate level Go Lang programming', 130.00, 'active', 4, 4, 4),
-           ('Spring Boot Fundamentals', 'Developing applications with Spring Boot', 140.00, 'active', 5, 5, 5),
-           ('JavaScript for Beginners', 'Basic concepts of JavaScript', 90.00, 'active', 1, 6, 9),
-           ('Python Advanced', 'Advanced techniques in Python programming', 200.00, 'active', 2, 5, 14),
-           ('AWS Certification Prep', 'Preparation for AWS certification exams', 180.00, 'active', 3, 5, 11),
-           ('Blockchain Basics', 'Introduction to blockchain technology', 160.00, 'active', 4, 6, 12),
-           ('C++ Masterclass', 'Mastering C++ programming', 170.00, 'active', 5, 5, 6);
-	
-	INSERT INTO [dbo].[WeeksCourse]
-           ([cid]
-           ,[wid])
-     VALUES
-           (1,1),
-		   (1,2),
-		   (2,2),
-		   (2,3),
-		   (3,4),
-		   (3,2),
-		   (4,2),
-		   (4,3),
-		   (5,2),
-		   (5,6),
-		   (7,1),
-		   (7,2),
-		   (8,7),
-		   (8,2),
-		   (9,7),
-		   (10,6)
-
+           (1, 1, 1, 'open'),
+           (1, 2, 1, 'open'),
+           (2, 1, 2, 'open'),
+           (3, 2, 2, 'open'),
+           (4, 1, 3, 'open'),
+           (1, 2, 3, 'open'),
+           (6, 1, 4, 'open'),
+           (5, 2, 4, 'open'),
+           (4, 1, 5, 'open'),
+           (3, 2, 5, 'open'),
+           (5, 1, 6, 'open'),
+           (2, 2, 6, 'open'),
+           (7, 1, 7, 'open'),
+           (1, 2, 7, 'open'),
+           (2, 1, 8, 'open'),
+           (3, 2, 8, 'open'),
+           (4, 1, 9, 'open'),
+           (5, 2, 9, 'open'),
+           (6, 1, 10, 'open'),
+           (5, 2, 10, 'open');
 UPDATE [dbo].[User]
    SET 
       [img] = 'img/namnv.png'

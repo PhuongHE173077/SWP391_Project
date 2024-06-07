@@ -48,7 +48,10 @@
                                                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                                                     <div class="text-center text-sm-left mb-2 mb-sm-0">
                                                         <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">${course.courseName}</h4>
-                                                        <p class="mb-0">${course.timeSlot}</p>
+                                                        <p class="mb-0"><c:forEach items="${course.listWeek}" var="lw">
+                                                                ${lw.name}
+                                                            </c:forEach>
+                                                            ${course.timeSlot.name}</p>
                                                         <div class="text-muted"><small></small></div>
 
                                                     </div>
@@ -71,7 +74,7 @@
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label>Subject</label>
-                                                                            
+
                                                                             <input name="subject" class="form-control" required>
                                                                         </div>
                                                                     </div>
@@ -129,7 +132,7 @@
                                     <h6 class="card-title font-weight-bold">Course of Mentor</h6>
                                     <img style="width:140px " src="${course.mentor.picture}" alt="alt"/>
                                     <p class="card-text">${course.mentor.name}
-                                       
+
 
                                     </p>
 

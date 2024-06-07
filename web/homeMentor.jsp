@@ -301,7 +301,7 @@
                                                     <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
                                                         <i class="mdi mdi-school me-3 icon-lg text-warning"></i>
                                                         <div class="d-flex flex-column justify-content-around">
-                                                            <a href="url" style="text-decoration: none"><small class="mb-1 text-muted">My Class</small></a>
+                                                            <a href="" style="text-decoration: none"><small class="mb-1 text-muted">My Class</small></a>
                                                             <h5 class="me-2 mb-0"></h5>
                                                         </div>
                                                     </div>
