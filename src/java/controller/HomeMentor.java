@@ -6,8 +6,10 @@
 package controller;
 
 import dao.CourseDao;
+import dao.RequestDao;
 import entity.Course;
 import entity.Mentor;
+import entity.Request;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -63,10 +65,11 @@ public class HomeMentor extends HttpServlet {
         CourseDao cd = new CourseDao();
         HttpSession session = request.getSession();
         Mentor m = (Mentor) session.getAttribute("mentor");
+        RequestDao rd = new RequestDao();
         List<Course>ListC = cd.getCourseByMentorId(m.getId());
+        List<Request>listR = rd.getAllRequestOfMentor(m.getId());
+        request.setAttribute("listR", listR);
         request.setAttribute("listC", ListC);
-            
-        
         request.getRequestDispatcher("homeMentor.jsp").forward(request, response);
     } 
 

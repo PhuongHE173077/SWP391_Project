@@ -25,6 +25,25 @@
         <link rel="stylesheet" href="css/style.css">
         <!-- endinject -->
         <link rel="shortcut icon" href="images/favicon.png" />
+        <style>
+            .accept{
+                color: black; 
+                text-decoration: none; 
+                margin-right: 10px; 
+                background-color: greenyellow;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            .reject{
+                color: black; 
+                text-decoration: none; 
+                
+                background-color: red;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            
+        </style>
     </head>
     <body>
         <c:set value="${sessionScope.mentor}" var="mentor"/>
@@ -147,7 +166,7 @@
                                 </a>
                             </div>
                         </li>
-                        
+
                         <li class="nav-item nav-profile dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                                 <img src="${mentor.picture}" alt="profile"/>
@@ -187,63 +206,32 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                                <i class="mdi mdi-circle-outline menu-icon"></i>
-                                <span class="menu-title">UI Elements</span>
-                                <i class="menu-arrow"></i>
+                                <i class="mdi mdi-send-circle menu-icon"></i>
+                                <span class="menu-title">Request to me</span>
+
                             </a>
-                            <div class="collapse" id="ui-basic">
-                                <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-                                </ul>
-                            </div>
+
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="pages/forms/basic_elements.html">
-                                <i class="mdi mdi-view-headline menu-icon"></i>
-                                <span class="menu-title">Form elements</span>
+                                <i class="mdi mdi-school menu-icon"></i>
+                                <span class="menu-title">My Class</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="pages/charts/chartjs.html">
-                                <i class="mdi mdi-chart-pie menu-icon"></i>
-                                <span class="menu-title">Charts</span>
+                                <i class="mdi mdi-flag menu-icon"></i>
+                                <span class="menu-title">Feedback</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="pages/tables/basic-table.html">
                                 <i class="mdi mdi-grid-large menu-icon"></i>
-                                <span class="menu-title">Tables</span>
+                                <span class="menu-title">Blogs</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/icons/mdi.html">
-                                <i class="mdi mdi-emoticon menu-icon"></i>
-                                <span class="menu-title">Icons</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                                <i class="mdi mdi-account menu-icon"></i>
-                                <span class="menu-title">User Pages</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="collapse" id="auth">
-                                <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"> Login 2 </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register-2.html"> Register 2 </a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="pages/samples/lock-screen.html"> Lockscreen </a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="documentation/documentation.html">
-                                <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                                <span class="menu-title">Documentation</span>
-                            </a>
-                        </li>
+
+
                     </ul>
                 </nav>
                 <!-- partial -->
@@ -258,7 +246,7 @@
                                             <h2>Welcome to Happy Programming,</h2>
                                             <p class="mb-md-0">Happy Programming bring the best experience to users.</p>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="d-flex justify-content-between align-items-end flex-wrap">
                                         <button type="button" class="btn btn-light bg-white btn-icon me-3 d-none d-md-block ">
@@ -283,8 +271,8 @@
                                             <li class="nav-item">
                                                 <a class="nav-link active" id="overview-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
                                             </li>
-                                            
-                                            
+
+
                                         </ul>
                                         <div class="tab-content py-0 px-0">
                                             <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
@@ -293,41 +281,41 @@
                                                         <i class="mdi mdi-calendar-heart icon-lg me-3 text-primary"></i>
                                                         <div class="d-flex flex-column justify-content-around">
                                                             <a href="url" style="text-decoration: none"><small class="mb-1 text-muted">Schedule</small></a>
-                                                            
+
                                                         </div>
                                                     </div>
                                                     <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
                                                         <i class="mdi mdi-book-lock-open me-3 icon-lg text-danger"></i>
                                                         <div class="d-flex flex-column justify-content-around">
-                                                            <small class="mb-1 text-muted">Course</small>
-                                                            <h5 class="me-2 mb-0">$577545</h5>
+                                                            <a href="url" style="text-decoration: none"><small class="mb-1 text-muted">Course</small></a>
+                                                            <h5 class="me-2 mb-0"></h5>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
                                                         <i class="mdi mdi-send-circle me-3 icon-lg text-success"></i>
                                                         <div class="d-flex flex-column justify-content-around">
-                                                            <small class="mb-1 text-muted">Total Request</small>
-                                                            <h5 class="me-2 mb-0">9833550</h5>
+                                                            <a href="url" style="text-decoration: none"><small class="mb-1 text-muted">Total Request</small></a>
+                                                            <h5 class="me-2 mb-0"></h5>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                                                        <i class="mdi mdi-download me-3 icon-lg text-warning"></i>
+                                                        <i class="mdi mdi-school me-3 icon-lg text-warning"></i>
                                                         <div class="d-flex flex-column justify-content-around">
-                                                            <small class="mb-1 text-muted">Downloads</small>
-                                                            <h5 class="me-2 mb-0">2233783</h5>
+                                                            <a href="url" style="text-decoration: none"><small class="mb-1 text-muted">My Class</small></a>
+                                                            <h5 class="me-2 mb-0"></h5>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex py-3 border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
                                                         <i class="mdi mdi-flag me-3 icon-lg text-danger"></i>
                                                         <div class="d-flex flex-column justify-content-around">
-                                                            <small class="mb-1 text-muted">Report</small>
-                                                            <h5 class="me-2 mb-0">3497843</h5>
+                                                            <a href="url" style="text-decoration: none"><small class="mb-1 text-muted">Report</small></a>
+                                                            <h5 class="me-2 mb-0"></h5>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                            
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -338,32 +326,34 @@
                             <div class="col-md-12 stretch-card">
                                 <div class="card">
                                     <div class="card-body">
-                                        <p class="card-title">My Courses</p>
+                                        <p class="card-title">All Request to me </p>
                                         <div class="table-responsive">
                                             <table id="recent-purchases-listing" class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th>Name</th>
-                                                        <th>Skill</th>
-                                                        <th>Price</th>
-                                                        <th>Time Slot</th>
-                                                        <th>status</th>
+                                                        <th>Mentee Name</th>
+                                                        <th>Course name</th>
+                                                        <th>Subject</th>
+                                                        <th>content</th>
+                                                        <th>Dealine Day</th>
                                                         <th>Action</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <c:forEach items="${requestScope.listC}" var="lc">
+                                                    <c:forEach items="${requestScope.listR}" var="lc">
                                                         <tr>
-                                                        <td>${lc.courseName}</td>
-                                                        <td>${lc.skill.skill}</td>
-                                                        <td>${lc.price}</td>
-                                                        <td>${lc.timeSlot.name}</td>
-                                                        <td>${lc.status}</td>
-                                                        <td>View Update Delete</td>
-                                                    </tr> 
+                                                            <td>${lc.mentee.name}</td>
+                                                            <td>${lc.course.courseName}</td>
+                                                            <td>${lc.subject}</td>
+                                                            <td>${lc.content}</td>
+                                                            <td>${lc.deadlineday}</td>
+                                                            <td><a href="url" class="accept">Accept</a> 
+                                                                <a href="url" class="reject">Reject</a></td>
+                                                        </tr> 
                                                     </c:forEach>
-                                                   
-                                                    
+
+
                                                 </tbody>
                                             </table>
                                         </div>
