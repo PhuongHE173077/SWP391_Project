@@ -20,6 +20,7 @@ public class Mentor {
     private String phone;
     private String picture;
     private int render;
+    private double price;
     private double balance;
     private String address; 
     private CvMentor cv;
@@ -31,7 +32,7 @@ public class Mentor {
         schedule = new ArrayList<>();
     }
 
-    public Mentor(int id, String name, String email, String pass, String dob, String phone, String picture, int render, double balance, String address, CvMentor cv, List<Skill> skillList, List<Schedule> schedule) {
+    public Mentor(int id, String name, String email, String pass, String dob, String phone, String picture, int render, double price, double balance, String address, CvMentor cv, List<Skill> skillList, List<Schedule> schedule) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -40,6 +41,7 @@ public class Mentor {
         this.phone = phone;
         this.picture = picture;
         this.render = render;
+        this.price = price;
         this.balance = balance;
         this.address = address;
         this.cv = cv;
@@ -111,6 +113,14 @@ public class Mentor {
         this.render = render;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public double getBalance() {
         return balance;
     }
@@ -151,6 +161,7 @@ public class Mentor {
         this.schedule = schedule;
     }
 
+    
    
     
 

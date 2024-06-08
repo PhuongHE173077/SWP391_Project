@@ -4,11 +4,11 @@
  */
 package controller;
 
-import dao.CourseDao;
+
 import dao.MentorDao;
 import dao.RequestDao;
 import dao.SkillDao;
-import entity.Course;
+
 import entity.Mentee;
 import entity.Mentor;
 import entity.Request;

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.attribute.standard.SheetCollate;
 
 /**
  *
@@ -32,12 +33,12 @@ public class RequestDao extends DBContext {
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
-
+            ScheduleDao sd = new ScheduleDao();
             MentorDao mentor = new MentorDao();
             MenteeDao mentee = new MenteeDao();
             while (rs.next()) {
 
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getInt(5), rs.getString(6), rs.getString(8), cd.getCourse(rs.getInt(7)));
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5),rs.getInt(9), rs.getString(6), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)));
                 list.add(rq);
             }
 
@@ -73,12 +74,12 @@ public class RequestDao extends DBContext {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            CourseDao cd = new CourseDao();
+            ScheduleDao sd = new ScheduleDao();
             MentorDao mentor = new MentorDao();
             MenteeDao mentee = new MenteeDao();
             while (rs.next()) {
 
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getInt(5), rs.getString(6), rs.getString(8), cd.getCourse(rs.getInt(7)));
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5),rs.getInt(9), rs.getString(6), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)));
                 list.add(rq);
             }
 
@@ -99,12 +100,12 @@ public class RequestDao extends DBContext {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            CourseDao cd = new CourseDao();
+            ScheduleDao sd = new ScheduleDao();
             MentorDao mentor = new MentorDao();
             MenteeDao mentee = new MenteeDao();
             while (rs.next()) {
 
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(rs.getInt(3)), rs.getString(2), rs.getInt(5), rs.getString(6), rs.getString(8), cd.getCourse(rs.getInt(7)));
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5),rs.getInt(9), rs.getString(6), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)));
                 list.add(rq);
             }
 
@@ -115,33 +116,33 @@ public class RequestDao extends DBContext {
         return list;
     }
 
-    public void addRequest(Request r) {
-        String sql = "INSERT INTO [dbo].[request]\n"
-                + "           ([subject]\n"
-                + "           ,[mentee_id]\n"
-                + "           ,[mentor_id]\n"
-                + "           ,[DeadlineDay]\n"
-                + "           ,[content]\n"
-                + "           ,[course_id]\n"
-                + "           ,[status])\n"
-                + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?)";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, r.getSubject());
-            st.setInt(2, r.getMentee().getId());
-            st.setInt(3, r.getMentor().getId());
-            st.setInt(4, r.getDeadlineday());
-            st.setString(5, r.getContent());
-            st.setInt(6, r.getCourse().getId());
-            st.setString(7, r.getStatus());
-
-            st.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(RequestDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+//    public void addRequest(Request r) {
+//        String sql = "INSERT INTO [dbo].[request]\n"
+//                + "           ([subject]\n"
+//                + "           ,[mentee_id]\n"
+//                + "           ,[mentor_id]\n"
+//                + "           ,[DeadlineDay]\n"
+//                + "           ,[content]\n"
+//                + "           ,[course_id]\n"
+//                + "           ,[status])\n"
+//                + "     VALUES\n"
+//                + "           (?,?,?,?,?,?,?)";
+//        try {
+//            PreparedStatement st = connection.prepareStatement(sql);
+//            st.setString(1, r.getSubject());
+//            st.setInt(2, r.getMentee().getId());
+//            st.setInt(3, r.getMentor().getId());
+//            st.setInt(4, r.getDeadlineday());
+//            st.setString(5, r.getContent());
+//            st.setInt(6, r.getCourse().getId());
+//            st.setString(7, r.getStatus());
+//
+//            st.executeUpdate();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(RequestDao.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//    }
 
     public static void main(String[] args) {
         RequestDao r = new RequestDao();

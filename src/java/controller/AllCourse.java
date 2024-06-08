@@ -5,11 +5,9 @@
 package controller;
 
 import dao.CategorySkillDao;
-import dao.CourseDao;
 import dao.RequestDao;
 import dao.SkillDao;
 import entity.CategorySkill;
-import entity.Course;
 import entity.Mentee;
 import entity.Request;
 import entity.Skill;
@@ -72,17 +70,15 @@ public class AllCourse extends HttpServlet {
 
         int cid = Integer.parseInt(request.getParameter("cid"));
         SkillDao sd = new SkillDao();
-        CourseDao cd = new CourseDao();
-        List<Course> listC = new ArrayList<>();
         CategorySkillDao csd = new CategorySkillDao();
         List<CategorySkill> listCs = csd.getAllCategorySkill();
         List<Skill> listS = new ArrayList<>();
         
         if (cid == 0) {
-            listC = cd.getAll();
+            
             listS = sd.getAllSkill();
         }else{
-            listC = cd.getCourseByCid(cid);
+            
             listS = sd.getSkillById(cid);
         }
         RequestDao rd = new RequestDao();
@@ -99,7 +95,7 @@ public class AllCourse extends HttpServlet {
         request.setAttribute("listS", listS);
         request.setAttribute("cid", cid);
         request.setAttribute("listCs", listCs);
-        request.setAttribute("listC", listC);
+
         request.getRequestDispatcher("AllCourses.jsp").forward(request, response);
     }
 

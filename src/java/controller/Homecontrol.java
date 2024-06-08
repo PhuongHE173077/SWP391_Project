@@ -5,11 +5,11 @@
 package controller;
 
 import dao.CategorySkillDao;
-import dao.CourseDao;
+
 import dao.RequestDao;
 import dao.SkillDao;
 import entity.CategorySkill;
-import entity.Course;
+
 import entity.Mentee;
 import entity.Request;
 import entity.Skill;
@@ -68,9 +68,8 @@ public class Homecontrol extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CourseDao cd = new CourseDao();
+
         SkillDao sd = new SkillDao();
-        List<Course> listT = cd.getTop5Course();
         List<Skill> listTop = sd.getTopSkill();
         CategorySkillDao csd = new CategorySkillDao();
         List<CategorySkill> listCs = csd.getAllCategorySkill();
@@ -86,7 +85,7 @@ public class Homecontrol extends HttpServlet {
         }
         request.setAttribute("listT", listTop);
         request.setAttribute("listCs", listCs);
-        request.setAttribute("listTop", listT);
+        request.setAttribute("listTop", listTop);
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 

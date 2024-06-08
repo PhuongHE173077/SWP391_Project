@@ -19,14 +19,14 @@ import java.util.List;
 public class SkillDao extends DBContext{
     public List<Skill> getAllSkill() {
         List<Skill> list = new ArrayList<>();
-        String query = "select * from skill";
+        String query = "select * from	skill";
         try {
             PreparedStatement st = connection.prepareStatement(query);
             ResultSet rs = st.executeQuery();
             CategorySkillDao cs = new CategorySkillDao();
 
             while (rs.next()) {
-                list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4), cs.searchCategorySkill(rs.getInt(4))));
+                list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4), cs.searchCategorySkill(rs.getInt(5))));
             }
         } catch (SQLException e) {
         }
@@ -42,7 +42,7 @@ public class SkillDao extends DBContext{
             CategorySkillDao cs = new CategorySkillDao();
 
             while (rs.next()) {
-                list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4), cs.searchCategorySkill(rs.getInt(4))));
+               list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4), cs.searchCategorySkill(rs.getInt(5))));
             }
         } catch (SQLException e) {
         }
@@ -59,7 +59,7 @@ public class SkillDao extends DBContext{
             CategorySkillDao cs = new CategorySkillDao();
 
             while (rs.next()) {
-                list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4), cs.searchCategorySkill(rs.getInt(4))));
+                list.add(new Skill(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4), cs.searchCategorySkill(rs.getInt(5))));
             }
         } catch (SQLException e) {
         }
@@ -75,7 +75,7 @@ public class SkillDao extends DBContext{
             CategorySkillDao cs = new CategorySkillDao();
 
             if (rs.next()) {
-                Skill abc  = new Skill(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4), cs.searchCategorySkill(rs.getInt(4)));
+                Skill abc  = new Skill(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4), cs.searchCategorySkill(rs.getInt(5)));
                 return abc;
             }
         } catch (SQLException e) {
@@ -103,10 +103,11 @@ public class SkillDao extends DBContext{
     
     public static void main(String[] args) {
         SkillDao sd = new SkillDao();
-        List<Skill> list = sd.getSkillOfMentor(2);
+        List<Skill> list = sd.getAllSkill();
         for (Skill skill : list) {
             System.out.println(skill.getSkill());
         }
+        
     }
     
 

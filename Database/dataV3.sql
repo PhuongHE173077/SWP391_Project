@@ -26,10 +26,26 @@ create table skill(
 	images nvarchar(max)
 	
 )
+
 create table mentor(
 	mentor_id int IDENTITY (1,1) PRIMARY KEY,
 	userId int references [User](user_id),
 	price money
+)
+create table Cv_Mentor(
+	cv_id int IDENTITY (1,1) primary key,
+	metor_id int references mentor(mentor_id),
+	full_name nvarchar(max),
+	email nvarchar(max),
+	dob nvarchar(max),
+	gender int,
+	phone nvarchar(max),
+	[address] nvarchar(max),
+	img nvarchar(max),
+	education nvarchar(max),
+	word_experice nvarchar(max),
+	achievements nvarchar(max) null,
+	status nvarchar(max)	
 )
  
 create table skill_detail(
@@ -68,6 +84,8 @@ create table request(
 	[status] nvarchar(max)
 	
 )
+alter table request
+add number_stady int 
 create table schedul_request(
 	id int IDENTITY (1,1) primary key,
 	WeeksDayId int references weeksday(id),

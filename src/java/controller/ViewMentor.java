@@ -6,15 +6,10 @@
 package controller;
 
 import dao.CategorySkillDao;
-import dao.CourseDao;
 import dao.MentorDao;
-import dao.RequestDao;
 import dao.SkillDao;
 import entity.CategorySkill;
-import entity.Course;
-import entity.Mentee;
 import entity.Mentor;
-import entity.Request;
 import entity.Skill;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,16 +18,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author TUF F15
  */
-@WebServlet(name="ViewMentor", urlPatterns={"/ViewCourse"})
-public class ViewCourse extends HttpServlet {
+@WebServlet(name="ViewMentor", urlPatterns={"/ViewMentor"})
+public class ViewMentor extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -70,32 +63,16 @@ public class ViewCourse extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
+        MentorDao md = new MentorDao();
+        List<Mentor> listM = md.getAllMentorBySkill(id);
         SkillDao sd = new SkillDao();
-        CourseDao cd = new CourseDao();
-        List<Course> listC = cd.getCourseBySkillId(id);
+        Skill skill = sd.searchSkill(id);
         CategorySkillDao csd = new CategorySkillDao();
         List<CategorySkill> listCs = csd.getAllCategorySkill();
-        List<Skill> listS = new ArrayList<>();
-        Skill skill = sd.searchSkill(id);
-        
-        
-        RequestDao rd = new RequestDao();
-        HttpSession session = request.getSession();
-        Mentee mentee = (Mentee) session.getAttribute("mentee");
-        if (mentee != null) {
-            List<Request> reList = rd.getAllRequestOfMentee(mentee.getId());
-            int count = rd.getCountRequest(mentee.getId());
-            request.setAttribute("cnt", count);
-            request.setAttribute("reList", reList);
-            
-
-        }
-        request.setAttribute("listS", listS);
-        request.setAttribute("skill", skill);
-        request.setAttribute("id", id);
         request.setAttribute("listCs", listCs);
-        request.setAttribute("listC", listC);
-        request.getRequestDispatcher("ViewCourse.jsp").forward(request, response);
+        request.setAttribute("listM", listM);
+        request.setAttribute("skill", skill);
+        request.getRequestDispatcher("ViewMentor.jsp").forward(request, response);
     } 
 
     /** 
