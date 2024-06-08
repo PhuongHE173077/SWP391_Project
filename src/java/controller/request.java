@@ -7,11 +7,14 @@ package controller;
 
 import dao.MentorDao;
 import dao.RequestDao;
+import dao.ScheduleDao;
 import dao.SkillDao;
+import dao.WeeksDao;
 
 import entity.Mentee;
 import entity.Mentor;
 import entity.Request;
+import entity.Schedule;
 import entity.Skill;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -74,10 +77,15 @@ public class request extends HttpServlet {
             throws ServletException, IOException {
         
         int id = Integer.parseInt(request.getParameter("id"));
-        CourseDao cd = new CourseDao();
-        Course course = cd.getCourse(id);
-        request.setAttribute("course", course);
-        
+        int sid = Integer.parseInt(request.getParameter("sid"));
+        MentorDao menntorDao = new MentorDao();
+        SkillDao sd = new SkillDao();
+        Mentor m = menntorDao.getMentorByID(id);
+        Skill skill = sd.searchSkill(sid);
+        WeeksDao wd = new WeeksDao();
+        request.setAttribute("listWeek", wd.getListWeeksDay());
+        request.setAttribute("mentor", m);
+        request.setAttribute("skill", skill);
         request.getRequestDispatcher("request.jsp").forward(request, response);
     }
 
@@ -92,23 +100,36 @@ public class request extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int course_id = Integer.parseInt(request.getParameter("id"));
+        int mid = Integer.parseInt(request.getParameter("id"));
+        int sid = Integer.parseInt(request.getParameter("sid"));
         String subject = request.getParameter("subject");
-        int deadLineDay = Integer.parseInt(request.getParameter("deadlineDate"));
+        String deadLineDay = request.getParameter("deadlineDate");
         String content = request.getParameter("content");
+        int Day = Integer.parseInt(request.getParameter("dayNumber"));
+        String timeSchedule[] = request.getParameterValues("key");
         HttpSession session = request.getSession();
         Mentee mentee = (Mentee) session.getAttribute("mentee");
         if (mentee == null) {
             response.sendRedirect("login");
         } else{
-            MentorDao mentorDao = new MentorDao();
-            CourseDao cd = new CourseDao();
-            RequestDao rqDao = new RequestDao();
-            
-            Course course = cd.getCourse(course_id);
-            
-            Request r = new Request(0,course.getMentor(), mentee, subject,deadLineDay, content, "Processing", course);
-            rqDao.addRequest(r);
+            ScheduleDao sd = new ScheduleDao();
+            int[] skillArray = new int[timeSchedule.length];
+            List<Schedule>list = new ArrayList<>();
+            for (int i = 0; i < skillArray.length; i++) {
+                try {
+                    int id = Integer.parseInt(timeSchedule[i]);
+                    Schedule s = sd.getlistScheduleMetorById(id);
+                    list.add(s);
+                } catch (NumberFormatException e) {
+                    // Xử lý lỗi chuyển đổi (nếu có)
+                    e.printStackTrace();
+                }
+            } 
+            SkillDao ssd = new SkillDao();
+            MentorDao md = new MentorDao();
+            RequestDao rd = new RequestDao();
+            Request rq = new Request(0, md.getMentorByID(mid), mentee, subject, deadLineDay, Day, content, ssd.searchSkill(sid), content, list);
+            rd.addRequest(rq);
             response.sendRedirect("home");
         }
     }

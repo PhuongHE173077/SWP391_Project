@@ -18,43 +18,68 @@ import java.util.logging.Logger;
  *
  * @author TUF F15
  */
-public class WeeksDao extends DBContext{
-    public WeeksDay getWeeksday(int id){
-        String sql ="select * from weeksday where id =?";
+public class WeeksDao extends DBContext {
+
+    public WeeksDay getWeeksday(int id) {
+        String sql = "select * from weeksday where id =?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return  new WeeksDay(rs.getInt(1), rs.getString(2));
-                
+                return new WeeksDay(rs.getInt(1), rs.getString(2));
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(WeeksDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    public List<WeeksDay> getListWeeksDayByCid(int cid){
-        String sql="select * from WeeksCourse where cid =?";
+
+    public List<WeeksDay> getListWeeksDay() {
+        String sql = "select * from weeksday ";
         List<WeeksDay> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, cid);
+
             ResultSet rs = st.executeQuery();
-            
-            while (rs.next()) {                
-                WeeksDay w = getWeeksday(rs.getInt(2));
+
+            while (rs.next()) {
+                WeeksDay w = new WeeksDay(rs.getInt(1), rs.getString(2));
                 list.add(w);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(WeeksDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
-    } 
+    }
+
+    public List<WeeksDay> getListWeeksDaybyMid(int id) {
+        String sql = "SELECT DISTINCT WeeksDayId\n"
+                + "FROM [dbo].[schedul_mentor]\n"
+                + "where mid = ? \n"
+                + "ORDER BY WeeksDayId ";
+        List<WeeksDay> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            WeeksDao wd = new WeeksDao();
+            while (rs.next()) {
+                WeeksDay w = wd.getWeeksday(rs.getInt(1));
+                list.add(w);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(WeeksDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         WeeksDao wd = new WeeksDao();
-        List<WeeksDay> list = wd.getListWeeksDayByCid(1);
+        List<WeeksDay> list = wd.getListWeeksDay();
         for (WeeksDay weeksDay : list) {
             System.out.println(weeksDay.getName());
         }

@@ -89,8 +89,6 @@ public class AllCourse extends HttpServlet {
             int count = rd.getCountRequest(mentee.getId());
             request.setAttribute("cnt", count);
             request.setAttribute("reList", reList);
-            
-
         }
         request.setAttribute("listS", listS);
         request.setAttribute("cid", cid);
