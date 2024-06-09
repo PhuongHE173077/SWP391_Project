@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
-	 version="6.0">
-
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <servlet>
+        <servlet-name>loadControll</servlet-name>
+        <servlet-class>controller.loadControll</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailController</servlet-name>
+        <servlet-class>controller.DetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>confirmCV</servlet-name>
+        <servlet-class>controller.confirmCV</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loadControll</servlet-name>
+        <url-pattern>/loadcontroll</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailController</servlet-name>
+        <url-pattern>/detailcontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>confirmCV</servlet-name>
+        <url-pattern>/confirmcv</url-pattern>
+    </servlet-mapping>
 </web-app>

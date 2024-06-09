@@ -74,6 +74,18 @@ public class CvDao extends DBContext {
         }
         return  check;
     }
+    public void updateStatusCV(int mentorid, String status) {
+        String query = "UPDATE [dbo].[Cv_Mentor]\n"
+                + "   SET [status] = ?\n"
+                + " WHERE metor_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setString(1, status);
+            st.setInt(2, mentorid);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
 
     public static void main(String[] args) {
         CvDao cvd = new CvDao();

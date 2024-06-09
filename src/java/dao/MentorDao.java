@@ -48,7 +48,39 @@ public class MentorDao extends DBContext {
 
         return listMentor;
     }
+    public List<Mentor> getAllMentorCVpre() {
+        String sql = "SELECT mentor.*, [User].* FROM mentor INNER JOIN [User] ON mentor.userId = [User].user_id  where [User].status = 'Processing'";
+        List<Mentor> listMentor = new ArrayList<>();
 
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            CvDao cvd = new CvDao();
+            SkillDao sd = new SkillDao();
+            ScheduleMentorDao scd = new ScheduleMentorDao();
+            while (rs.next()) {
+                List<Skill> list = sd.getSkillOfMentor(rs.getInt(1));
+                Mentor mentor = new Mentor(rs.getInt(1), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getDouble(3), rs.getDouble(12), rs.getString(13), cvd.getCvMentorByID(rs.getInt(1)), sd.getSkillOfMentor(rs.getInt(1)), scd.getListScheduleByMentor(rs.getInt(1)));
+                listMentor.add(mentor);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MentorDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return listMentor;
+    }
+    public void updateStatusMentor(int mentorid, String status) {
+        String query = "UPDATE [dbo].[User]\n"
+                + "   SET [status] = ?\n"
+                + " WHERE user_id = (select userId from mentor where mentor_id = ?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setString(1, status);
+            st.setInt(2, mentorid);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
     public Mentor getMentorByID(int id) {
         String sql = "SELECT    mentor.*, [User].*\n"
                 + "FROM         mentor INNER JOIN\n"
