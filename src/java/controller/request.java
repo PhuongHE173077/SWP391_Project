@@ -4,15 +4,17 @@
  */
 package controller;
 
-
 import dao.MentorDao;
+import dao.PaymentDao;
 import dao.RequestDao;
 import dao.ScheduleDao;
 import dao.SkillDao;
+import dao.UserDao;
 import dao.WeeksDao;
 
 import entity.Mentee;
 import entity.Mentor;
+import entity.Payment;
 import entity.Request;
 import entity.Schedule;
 import entity.Skill;
@@ -25,6 +27,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,7 +78,7 @@ public class request extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         int id = Integer.parseInt(request.getParameter("id"));
         int sid = Integer.parseInt(request.getParameter("sid"));
         MentorDao menntorDao = new MentorDao();
@@ -111,10 +114,10 @@ public class request extends HttpServlet {
         Mentee mentee = (Mentee) session.getAttribute("mentee");
         if (mentee == null) {
             response.sendRedirect("login");
-        } else{
+        } else {
             ScheduleDao sd = new ScheduleDao();
             int[] skillArray = new int[timeSchedule.length];
-            List<Schedule>list = new ArrayList<>();
+            List<Schedule> list = new ArrayList<>();
             for (int i = 0; i < skillArray.length; i++) {
                 try {
                     int id = Integer.parseInt(timeSchedule[i]);
@@ -124,13 +127,37 @@ public class request extends HttpServlet {
                     // Xử lý lỗi chuyển đổi (nếu có)
                     e.printStackTrace();
                 }
-            } 
+            }
             SkillDao ssd = new SkillDao();
             MentorDao md = new MentorDao();
             RequestDao rd = new RequestDao();
-            Request rq = new Request(0, md.getMentorByID(mid), mentee, subject, deadLineDay, Day, content, ssd.searchSkill(sid), "Processing", list);
-            rd.addRequest(rq);
-            response.sendRedirect("home");
+            UserDao ud = new UserDao();
+            PaymentDao pd = new PaymentDao();
+            Request rq = new Request(0, md.getMentorByID(mid), mentee, subject, deadLineDay, Day, content, ssd.searchSkill(sid), content, list);
+            if (mentee.getBalance() < rq.getTotal()) {
+                MentorDao menntorDao = new MentorDao();
+                Mentor m = menntorDao.getMentorByID(mid);
+                Skill skill = ssd.searchSkill(sid);
+                WeeksDao wd = new WeeksDao();
+                request.setAttribute("listWeek", wd.getListWeeksDay());
+                request.setAttribute("mentor", m);
+                request.setAttribute("skill", skill);
+                String error = "So du khong du";
+                request.setAttribute("error", error);
+                request.getRequestDispatcher("request.jsp").forward(request, response);
+            } else {
+                rd.addRequest(rq);
+                ud.removeMoney(mentee, rq.getTotal());
+
+                LocalDateTime currentDateTime = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String formattedDateTime = currentDateTime.format(formatter);
+
+                Payment payment = new Payment(sid, rd.getTop1Rq(), rq.getTotal(), formattedDateTime, content);
+                pd.addPayment(payment);
+//                String announce = "Tru tien thanh cong";
+                request.getRequestDispatcher("payment").forward(request, response);
+            }
         }
     }
 

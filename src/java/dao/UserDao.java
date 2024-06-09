@@ -154,4 +154,17 @@ public class UserDao extends DBContext {
         return null;
     }
 
+    public void removeMoney(Mentee mentee, double money) {
+        String sql = "UPDATE [dbo].[User]\n"
+                + "   SET [balance] = ?\n"
+                + " WHERE [user_id] = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setDouble(1, mentee.getBalance() - money);
+            ps.setInt(2, mentee.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }

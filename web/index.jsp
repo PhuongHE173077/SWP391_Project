@@ -107,7 +107,8 @@
                                         <option value="0">${c.name}</option>
                                         <option value="1">My Profile</option>
                                         <option value="2">Change Password</option>
-                                        <option value="3">Logout</option>
+                                        <option value="3">Payment history</option>
+                                        <option value="4">Logout</option>
                                     </select>
                                 </form>
                                 <li><a href="#"><i class="fa fa-dollar"></i> USD: ${c.balance} $</a></li>

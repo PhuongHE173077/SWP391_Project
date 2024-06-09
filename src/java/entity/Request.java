@@ -120,21 +120,10 @@ public class Request {
     public void setSchedule(List<Schedule> schedule) {
         this.schedule = schedule;
     }
-
-    
-    
-   
-    
-
-   
-
-    
-
     
     
     
-
-    
-    
-    
+    public double getTotal() {
+        return mentor.getPrice() * day_number;
+    }    
 }
