@@ -56,6 +56,28 @@ public class ScheduleMentorDao extends DBContext {
         
         return list;
     }
+    public List<TimeSlot> getTimeSlotInDay(int Wid, int mid) {
+        String sql = "SELECT *\n"
+                + "FROM [dbo].[schedul_mentor]\n"
+                + "where mid = ? and WeeksDayId =? \n"
+                + "ORDER BY WeeksDayId ";
+        List<TimeSlot> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, mid);
+            st.setInt(2,Wid);
+            ResultSet rs =st.executeQuery();
+            TimeSlotDao tsd = new TimeSlotDao();
+            while (rs.next()) {
+                TimeSlot t = tsd.getTimeSlotByid(rs.getInt(3));
+                list.add(t);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleMentorDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
     public static void main(String[] args) {
         ScheduleMentorDao scmd = new ScheduleMentorDao();
         List<ScheduleMentor> list = scmd.getListScheduleByMentor(6);

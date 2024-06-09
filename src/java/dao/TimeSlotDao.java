@@ -9,6 +9,8 @@ import entity.TimeSlot;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,5 +33,21 @@ public class TimeSlotDao extends DBContext{
             Logger.getLogger(TimeSlotDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+     public List<TimeSlot> getTimeSlot(){
+        String sql = "select * from timeSlot "; 
+        List<TimeSlot> list = new ArrayList<>();
+        try {
+           
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                TimeSlot ts = new TimeSlot(rs.getInt(1), rs.getString(2));
+                 list.add(ts);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TimeSlotDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 }

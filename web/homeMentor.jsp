@@ -281,7 +281,7 @@
                                                     <div class="d-none d-xl-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
                                                         <i class="mdi mdi-calendar-heart icon-lg me-3 text-primary"></i>
                                                         <div class="d-flex flex-column justify-content-around">
-                                                            <a href="url" style="text-decoration: none"><small class="mb-1 text-muted">Schedule</small></a>
+                                                            <a href="schedule" style="text-decoration: none"><small class="mb-1 text-muted">Schedule</small></a>
 
                                                         </div>
                                                     </div>
