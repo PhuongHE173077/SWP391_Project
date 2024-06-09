@@ -212,151 +212,151 @@ Author     : Dell
     </script>
 </head>
 <body>
-         <!-- HEADER -->
-        <header>
-            <!-- TOP HEADER -->
-            <div id="top-header">
-                <div class="container">
-                    <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> 012346789</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> phuongddhe173077@fpt.edu.vn</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> FPT University</a></li>
-                    </ul>
-                    <ul class="header-links pull-right">
+    <!-- HEADER -->
+    <header>
+        <!-- TOP HEADER -->
+        <div id="top-header">
+            <div class="container">
+                <ul class="header-links pull-left">
+                    <li><a href="#"><i class="fa fa-phone"></i> 012346789</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> phuongddhe173077@fpt.edu.vn</a></li>
+                    <li><a href="#"><i class="fa fa-map-marker"></i> FPT University</a></li>
+                </ul>
+                <ul class="header-links pull-right">
 
-                        <c:set value="${sessionScope.mentee}" var="c"/>
-                        <c:choose>
-                            <c:when test="${empty c}">
-                                <li><a href="login" style="font-size: 16px;"><i class="fa fa-user-o"> Login</i></a></li>
-                                <li><i style="font-size: 16px;" class="fa "> / </i></li>
-                                <li><a href="login.jsp" style="font-size: 16px;"><i class="fa "> Sing up </i></a></li>
-                                </c:when>
-                                <c:otherwise>
-                                <form id="f2" action="directional">
-                                    <li><i class="fa fa-user-o"></i></li>
-                                    <select name="key" onchange="change()">
-                                        <option value="0">${c.name}</option>
-                                        <option value="1">My Profile</option>
-                                        <option value="2">Change Password</option>
-                                        <option value="3">Logout</option>
-                                    </select>
-                                </form>
-                                <li><a href="#"><i class="fa fa-dollar"></i> USD: ${c.balance} $</a></li>
-                                </c:otherwise>
+                    <c:set value="${sessionScope.mentee}" var="c"/>
+                    <c:choose>
+                        <c:when test="${empty c}">
+                            <li><a href="login" style="font-size: 16px;"><i class="fa fa-user-o"> Login</i></a></li>
+                            <li><i style="font-size: 16px;" class="fa "> / </i></li>
+                            <li><a href="login.jsp" style="font-size: 16px;"><i class="fa "> Sing up </i></a></li>
+                            </c:when>
+                            <c:otherwise>
+                            <form id="f2" action="directional">
+                                <li><i class="fa fa-user-o"></i></li>
+                                <select name="key" onchange="change()">
+                                    <option value="0">${c.name}</option>
+                                    <option value="1">My Profile</option>
+                                    <option value="2">Change Password</option>
+                                    <option value="3">Logout</option>
+                                </select>
+                            </form>
+                            <li><a href="#"><i class="fa fa-dollar"></i> USD: ${c.balance} $</a></li>
+                            </c:otherwise>
 
-                        </c:choose>
+                    </c:choose>
 
-                    </ul>
+                </ul>
 
-                </div>
             </div>
-            <!-- /TOP HEADER -->
+        </div>
+        <!-- /TOP HEADER -->
 
-            <!-- MAIN HEADER -->
-            <div id="header">
-                <!-- container -->
-                <div class="container">
-                    <!-- row -->
-                    <div class="row">
-                        <!-- LOGO -->
-                        <div class="col-md-3">
-                            <div class="header-logo">
-                                <a href="home" class="logo">
-                                    <img src="./img/logo.png" alt="">
+        <!-- MAIN HEADER -->
+        <div id="header">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <!-- LOGO -->
+                    <div class="col-md-3">
+                        <div class="header-logo">
+                            <a href="home" class="logo">
+                                <img src="./img/logo.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /LOGO -->
+
+                    <!-- SEARCH BAR -->
+                    <div class="col-md-6">
+                        <div class="header-search">
+                            <form>
+                                <select class="input-select">
+                                    <option value="0">Course Name</option>
+                                    <option value="1">Mentor Name</option>
+
+                                </select>
+                                <input class="input" placeholder="Search here">
+                                <button class="search-btn">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /SEARCH BAR -->
+
+                    <!-- ACCOUNT -->
+                    <div class="col-md-3 clearfix">
+                        <div class="header-ctn">
+                            <!-- Wishlist -->
+                            <div>
+                                <a href="#">
+                                    <i class="fa fa-heart-o"></i>
+                                    <span>Your Wishlist</span>
+                                    <div class="qty">2</div>
                                 </a>
                             </div>
-                        </div>
-                        <!-- /LOGO -->
+                            <!-- /Wishlist -->
 
-                        <!-- SEARCH BAR -->
-                        <div class="col-md-6">
-                            <div class="header-search">
-                                <form>
-                                    <select class="input-select">
-                                        <option value="0">Course Name</option>
-                                        <option value="1">Mentor Name</option>
-
-                                    </select>
-                                    <input class="input" placeholder="Search here">
-                                    <button class="search-btn">Search</button>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- /SEARCH BAR -->
-
-                        <!-- ACCOUNT -->
-                        <div class="col-md-3 clearfix">
-                            <div class="header-ctn">
-                                <!-- Wishlist -->
-                                <div>
-                                    <a href="#">
-                                        <i class="fa fa-heart-o"></i>
-                                        <span>Your Wishlist</span>
-                                        <div class="qty">2</div>
-                                    </a>
-                                </div>
-                                <!-- /Wishlist -->
-
-                                <!-- Cart -->
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                        <i class="fa fa-vcard"></i>
-                                        <span>Your Request</span>
-                                        <div class="qty">${cnt}</div>
-                                    </a>
-                                    <c:if test="${cnt > 0}">
-                                        <div class="cart-dropdown">
-                                            <div class="cart-list">
-                                                <div class="product-widget">
-                                                    <c:forEach items="${requestScope.reList}" var="re">
-                                                        <div class="product-img">
-                                                            <img src="${re.course.skill.images}" alt="">
-                                                        </div>
-                                                        <div class="product-body">
-                                                            <h3 class="product-name"><a href="#">${re.course.courseName}</a></h3>
-                                                            <h4 class="product-price">
-                                                                <span class="qty">${re.status} </span>
-                                                            </h4>
-                                                        </div>
-                                                    </c:forEach>
-
-
-                                                </div>
+                            <!-- Cart -->
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="fa fa-vcard"></i>
+                                    <span>Your Request</span>
+                                    <div class="qty">${cnt}</div>
+                                </a>
+                                <c:if test="${cnt > 0}">
+                                    <div class="cart-dropdown">
+                                        <div class="cart-list">
+                                            <div class="product-widget">
+                                                <c:forEach items="${requestScope.reList}" var="re">
+                                                    <div class="product-img">
+                                                        <img src="${re.skill.images}" alt="">
+                                                    </div>
+                                                    <div class="product-body">
+                                                        <h3 class="product-name"><a href="#">${re.skill.skill}</a></h3>
+                                                        <h4 class="product-price">
+                                                            <span class="qty">${re.status} </span>
+                                                        </h4>
+                                                    </div>
+                                                </c:forEach>
 
 
                                             </div>
-                                            <div class="cart-summary">
-                                                <small>${cnt} Item(s) selected</small>
-                                            </div>
-                                            <div class="cart-summary">
 
-                                                <a href="ViewRequest">View Request  <i class="fa fa-arrow-circle-right"></i></a>
-                                            </div>
+
                                         </div>
-                                    </c:if>
+                                        <div class="cart-summary">
+                                            <small>${cnt} Item(s) selected</small>
+                                        </div>
+                                        <div class="cart-summary">
 
-                                </div>
-                                <!-- /Cart -->
+                                            <a href="ViewRequest">View Request  <i class="fa fa-arrow-circle-right"></i></a>
+                                        </div>
+                                    </div>
+                                </c:if>
 
-                                <!-- Menu Toogle -->
-                                <div class="menu-toggle">
-                                    <a href="#">
-                                        <i class="fa fa-bars"></i>
-                                        <span>Menu</span>
-                                    </a>
-                                </div>
-                                <!-- /Menu Toogle -->
                             </div>
+                            <!-- /Cart -->
+
+                            <!-- Menu Toogle -->
+                            <div class="menu-toggle">
+                                <a href="#">
+                                    <i class="fa fa-bars"></i>
+                                    <span>Menu</span>
+                                </a>
+                            </div>
+                            <!-- /Menu Toogle -->
                         </div>
-                        <!-- /ACCOUNT -->
                     </div>
-                    <!-- row -->
+                    <!-- /ACCOUNT -->
                 </div>
-                <!-- container -->
+                <!-- row -->
             </div>
-            <!-- /MAIN HEADER -->
-        </header>
-        <!-- /HEADER -->
+            <!-- container -->
+        </div>
+        <!-- /MAIN HEADER -->
+    </header>
+    <!-- /HEADER -->
 
     <!-- NAVIGATION -->
     <nav id="navigation">
@@ -402,7 +402,7 @@ Author     : Dell
                             <tr>
                                 <th>#</th>
                                 <th>Subject <i class="fa fa-sort"></i></th>
-                                <th>Course</th>
+                                <th>Skill</th>
                                 <th>Dealine Date<i class="fa fa-sort"></i></th>
                                 <th>description <i class="fa fa-sort"></i></th>
                                 <th>Status</th>
@@ -417,19 +417,19 @@ Author     : Dell
                                     <td>${count}</td>
                                     <td>${rl.subject}</td>
                                     <td>
-                                        ${rl.course.courseName}
+                                        ${rl.skill.skill}
                                     </td>
                                     <td>${rl.deadlineday} </td>
                                     <td>${rl.content}</td>
                                     <td>${rl.status}</td>
                                     <td>
-                                        <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
+                                        <a href="view?id=${rl.id}" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
                                         <c:if test="${rl.status eq 'Processing'}">
-                                             <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                            <a href="edit?id=${rl.id}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                            <a href="delete?id=${rl.id}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                         </c:if>
-                                        
-                                       
+
+
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -440,7 +440,7 @@ Author     : Dell
                         <td> Total hour: ${total}</td>-->
                     </table>
                     <div class="clearfix">
-                       
+
                     </div>
                 </div>
             </div>        

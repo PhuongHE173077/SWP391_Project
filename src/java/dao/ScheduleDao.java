@@ -96,6 +96,16 @@ public class ScheduleDao extends DBContext {
         }  
         return check;
     }
+    public void deleteSchedul(int id) {//bien request
+        String query = "delete from schedul_request where rid = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            
+        }
+    }
 
     public static void main(String[] args) {
         ScheduleDao sc = new ScheduleDao();

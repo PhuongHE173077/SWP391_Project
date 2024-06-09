@@ -348,13 +348,14 @@
                             <c:forEach items="${requestScope.listM}" var="lc">
 
                                 <div class="col-md-4 col-xs-6">
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="${lc.picture}" alt="">
+                                    <div class="product" >
+                                        <a class="product-img" href="viewCVMentor?id=${lc.id}">
+                                            
+                                            <img src="${lc.picture}"  alt="">
                                             <div class="product-label">
 
                                             </div>
-                                        </div>
+                                        </a>
                                         <div class="product-body">
                                             <a href="url"><p class="product-category"><i class="fa fa-user"></i> <c:forEach items="${lc.skillList}" var="ls">${ls.skill}/</c:forEach></p></a>
                                             <h3 class="product-name"><a href="ViewMentor?id">${lc.name}</a></h3><!--view file-->

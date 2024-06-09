@@ -161,6 +161,62 @@ public class RequestDao extends DBContext {
         return check;
 
     }
+    public void deleteRequest(int id) {//bien request
+        String query = "delete from request where id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+
+    //ham sua
+    public Request getRequestById(int id) {
+        String query = "select * from request where id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            ScheduleDao sd = new ScheduleDao();
+            MentorDao mentor = new MentorDao();
+            MenteeDao mentee = new MenteeDao();
+            SkillDao ssd = new SkillDao();
+            if (rs.next()) {
+
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)));
+                return rq;
+            }
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(RequestDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+    public boolean editRequest(Request r) {
+        boolean check = false;
+        String query = "UPDATE [dbo].[request]\n"
+                + "   SET [subject] = ?\n"
+                + "      ,[DeadlineDay] = ?\n"
+                + "      ,[content] = ?\n"
+                + "      ,[number_stady] = ?\n"
+                + " WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setString(1, r.getSubject());
+            st.setString(2, r.getDeadlineday());
+            st.setString(3, r.getContent());
+            st.setInt(4, r.getDay_number());
+            st.setInt(5, r.getId());
+            st.executeUpdate();
+            check = true;
+        } catch (SQLException e) {
+        }
+        return check;
+    }
     
 
     public static void main(String[] args) {
