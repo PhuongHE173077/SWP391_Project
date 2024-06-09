@@ -338,3 +338,46 @@ UPDATE [dbo].[User]
       [img] = 'img/dungtt.png'
       
  WHERE user_id = 11
+
+ UPDATE [dbo].[mentor]
+   SET [price] = 400
+ WHERE  mentor_id = 1
+
+UPDATE [dbo].[mentor]
+   SET [price] = 350
+ WHERE mentor_id = 2
+
+ UPDATE [dbo].[mentor]
+   SET [price] = 450
+ WHERE  mentor_id = 3
+
+ UPDATE [dbo].[mentor]
+   SET [price] = 500
+ WHERE  mentor_id =4 
+
+ UPDATE [dbo].[mentor]
+   SET [price] = 400
+ WHERE  mentor_id = 5
+
+ UPDATE [dbo].[mentor]
+   SET [price] = 350
+ WHERE  mentor_id = 6
+
+ UPDATE [dbo].[mentor]
+   SET [price] = 450
+ WHERE  mentor_id = 7
+
+ UPDATE [dbo].[mentor]
+   SET [price] = 400
+ WHERE  mentor_id = 8
+
+ UPDATE [dbo].[mentor]
+   SET [price] = 450
+ WHERE  mentor_id = 9
+
+ UPDATE [dbo].[mentor]
+   SET [price] = 400
+ WHERE  mentor_id = 10
+
+
+

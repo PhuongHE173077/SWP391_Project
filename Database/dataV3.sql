@@ -63,13 +63,7 @@ create table timeSlot(
 		name nvarchar(max),
 		
 	)
-create table schedul_mentor(
-	id int IDENTITY (1,1) primary key,
-	WeeksDayId int references weeksday(id),
-	timeId int references timeSlot(id),
-	mid int references mentor(mentor_id),
-	status nvarchar(max), 
-)
+
 
 
 
