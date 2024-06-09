@@ -15,6 +15,7 @@ import entity.Skill;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
  * @author TUF F15
  */
 @WebServlet(name = "RegisterCv", urlPatterns = {"/registerCv"})
+@MultipartConfig
 public class RegisterCv extends HttpServlet {
 
     /**
