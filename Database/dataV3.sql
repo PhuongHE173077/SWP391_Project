@@ -63,7 +63,13 @@ create table timeSlot(
 		name nvarchar(max),
 		
 	)
-
+create table schedul_mentor(
+	id int IDENTITY (1,1) primary key,
+	WeeksDayId int references weeksday(id),
+	timeId int references timeSlot(id),
+	mid int references mentor(mentor_id),
+	status nvarchar(max), 
+)
 
 
 
@@ -101,13 +107,7 @@ create table payment(
 	date_payment nvarchar (max),
 	status nvarchar(max)
 	)
-	create table class(
-		id int IDENTITY (1,1)primary key,
-		request_id int references request(id),
-		schedul_id int references schedul(id),
-		status nvarchar(max)
-		 
-	)
+	
 	
 	create table categorySkill(
 		id int primary key,
