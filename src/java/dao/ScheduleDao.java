@@ -59,7 +59,7 @@ public class ScheduleDao extends DBContext {
 
     public List<Schedule> getlistScheduleByInRequest(int id) {
         List<Schedule> list = new ArrayList<>();
-        String sql = "select * from	schedul_request where rid =1";
+        String sql = "select * from schedul_request where rid =1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);

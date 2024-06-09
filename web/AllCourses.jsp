@@ -198,10 +198,10 @@
                                                 <div class="product-widget">
                                                     <c:forEach items="${requestScope.reList}" var="re">
                                                         <div class="product-img">
-                                                            <img src="${re.course.skill.images}" alt="">
+                                                            <img src="${re.skill.images}" alt="">
                                                         </div>
                                                         <div class="product-body">
-                                                            <h3 class="product-name"><a href="#">${re.course.courseName}</a></h3>
+                                                            <h3 class="product-name"><a href="#">${re.skill.skill}</a></h3>
                                                             <h4 class="product-price">
                                                                 <span class="qty">${re.status} </span>
                                                             </h4>

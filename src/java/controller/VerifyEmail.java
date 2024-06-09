@@ -101,11 +101,9 @@ public class VerifyEmail extends HttpServlet {
             }else{
                 md.adaMentor(user, 0);
                 Mentor m = md.getMentorByUserID(user.getId());
-                request.setAttribute("mentor", m);
-                SkillDao sd = new SkillDao();
-                List<Skill>list = sd.getAllSkill();
-                request.setAttribute("sk", list);
-                request.getRequestDispatcher("Cv_insert.jsp").forward(request, response);
+                session.setAttribute("mentor", m);
+                
+                response.sendRedirect("registerCv");
             }
             
         }else{

@@ -56,19 +56,17 @@
 
         <div class="container rounded bg-white mt-5 mb-5 p-4 shadow-sm">
             <h3 style="font-family: arial">Import the your Cv: </h3>
-            <form action="updateProfile" method="post" enctype="multipart/form-data">
+            <form action="registerCv" method="post" >
                 <div class="row">
                     <div class="col-md-4 text-center">
                         <div class="profile-picture-container">
                             <img id="profile-picture" class="img-account-profile rounded-circle mb-2"
-                                 src="https://th.bing.com/th/id/OIP.1waDZ8Q2eWBkenMscI08qAHaHa?w=188&h=188&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+                                 src="${mentee.picture}?${System.currentTimeMillis()}"
                                  alt="Profile Picture"
                                  style="width: 150px; height: 150px; object-fit: cover;">
-                            <div class="small font-italic text-muted mb-4" style="margin-top: 10px;">Inprort your image in your profile </div>
-                            <button type="button" class="btn btn-primary btn-sm change-photo-button" 
-                                    onclick="document.getElementById('file-input').click();">
-                                update Image
-                            </button>
+                            <div class="small font-italic text-muted mb-4" style="margin-top: 10px;">JPG or PNG no larger than 5 MB</div>
+                            <button class="btn btn-primary profile-button" type="button" onclick="document.getElementById('file-input').click();" style="margin-top: 10px;">Upload new image</button>
+                            <input type="file" id="file-input" name="profilePicture" style="display: none;" accept="image/*" onchange="loadFile(event)">
                         </div>
                         <input type="file" id="file-input" name="profilePicture" style="display: none;" 
                                accept="image/*" onchange="loadFile(event)" required>

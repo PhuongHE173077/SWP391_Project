@@ -128,7 +128,7 @@ public class request extends HttpServlet {
             SkillDao ssd = new SkillDao();
             MentorDao md = new MentorDao();
             RequestDao rd = new RequestDao();
-            Request rq = new Request(0, md.getMentorByID(mid), mentee, subject, deadLineDay, Day, content, ssd.searchSkill(sid), content, list);
+            Request rq = new Request(0, md.getMentorByID(mid), mentee, subject, deadLineDay, Day, content, ssd.searchSkill(sid), "Processing", list);
             rd.addRequest(rq);
             response.sendRedirect("home");
         }
