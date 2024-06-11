@@ -173,7 +173,7 @@
                                 <span class="nav-profile-name">${mentor.name}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                                <a class="dropdown-item">
+                                <a href="viewCVMentor?id=${mentor.id}" class="dropdown-item">
                                     <i class="mdi mdi-account text-primary"></i>
                                     My Cv
                                 </a>
@@ -259,7 +259,7 @@
                                             <i class="mdi mdi-plus text-muted"></i>
                                         </button>
                                     
-                                        <button class="btn btn-primary mt-2 mt-xl-0"><a href="url" style="text-decoration: none; color: black">Create Course</a></button>
+                                        <button class="btn btn-primary mt-2 mt-xl-0"><a href="schedule" style="text-decoration: none; color: black">Update Schedule</a></button
                                     </div>
                                 </div>
                             </div>

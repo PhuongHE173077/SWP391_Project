@@ -41,9 +41,23 @@
             .save-button:hover {
                 background-color: #45a049; /* Màu xanh lá đậm hơn khi hover */
             }
-
+            
+            
 
         </style>
+        <script>
+                // This script will run when the page loads
+                window.onload = function () {
+                    // Get the error message from the JSP attribute
+                    var erro = '<%= request.getAttribute("thongbao") != null ? request.getAttribute("thongbao") : "" %>';
+
+                    // Check if there is an error message
+                    if (erro.trim() !== "") {
+                        // Display the error message
+                        alert(erro);
+                    }
+                }
+            </script>
         <script type="text/javascript">
             function change() {
                 document.getElementById("f2").submit();
@@ -121,7 +135,7 @@
                                 
                             </div>
                                                 <div class="button-container">
-                                    <button class="save-button">Save</button>
+                                                    <button type="submit" >Save</button>
                                 </div>
 </form>
 
@@ -138,10 +152,17 @@
                                 </div>
                             </div>
                             <div class="card">
+                                <c:set value="${sessionScope.mentor}" var="me"/>
                                 <div class="card-body">
-                                    <h6 class="card-title font-weight-bold">Mentor </h6>
-                                    <p class="card-text">${mentor.skill}</p>
-                                    <p class="card-text">${skill.skill}</p>
+                                    <h6 class="card-title font-weight-bold">Your schedule of Mentor </h6>
+                                    <c:forEach items="${me.schedule}" var="mch">
+                                    <h5 class="card-text">${mch.weeksday.name}</h5>
+                                    <c:forEach items="${mch.listTime}" var="mt">
+                                        <p>${mt.name}</p>
+                                    </c:forEach>
+                                    
+                                </c:forEach>
+                                    
 
                                 </div>
                             </div>

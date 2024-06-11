@@ -116,6 +116,9 @@
                                                                                 Time slot
                                                                             </div>
                                                                         </div>
+                                                                            <c:if test="${requestScope.mentor.schedule eq null}">
+                                                                                
+                                                                            </c:if>
                                                                         
                                                                         <c:forEach items="${requestScope.mentor.schedule}" var="lsch">
                                                                             <div class="row" style="border: 1px solid gainsboro; margin-bottom: 10px;border-radius: 10px;">

@@ -349,7 +349,7 @@
 
                                 <div class="col-md-4 col-xs-6">
                                     <div class="product" >
-                                        <a class="product-img" href="viewCVMentor?id=${lc.id}">
+                                        <a class="product-img" href="viewCVMentor?id=${lc.id}&sid=${skill.id}">
                                             
                                             <img src="${lc.picture}"  alt="">
                                             <div class="product-label">

@@ -133,7 +133,7 @@ public class request extends HttpServlet {
             RequestDao rd = new RequestDao();
             UserDao ud = new UserDao();
             PaymentDao pd = new PaymentDao();
-            Request rq = new Request(0, md.getMentorByID(mid), mentee, subject, deadLineDay, Day, content, ssd.searchSkill(sid), content, list);
+            Request rq = new Request(0, md.getMentorByID(mid), mentee, subject, deadLineDay, Day, content, ssd.searchSkill(sid), "Processing", list);
             if (mentee.getBalance() < rq.getTotal()) {
                 MentorDao menntorDao = new MentorDao();
                 Mentor m = menntorDao.getMentorByID(mid);

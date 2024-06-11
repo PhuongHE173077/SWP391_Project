@@ -5,6 +5,7 @@
 package controller;
 
 import dao.CvDao;
+import dao.MentorDao;
 import dao.SkillDao;
 import dao.SkillDetailDao;
 import entity.CvMentor;
@@ -119,7 +120,7 @@ public class RegisterCv extends HttpServlet {
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
         }
-
+        MentorDao mentorDao = new MentorDao();
         Path filePath = Paths.get(uploadFilePath, fileName);
         boolean redirectToHome = false;
         if (filePart != null && filePart.getSize() > 0) {
@@ -134,7 +135,7 @@ public class RegisterCv extends HttpServlet {
                 mentor.setCv(cvd);
                 cv.addCvMentor(mentor);
                 SkillDetailDao sdt = new SkillDetailDao();
-                
+                mentorDao.updateImgMentor(mentor.getId(), cvd.getImg());
                 List<Skill> list = listSkill(skills);
                 for (Skill skill : list) {
                     sdt.addSkillDetail(mentor.getId(), skill);

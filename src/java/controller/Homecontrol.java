@@ -68,7 +68,7 @@ public class Homecontrol extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+                String tbao = (String) request.getAttribute("tbao");
         SkillDao sd = new SkillDao();
         List<Skill> listTop = sd.getTopSkill();
         CategorySkillDao csd = new CategorySkillDao();
@@ -83,6 +83,7 @@ public class Homecontrol extends HttpServlet {
             request.setAttribute("reList", reList);
 
         }
+        request.setAttribute("tbao", tbao);
         request.setAttribute("listT", listTop);
         request.setAttribute("listCs", listCs);
         request.setAttribute("listTop", listTop);
@@ -100,7 +101,9 @@ public class Homecontrol extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String tbao = (String) request.getAttribute("tbao");
+        request.setAttribute("tbao", tbao);
+        response.sendRedirect("home");
     }
 
     /**

@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.MentorDao;
 import dao.ScheduleDao;
 import dao.ScheduleMentorDao;
 import dao.SkillDao;
@@ -134,7 +135,7 @@ public class Schedule extends HttpServlet {
         }
         WeeksDao wd = new WeeksDao();
         
-            int idw = 1;
+            int idw = wid;
             WeeksDay w = wd.getWeeksday(idw);
             ScheduleMentorDao scd = new ScheduleMentorDao();
             List<TimeSlot> listSch = scd.getTimeSlotInDay(idw, m.getId());
@@ -144,7 +145,10 @@ public class Schedule extends HttpServlet {
             request.setAttribute("listW", wd.getListWeeksDay());
             request.setAttribute("list", list);
             request.setAttribute("week", w);
-            request.setAttribute("thongbao", "Update sccesfully");
+            MentorDao md = new MentorDao();
+            Mentor me = md .getMentorByID(m.getId());
+            session.setAttribute("mentor", me);
+            request.setAttribute("thongbao", "Update sccesfully!!");
             request.getRequestDispatcher("schedule.jsp").forward(request, response);
     }
 

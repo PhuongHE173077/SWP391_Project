@@ -357,7 +357,7 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <a href="request?id=${lc.id}" > <button class="add-to-cart-btn"><i class="fa fa-send"></i> View Mentor Request</button> </a>
+                                            <a href="ViewMentor?id=${lc.id}" > <button class="add-to-cart-btn"><i class="fa fa-send"></i> View Mentor Request</button> </a>
 
                                         </div>
                                     </div>

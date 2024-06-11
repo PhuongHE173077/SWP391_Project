@@ -58,7 +58,7 @@ public class ScheduleMentorDao extends DBContext {
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, mid);
+            st.setInt(1, Wid);
             st.setInt(2, timeid);
             st.setInt(3, mid);
             st.setString(4, status);

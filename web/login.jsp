@@ -47,6 +47,22 @@
                     }
                 }
             </script>
+            <script type="text/javascript">
+                window.onload = function () {
+                    // Retrieve the value of the "thongbao" attribute from the JSP request
+                   var error = '<%= request.getAttribute("thongbao") != null ? request.getAttribute("thongbao") : "" %>';
+
+                    // If the "error" value is not null or empty, display the confirmation dialog
+                    if ( error.trim() !== "") {
+                        // Show the confirmation dialog and wait for user response
+                        if (confirm(error +". Do you want to update your CV?")) {
+                            // Redirect to anotherPage.jsp if the user confirms
+                            window.location.href = "updateCvMentor";
+                        }
+                    }
+                };
+            </script>
+
         </head>
         <body>
             <div class="container-scroller">
