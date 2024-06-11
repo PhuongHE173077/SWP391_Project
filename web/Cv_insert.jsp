@@ -56,8 +56,8 @@
 
         <div class="container rounded bg-white mt-5 mb-5 p-4 shadow-sm">
             <h3 style="font-family: arial">Import the your Cv: </h3>
-            <form action="registerCv" method="post" >
-                <div class="row">
+            <form action="registerCv" method="post" enctype="multipart/form-data">
+                <div class="row" >
                     <div class="col-md-4 text-center">
                         <div class="profile-picture-container">
                             <img id="profile-picture" class="img-account-profile rounded-circle mb-2"

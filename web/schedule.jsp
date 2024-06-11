@@ -106,7 +106,7 @@
                                                                     <c:set var="isChecked" value="true" />
                                                                 </c:if>
                                                             </c:forEach>
-                                                            <input class="form-check-input" type="checkbox" id="checkbox${listItem.id}" value="${listItem.id}" ${isChecked ? 'checked' : ''} />
+                                                            <input class="form-check-input" type="checkbox" name="skill" id="checkbox${listItem.id}" value="${listItem.id}" ${isChecked ? 'checked' : ''} />
                                                             <label class="form-check-label" for="checkbox${listItem.id}">${listItem.name}</label>
                                                         </div>
                                                     </c:forEach>
@@ -140,7 +140,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title font-weight-bold">Mentor </h6>
-                                    <img style="width:140px" src="" alt="alt"/>
+                                    <p class="card-text">${mentor.skill}</p>
                                     <p class="card-text">${skill.skill}</p>
 
                                 </div>

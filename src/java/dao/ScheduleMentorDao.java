@@ -33,7 +33,41 @@ public class ScheduleMentorDao extends DBContext {
         return list;
 
     }
+    public void deleteShedule(int Wid, int mid) {
+        String sql = "delete schedul_mentor where mid =? and WeeksDayId = ?";
 
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, mid);
+            st.setInt(2, Wid);
+            st.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleMentorDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void addShedule(int Wid, int timeid, int mid, String status) {
+        String sql = "INSERT INTO [dbo].[schedul_mentor]\n"
+                + "           ([WeeksDayId]\n"
+                + "           ,[timeId]\n"
+                + "           ,[mid]\n"
+                + "           ,[status])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?)";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, mid);
+            st.setInt(2, timeid);
+            st.setInt(3, mid);
+            st.setString(4, status);
+            st.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleMentorDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public List<TimeSlot> getTimeSlotShedule(int Wid, int mid) {
         String sql = "SELECT *\n"
                 + "FROM [dbo].[schedul_mentor]\n"
