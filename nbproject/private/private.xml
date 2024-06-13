@@ -14,17 +14,14 @@
             <file>file:/D:/Ilter2/SWP391_Project/src/java/controller/ViewCVMentor.java</file>
         </group>
         <group>
-            <file>file:/D:/SWP391%20(2)/SWP391_Project/src/java/dao/RequestDao.java</file>
-            <file>file:/D:/SWP391%20(2)/SWP391_Project/web/request.jsp</file>
-            <file>file:/D:/SWP391%20(2)/SWP391_Project/src/java/dao/PaymentDao.java</file>
-            <file>file:/D:/SWP391%20(2)/SWP391_Project/web/Payment.jsp</file>
-            <file>file:/D:/SWP391%20(2)/SWP391_Project/src/java/controller/PaymentController.java</file>
-        </group>
-        <group>
             <file>file:/F:/SWP391/SWP391_Project/src/java/controller/loadControll.java</file>
             <file>file:/F:/SWP391/SWP391_Project/src/java/controller/DetailController.java</file>
             <file>file:/F:/SWP391/SWP391_Project/src/java/controller/confirmCV.java</file>
             <file>file:/F:/SWP391/SWP391_Project/web/detail.jsp</file>
+        </group>
+        <group>
+            <file>file:/F:/SWP391/SWP391_Project/src/java/service/SendEmail.java</file>
+            <file>file:/F:/SWP391/SWP391_Project/src/java/controller/confirmCV.java</file>
         </group>
     </open-files>
 </project-private>
