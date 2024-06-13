@@ -74,6 +74,19 @@
             }
 
         </style>
+        <script>
+                // This script will run when the page loads
+                window.onload = function () {
+                    // Get the error message from the JSP attribute
+                    var erro = '<%= request.getAttribute("tbao") != null ? request.getAttribute("tbao") : "" %>';
+
+                    // Check if there is an error message
+                    if (erro.trim() !== "") {
+                        // Display the error message
+                        alert(erro);
+                    }
+                }
+            </script>
         <script type="text/javascript">
             function change() {
                 document.getElementById("f2").submit();
@@ -107,7 +120,8 @@
                                         <option value="0">${c.name}</option>
                                         <option value="1">My Profile</option>
                                         <option value="2">Change Password</option>
-                                        <option value="3">Logout</option>
+                                        <option value="3">Payment history</option>
+                                        <option value="4">Logout</option>
                                     </select>
                                 </form>
                                 <li><a href="#"><i class="fa fa-dollar"></i> USD: ${c.balance} $</a></li>
@@ -176,8 +190,9 @@
                                     <c:if test="${cnt > 0}">
                                         <div class="cart-dropdown">
                                             <div class="cart-list">
+                                                <c:forEach items="${requestScope.reList}" var="re">
                                                 <div class="product-widget">
-                                                    <c:forEach items="${requestScope.reList}" var="re">
+                                                    
                                                         <div class="product-img">
                                                             <img src="${re.skill.images}" alt="">
                                                         </div>
@@ -187,11 +202,11 @@
                                                                 <span class="qty">${re.status}</span>
                                                             </h4>
                                                         </div>
-                                                    </c:forEach>
+                                                    
 
 
                                                 </div>
-
+                                                </c:forEach>
 
                                             </div>
                                             <div class="cart-summary">

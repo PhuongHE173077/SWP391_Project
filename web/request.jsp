@@ -38,6 +38,17 @@
                                     <div class="e-profile">
                                         <form action="request" method="post">
                                             <div class="row">
+                                                <div class="col" >
+                                                    <div class="form-group">
+                                                        <c:if test="${not empty error}">
+                                                            <div style="color: red;">
+                                                                <strong>Error:</strong> ${error}
+                                                            </div>
+                                                        </c:if>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-12 col-sm-auto mb-3">
                                                     <div class="mx-auto" style="width: 140px;">
                                                         <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
@@ -116,6 +127,9 @@
                                                                                 Time slot
                                                                             </div>
                                                                         </div>
+                                                                            <c:if test="${requestScope.mentor.schedule eq null}">
+                                                                                
+                                                                            </c:if>
                                                                         
                                                                         <c:forEach items="${requestScope.mentor.schedule}" var="lsch">
                                                                             <div class="row" style="border: 1px solid gainsboro; margin-bottom: 10px;border-radius: 10px;">

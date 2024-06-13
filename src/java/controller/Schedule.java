@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.MentorDao;
 import dao.ScheduleDao;
 import dao.ScheduleMentorDao;
 import dao.SkillDao;
@@ -109,11 +110,50 @@ public class Schedule extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+        @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int wid = Integer.parseInt(request.getParameter("week"));
+        String key[] = request.getParameterValues("skill");
+        HttpSession session = request.getSession();
+        Mentor m = (Mentor) session.getAttribute("mentor");
+        ScheduleMentorDao smd = new ScheduleMentorDao();
+        SkillDao sd = new SkillDao();
+        smd.deleteShedule(wid, m.getId());
+        if (key != null && key.length > 0) {
+            int[] skillArray = new int[key.length];
 
+            for (int i = 0; i < skillArray.length; i++) {
+                try {
+                    int id = Integer.parseInt(key[i]);
+                    smd.addShedule(wid, id, m.getId(), "open");
+                } catch (NumberFormatException e) {
+                    // Xử lý lỗi chuyển đổi (nếu có)
+                    e.printStackTrace();
+                }
+            }
+        }
+        WeeksDao wd = new WeeksDao();
+        
+            int idw = wid;
+            WeeksDay w = wd.getWeeksday(idw);
+            ScheduleMentorDao scd = new ScheduleMentorDao();
+            List<TimeSlot> listSch = scd.getTimeSlotInDay(idw, m.getId());
+            request.setAttribute("listS", listSch);
+            TimeSlotDao ssd = new TimeSlotDao();
+            List<TimeSlot> list = ssd.getTimeSlot();
+            request.setAttribute("listW", wd.getListWeeksDay());
+            request.setAttribute("list", list);
+            request.setAttribute("week", w);
+            MentorDao md = new MentorDao();
+            Mentor me = md .getMentorByID(m.getId());
+            session.setAttribute("mentor", me);
+            request.setAttribute("thongbao", "Update sccesfully!!");
+            request.getRequestDispatcher("schedule.jsp").forward(request, response);
     }
+
+
+
 
     /**
      * Returns a short description of the servlet.

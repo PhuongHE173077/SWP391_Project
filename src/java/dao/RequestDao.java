@@ -50,6 +50,25 @@ public class RequestDao extends DBContext {
 
         return list;
     }
+    
+    public Request getTop1Rq() {
+        String sql ="select top 1 * from request order by id desc";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            ScheduleDao sd = new ScheduleDao();
+            MentorDao mentor = new MentorDao();
+            MenteeDao mentee = new MenteeDao();
+            SkillDao ssd = new SkillDao();
+            if (rs.next()) {
+              return new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RequestDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 
     public int getCountRequest(int id) {
         String query = "select count(*) from request where mentee_id = ?";
@@ -222,5 +241,6 @@ public class RequestDao extends DBContext {
     public static void main(String[] args) {
         RequestDao r = new RequestDao();
         System.out.println(r.getAllRequestOfMentor(3).get(0));
+//        System.out.println(r.getTop1Rq().getMentor());
     }
 }

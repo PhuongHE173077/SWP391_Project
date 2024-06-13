@@ -24,7 +24,7 @@ import service.SendEmail;
  * @author TUF F15
  */
 @WebServlet(name="register", urlPatterns={"/register"})
-public class Register extends HttpServlet {
+public class Register extends HttpServlet{
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.

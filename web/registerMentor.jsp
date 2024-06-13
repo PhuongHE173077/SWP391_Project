@@ -48,7 +48,7 @@
                                                     <i class="mdi mdi-account-outline text-primary"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" name="name" class="form-control form-control-lg border-left-0" placeholder="Account name" required>
+                                            <input type="text" name="accname" class="form-control form-control-lg border-left-0" placeholder="Account name" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -71,7 +71,7 @@
                                                         <i class="mdi mdi-calendar text-primary"></i>
                                                     </span>
                                             </div>
-                                                <input type="date" name="name" class="form-control form-control-lg border-left-0" placeholder="Date Of Birth" required> 
+                                                <input type="date" name="dob" class="form-control form-control-lg border-left-0" placeholder="Date Of Birth" required> 
                                                
 
                                             </div>
@@ -137,7 +137,7 @@
                                                     <i class="mdi mdi-phone text-primary"></i>
                                                 </span>
                                             </div>
-                                            <input type="number" name="confirmPass" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Phone Number" required>                        
+                                            <input type="number" name="phoneNumber" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Phone Number" required>                        
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -148,7 +148,7 @@
                                                     <i class="mdi mdi-text text-primary"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" name="confirmPass" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Address" required>                       
+                                            <input type="text" name="address" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Address" required>                       
                                         </div>
                                     </div>
 

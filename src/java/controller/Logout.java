@@ -59,6 +59,7 @@ public class Logout extends HttpServlet {
     throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.removeAttribute("mentee");
+        session.removeAttribute("mentor");
         response.sendRedirect("home");
     } 
 

@@ -5,6 +5,7 @@
 package controller;
 
 import dao.CvDao;
+import dao.MentorDao;
 import dao.SkillDao;
 import dao.SkillDetailDao;
 import entity.CvMentor;
@@ -15,6 +16,7 @@ import entity.Skill;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,6 +39,7 @@ import java.util.ArrayList;
  * @author TUF F15
  */
 @WebServlet(name = "RegisterCv", urlPatterns = {"/registerCv"})
+@MultipartConfig
 public class RegisterCv extends HttpServlet {
 
     /**
@@ -117,7 +120,7 @@ public class RegisterCv extends HttpServlet {
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
         }
-
+        MentorDao mentorDao = new MentorDao();
         Path filePath = Paths.get(uploadFilePath, fileName);
         boolean redirectToHome = false;
         if (filePart != null && filePart.getSize() > 0) {
@@ -132,7 +135,7 @@ public class RegisterCv extends HttpServlet {
                 mentor.setCv(cvd);
                 cv.addCvMentor(mentor);
                 SkillDetailDao sdt = new SkillDetailDao();
-                
+                mentorDao.updateImgMentor(mentor.getId(), cvd.getImg());
                 List<Skill> list = listSkill(skills);
                 for (Skill skill : list) {
                     sdt.addSkillDetail(mentor.getId(), skill);

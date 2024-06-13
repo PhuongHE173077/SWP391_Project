@@ -5,11 +5,8 @@
 
 package controller;
 
-
-import dao.CvDao;
-import dao.MentorDao;
-import entity.CvMentor;
-import entity.Mentor;
+import dao.SkillDao;
+import entity.Skill;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,13 +14,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
- * @author Dell
+ * @author TUF F15
  */
-@WebServlet(name="ViewCVMentor", urlPatterns={"/viewCVMentor"})
-public class ViewCVMentor extends HttpServlet {
+@WebServlet(name="UpdateCvMentor", urlPatterns={"/updateCvMentor"})
+public class UpdateCvMentor extends HttpServlet{
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,20 +33,18 @@ public class ViewCVMentor extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int id = Integer.parseInt(request.getParameter("id"));
-        String sid_raw =request.getParameter("sid");
-        int sid =0;
-        if (sid_raw != null) {
-             sid = Integer.parseInt(sid_raw);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UpdateCvMentor</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UpdateCvMentor at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        MentorDao cvmd = new MentorDao();
-        Mentor c = cvmd.getMentorByID(id);
-        request.setAttribute("sid", sid);
-        request.setAttribute("detail", c);
-        request.getRequestDispatcher("ViewProfileMentor.jsp").forward(request, response);
-        
-        
-        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,7 +58,13 @@ public class ViewCVMentor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        SkillDao sd = new SkillDao();
+        List<Skill> list = sd.getAllSkill();
+        String thongbao = "The your Cv is confirm by manager!</br>You want to edit your Cv";
+        request.setAttribute("thongbao", thongbao);
+        request.setAttribute("sk", list);
+        request.getRequestDispatcher("Cv_insert.jsp").forward(request, response);
     } 
 
     /** 
@@ -75,7 +77,7 @@ public class ViewCVMentor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /** 

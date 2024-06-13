@@ -81,6 +81,18 @@ public class MentorDao extends DBContext {
         } catch (Exception e) {
         }
     }
+     public void updateImgMentor(int mentorid, String img) {
+        String query = "UPDATE [dbo].[User]\n"
+                + "   SET img = ?\n"
+                + " WHERE user_id = (select userId from mentor where mentor_id = ?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setString(1, img);
+            st.setInt(2, mentorid);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
     public Mentor getMentorByID(int id) {
         String sql = "SELECT    mentor.*, [User].*\n"
                 + "FROM         mentor INNER JOIN\n"
@@ -184,10 +196,8 @@ public class MentorDao extends DBContext {
 
     public static void main(String[] args) {
         MentorDao md = new MentorDao();
-        List<Mentor> list = md.getAllMentorBySkill(1);
-        for (Mentor mentor : list) {
-            System.out.println(mentor.getAddress());
-        }
+        Mentor me = md .getMentorByID(20);
+        md.updateImgMentor(me.getId(), me.getCv().getImg());
 
     }
 }
