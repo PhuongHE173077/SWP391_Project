@@ -5,9 +5,7 @@
 
 package controller;
 
-
 import dao.RequestDao;
-
 import entity.Mentor;
 import entity.Request;
 import java.io.IOException;
@@ -24,8 +22,8 @@ import java.util.List;
  *
  * @author TUF F15
  */
-@WebServlet(name="HomeMentor", urlPatterns={"/HomeMentor"})
-public class HomeMentor extends HttpServlet {
+@WebServlet(name="RequestFromMentee", urlPatterns={"/requestFromMentee"})
+public class RequestFromMentee extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -42,10 +40,10 @@ public class HomeMentor extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeMentor</title>");  
+            out.println("<title>Servlet RequestFromMentee</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeMentor at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet RequestFromMentee at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,11 +60,14 @@ public class HomeMentor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-
         HttpSession session = request.getSession();
         Mentor m = (Mentor) session.getAttribute("mentor");
+        if (m == null) {
+            response.sendRedirect("login");
+        }
         RequestDao rd = new RequestDao();
-        request.getRequestDispatcher("homeMentor.jsp").forward(request, response);
+        List<Request>list = rd.getAllRequestOfMentor(m.getId());
+        request.getRequestDispatcher("RequestInMentor.jsp").forward(request, response);
     } 
 
     /** 

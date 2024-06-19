@@ -14,6 +14,8 @@ import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,12 +29,18 @@ public class ScheduleMentorDao extends DBContext {
         WeeksDao w = new WeeksDao();
         List<ScheduleMentor> list = new ArrayList<>();
         List<WeeksDay> listw = w.getListWeeksDaybyMid(id);
+        DayStartEndDao dsed = new DayStartEndDao();
         for (WeeksDay weeksDay : listw) {
-            list.add(new ScheduleMentor(weeksDay, getTimeSlotShedule(weeksDay.getId(), id)));
+           
+            if (!getTimeSlotShedule(weeksDay.getId(), id).isEmpty()) {
+                list.add(new ScheduleMentor(weeksDay, getTimeSlotShedule(weeksDay.getId(), id)));
+            }
+            
         }
         return list;
 
     }
+
     public void deleteShedule(int Wid, int mid) {
         String sql = "delete schedul_mentor where mid =? and WeeksDayId = ?";
 
@@ -47,14 +55,14 @@ public class ScheduleMentorDao extends DBContext {
         }
     }
 
-    public void addShedule(int Wid, int timeid, int mid, String status) {
+    public void addShedule(int Wid, int timeid, int mid, int fid, String status) {
         String sql = "INSERT INTO [dbo].[schedul_mentor]\n"
                 + "           ([WeeksDayId]\n"
                 + "           ,[timeId]\n"
                 + "           ,[mid]\n"
-                + "           ,[status])\n"
+                + "           ,[status],[fid])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?)";
+                + "           (?,?,?,?,?)";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -62,34 +70,36 @@ public class ScheduleMentorDao extends DBContext {
             st.setInt(2, timeid);
             st.setInt(3, mid);
             st.setString(4, status);
+            st.setInt(5, fid);
             st.executeUpdate();
 
         } catch (SQLException ex) {
             Logger.getLogger(ScheduleMentorDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public List<TimeSlot> getTimeSlotShedule(int Wid, int mid) {
         String sql = "SELECT *\n"
-                + "FROM [dbo].[schedul_mentor]\n"
-                + "where mid = ? and WeeksDayId =? \n"
-                + "ORDER BY WeeksDayId ";
+                + "                FROM [dbo].[schedul_mentor]\n"
+                + "                where mid = 1 and WeeksDayId =4 and status ='Approve'";
         List<TimeSlot> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, mid);
-            st.setInt(2,Wid);
-            ResultSet rs =st.executeQuery();
+            st.setInt(2, Wid);
+            ResultSet rs = st.executeQuery();
             TimeSlotDao tsd = new TimeSlotDao();
             while (rs.next()) {
                 TimeSlot t = tsd.getTimeSlotByid(rs.getInt(3));
-                list.add(new TimeSlot(rs.getInt(1),t.getName()));
+                list.add(new TimeSlot(rs.getInt(1), t.getName()));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ScheduleMentorDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return list;
     }
+
     public List<TimeSlot> getTimeSlotInDay(int Wid, int mid) {
         String sql = "SELECT *\n"
                 + "FROM [dbo].[schedul_mentor]\n"
@@ -99,8 +109,8 @@ public class ScheduleMentorDao extends DBContext {
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, mid);
-            st.setInt(2,Wid);
-            ResultSet rs =st.executeQuery();
+            st.setInt(2, Wid);
+            ResultSet rs = st.executeQuery();
             TimeSlotDao tsd = new TimeSlotDao();
             while (rs.next()) {
                 TimeSlot t = tsd.getTimeSlotByid(rs.getInt(3));
@@ -111,12 +121,12 @@ public class ScheduleMentorDao extends DBContext {
         }
         return list;
     }
-    
+
     public static void main(String[] args) {
-        ScheduleMentorDao scmd = new ScheduleMentorDao();
-        List<ScheduleMentor> list = scmd.getListScheduleByMentor(6);
+        ScheduleMentorDao scd = new ScheduleMentorDao();
+        List<ScheduleMentor> list = scd.getListScheduleByMentor(1);
         for (ScheduleMentor scheduleMentor : list) {
-            System.out.println(scheduleMentor.getListTime().get(0).getName());
+            System.out.println(scheduleMentor.getWeeksday());
         }
     }
 }

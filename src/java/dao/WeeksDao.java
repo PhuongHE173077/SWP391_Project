@@ -55,6 +55,39 @@ public class WeeksDao extends DBContext {
         return list;
     }
 
+    public boolean addWeeksDay(String day) {
+        boolean check = false;
+        String sql = "INSERT INTO [dbo].[weeksday]\n"
+                + "           ([name])\n"
+                + "     VALUES\n"
+                + "           (?)";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, day);
+            st.executeUpdate();
+            check =true;
+        } catch (SQLException ex) {
+            Logger.getLogger(WeeksDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return check;
+    }
+    
+    public  WeeksDay getWeeksDayByDate(String Date){
+        String sql ="select * from weeksday where name =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, Date);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                WeeksDay wd = new WeeksDay(rs.getInt(1), rs.getString(2));
+                return  wd;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(WeeksDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     public List<WeeksDay> getListWeeksDaybyMid(int id) {
         String sql = "SELECT DISTINCT WeeksDayId\n"
                 + "FROM [dbo].[schedul_mentor]\n"

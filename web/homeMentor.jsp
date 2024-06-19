@@ -27,22 +27,22 @@
         <link rel="shortcut icon" href="images/favicon.png" />
         <style>
             .accept{
-                color: black; 
-                text-decoration: none; 
-                margin-right: 10px; 
+                color: black;
+                text-decoration: none;
+                margin-right: 10px;
                 background-color: greenyellow;
                 padding: 10px;
                 border-radius: 5px;
             }
             .reject{
-                color: black; 
-                text-decoration: none; 
-                
+                color: black;
+                text-decoration: none;
+
                 background-color: red;
                 padding: 10px;
                 border-radius: 5px;
             }
-            
+
         </style>
     </head>
     <body>
@@ -199,18 +199,22 @@
                 <nav class="sidebar sidebar-offcanvas" id="sidebar">
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="HomeMentor">
                                 <i class="mdi mdi-home menu-icon"></i>
                                 <span class="menu-title">Dashboard</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                                <i class="mdi mdi-send-circle menu-icon"></i>
-                                <span class="menu-title">Request to me</span>
-
+                            <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                                <i class="mdi mdi-send menu-icon"></i>
+                                <span class="menu-title">Reuest</span>
+                                <i class="menu-arrow"></i>
                             </a>
-
+                            <div class="collapse" id="auth">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="requestFromMentee"> request from mentee</a></li>
+                                </ul>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="pages/forms/basic_elements.html">
@@ -258,7 +262,7 @@
                                         <button type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
                                             <i class="mdi mdi-plus text-muted"></i>
                                         </button>
-                                    
+
                                         <button class="btn btn-primary mt-2 mt-xl-0"><a href="schedule" style="text-decoration: none; color: black">Update Schedule</a></button
                                     </div>
                                 </div>

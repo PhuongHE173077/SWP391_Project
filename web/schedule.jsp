@@ -41,23 +41,33 @@
             .save-button:hover {
                 background-color: #45a049; /* Màu xanh lá đậm hơn khi hover */
             }
-            
-            
+
+            .schedule-table th, .schedule-table td {
+                text-align: center;
+                vertical-align: middle;
+                font-size: 15px;
+            }
+            .schedule-table th {
+                background-color: #f8f9fa;
+            }
+            .btn-save {
+                margin-top: 20px;
+            }
 
         </style>
         <script>
-                // This script will run when the page loads
-                window.onload = function () {
-                    // Get the error message from the JSP attribute
-                    var erro = '<%= request.getAttribute("thongbao") != null ? request.getAttribute("thongbao") : "" %>';
+            // This script will run when the page loads
+            window.onload = function () {
+                // Get the error message from the JSP attribute
+                var erro = '<%= request.getAttribute("thongbao") != null ? request.getAttribute("thongbao") : "" %>';
 
-                    // Check if there is an error message
-                    if (erro.trim() !== "") {
-                        // Display the error message
-                        alert(erro);
-                    }
+                // Check if there is an error message
+                if (erro.trim() !== "") {
+                    // Display the error message
+                    alert(erro);
                 }
-            </script>
+            }
+        </script>
         <script type="text/javascript">
             function change() {
                 document.getElementById("f2").submit();
@@ -83,61 +93,52 @@
                         <div class="col mb-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="e-profile">
-                                        <form id="f2" action="schedule">
-                                            <div class="form-group">
-                                                <select class="form-control" name="key" onchange="change()">
-
-                                                    <c:forEach items="${requestScope.listW}" var="lw">
-                                                        <c:if test="${lw.id == week.id}">
-                                                            <option value="${lw.id}">${lw.name}</option>
-                                                        </c:if>
-                                                    </c:forEach>
-
-                                                    <!-- Vòng lặp thứ hai: hiển thị các tùy chọn khác -->
-                                                    <c:forEach items="${requestScope.listW}" var="lw">
-                                                        <c:if test="${lw.id != week.id}">
-                                                            <option value="${lw.id}">${lw.name}</option>
-                                                        </c:if>
-                                                    </c:forEach>
-
-
-
-                                                </select>
-                                            </div>
+                                    <div class="container mt-5">
+                                        <h2 class="mb-4">Schedule Table</h2>
+                                        <form id="f2" action="schedule"/>
+                                            <select class="form-select form-select-lg mb-3" aria-label="Large select example" name="key" onchange="change()">
+                                            <c:forEach items="${requestScope.listw}" var="lw">
+                                                <option value="${lw.id}">${lw.startDay} to ${lw.endDay}</option>
+                                            </c:forEach>
+                                        </select>
                                         </form>
-                                        <ul class="nav nav-tabs"></ul>
+                                        
                                         <form action="schedule" method="post">
-                                            <div class="form-group row">
-                                                <label class="col-sm-6 col-form-label">${week.name}</label>
-                                                <input  type="hidden" name="week" value="${week.id}" />
-                                                <div class="col-sm-5">
-                                                    <c:forEach items="${requestScope.list}" var="listItem">
-                                                        <div class="form-check">
-                                                            <c:set var="isChecked" value="false" />
-                                                            <c:forEach items="${requestScope.listS}" var="ls">
-                                                                <c:if test="${listItem.id == ls.id}">
-                                                                    <c:set var="isChecked" value="true" />
-                                                                </c:if>
+                                            <input type="hidden" name="week" value="${de.id}"/>
+                                            <table class="table table-bordered schedule-table">
+                                                <thead>
+
+                                                <th>WEEK</th>
+                                                <th>MON </th>
+                                                <th>TUES</th>
+                                                <th>THUR</th>
+                                                <th>WEN</th>
+                                                <th>FRI</th>
+                                                <th>SAT</th>
+                                                <th>SUN</th>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${timeSlots}" var="slot">
+                                                        <tr>
+                                                            <td>${slot.name}</td>
+                                                            <c:forEach items="${dates}" var="date">
+                                                                <td>
+                                                                    <input type="checkbox" class="form-check-input" name="schedule" value="${slot.id},${date}">
+                                                                </td>
                                                             </c:forEach>
-                                                            <input class="form-check-input" type="checkbox" name="skill" id="checkbox${listItem.id}" value="${listItem.id}" ${isChecked ? 'checked' : ''} />
-                                                            <label class="form-check-label" for="checkbox${listItem.id}">${listItem.name}</label>
-                                                        </div>
+                                                        </tr>
                                                     </c:forEach>
-
-
-                                                </div>
-                                            </div>
-
-
+                                                </tbody>
+                                            </table>
+                                           
+                                        
                                     </div>
                                 </div>
-                                
-                            </div>
-                                                <div class="button-container">
-                                                    <button type="submit" >Save</button>
-                                </div>
-</form>
+
+                            </div> 
+                            <button type="submit" class="btn btn-primary btn-save">Send</button>
+                            
+                            </form>
 
                         </div>
                         <div class="col-12 col-md-3 mb-3">
@@ -156,13 +157,28 @@
                                 <div class="card-body">
                                     <h6 class="card-title font-weight-bold">Your schedule of Mentor </h6>
                                     <c:forEach items="${me.schedule}" var="mch">
-                                    <h5 class="card-text">${mch.weeksday.name}</h5>
-                                    <c:forEach items="${mch.listTime}" var="mt">
-                                        <p>${mt.name}</p>
+                                        <h5 class="card-text">${mch.weeksday.name}</h5>
+                                        <c:forEach items="${mch.listTime}" var="mt">
+                                            <p>${mt.name}</p>
+                                        </c:forEach>
+
                                     </c:forEach>
-                                    
-                                </c:forEach>
-                                    
+
+
+                                </div>
+                            </div>
+                             <div class="card">
+                                <c:set value="${sessionScope.mentor}" var="me"/>
+                                <div class="card-body">
+                                    <h6 class="card-title font-weight-bold">Your schedule of Mentor </h6>
+                                    <c:forEach items="${me.schedule}" var="mch">
+                                        <h5 class="card-text">${mch.weeksday.name}</h5>
+                                        <c:forEach items="${mch.listTime}" var="mt">
+                                            <p>${mt.name}</p>
+                                        </c:forEach>
+
+                                    </c:forEach>
+
 
                                 </div>
                             </div>

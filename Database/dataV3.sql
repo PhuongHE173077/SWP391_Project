@@ -55,7 +55,7 @@ create table skill_detail(
 )
 
 create table timeSlot(
-		id int primary key,
+		id int IDENTITY (1,1) primary key,
 		timeSlot nvarchar(max)
 	)
 	create table weeksday(
@@ -102,10 +102,21 @@ create table feedback(
 )
 create table payment(
 	id int IDENTITY (1,1) primary key,
-	request_id int references request(id),
-	amount money,
-	date_payment nvarchar (max),
-	status nvarchar(max)
+	request_id int null references request(id),
+	user_id int null references [User](user_id),
+	amount money null,
+	datail nvarchar(max) null,
+	paymentDate nvarchar(max) null,
+	note nvarchar(max) null,
+	transactionType nvarchar(max) null,
+	bankCode nvarchar(max) null,
+	bankTranNo nvarchar(max) null,
+	cardType nvarchar(max) null,
+	transactionNo nvarchar(max) null,
+	transactionStatus nvarchar(max) null,
+	txnRef nvarchar(max) null,
+	secureHash nvarchar(max) null,
+	status int,
 	)
 	
 	
@@ -120,7 +131,19 @@ create table payment(
 	/*Status of user : Active, Block, Processing*/
 	alter table [User]
 	add status nvarchar(max)
-
-
 	
+	create table fromDayToDay(
+		id int IDENTITY (1,1) primary key,
+		startday nvarchar(max),
+		endday nvarchar(max)
+
+	)
+	 alter table schedul_request
+	 add fid int references fromDayToDay(id)
+
+	 alter table schedul_mentor
+	 add fid int references fromDayToDay(id)
+
+	alter table request
+	add dateSent nvarchar(max)
 

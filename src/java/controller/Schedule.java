@@ -4,12 +4,14 @@
  */
 package controller;
 
+import dao.DayStartEndDao;
 import dao.MentorDao;
 import dao.ScheduleDao;
 import dao.ScheduleMentorDao;
 import dao.SkillDao;
 import dao.TimeSlotDao;
 import dao.WeeksDao;
+import entity.DayStartAndEnd;
 import entity.Mentor;
 import entity.ScheduleMentor;
 import entity.TimeSlot;
@@ -22,6 +24,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,34 +79,71 @@ public class Schedule extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String schedule = request.getParameter("key");
-
-        HttpSession session = request.getSession();
-        Mentor m = (Mentor) session.getAttribute("mentor");
-        WeeksDao wd = new WeeksDao();
         if (schedule == null) {
-            int idw = 1;
-            WeeksDay w = wd.getWeeksday(idw);
-            ScheduleMentorDao scd = new ScheduleMentorDao();
-            List<TimeSlot> listSch = scd.getTimeSlotInDay(idw, m.getId());
-            request.setAttribute("listS", listSch);
-            TimeSlotDao sd = new TimeSlotDao();
-            List<TimeSlot> list = sd.getTimeSlot();
-            request.setAttribute("listW", wd.getListWeeksDay());
-            request.setAttribute("list", list);
-            request.setAttribute("week", w);
+            DayStartEndDao dsd = new DayStartEndDao();
+            List<DayStartAndEnd> list = dsd.getAllDayFE();
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String date = today.format(dateFormat);
+            DayStartAndEnd de = dsd.getDayinWeekday(date);
+            request.setAttribute("date", de);
+            String startDateStr = de.getStartDay();
+            String endDateStr = de.getEndDay();
+            ArrayList<String> dates = new ArrayList<>();
+            TimeSlotDao td = new TimeSlotDao();
+            List<TimeSlot> timeSlots = td.getTimeSlot();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat displayFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+            try {
+                Date startDate = sdf.parse(startDateStr);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(startDate);
+
+                for (int i = 0; i < 7; i++) {
+                    dates.add(displayFormat.format(cal.getTime()));
+                    cal.add(Calendar.DAY_OF_MONTH, 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            request.setAttribute("de", de);
+            request.setAttribute("listw", list);
+            request.setAttribute("dates", dates);
+            request.setAttribute("timeSlots", timeSlots);
             request.getRequestDispatcher("schedule.jsp").forward(request, response);
         } else {
-            int idw = Integer.parseInt(schedule);
-            WeeksDay w = wd.getWeeksday(idw);
-            ScheduleMentorDao scd = new ScheduleMentorDao();
-            List<TimeSlot> listSch = scd.getTimeSlotInDay(idw, m.getId());
-            request.setAttribute("listS", listSch);
-            TimeSlotDao sd = new TimeSlotDao();
-            List<TimeSlot> list = sd.getTimeSlot();
-            request.setAttribute("listW", wd.getListWeeksDay());
-            request.setAttribute("list", list);
-            request.setAttribute("week", w);
+            int week = Integer.parseInt(schedule);
+            DayStartEndDao dsd = new DayStartEndDao();
+            List<DayStartAndEnd> list = dsd.getAllDayFE();
+            DayStartAndEnd de = dsd.getDayById(week);
+            request.setAttribute("date", de);
+            String startDateStr = de.getStartDay();
+            String endDateStr = de.getEndDay();
+            ArrayList<String> dates = new ArrayList<>();
+            TimeSlotDao td = new TimeSlotDao();
+            List<TimeSlot> timeSlots = td.getTimeSlot();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            try {
+                Date startDate = sdf.parse(startDateStr);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(startDate);
+
+                for (int i = 0; i < 7; i++) {
+                    dates.add(displayFormat.format(cal.getTime()));
+                    cal.add(Calendar.DAY_OF_MONTH, 1);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            request.setAttribute("de", de);
+            request.setAttribute("listw", list);
+            request.setAttribute("dates", dates);
+            request.setAttribute("timeSlots", timeSlots);
             request.getRequestDispatcher("schedule.jsp").forward(request, response);
+
         }
 
     }
@@ -110,50 +156,33 @@ public class Schedule extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-        @Override
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int wid = Integer.parseInt(request.getParameter("week"));
-        String key[] = request.getParameterValues("skill");
+        String[] schedules = request.getParameterValues("schedule");
+        int fid = Integer.parseInt(request.getParameter("week"));
+        ScheduleMentorDao scd = new ScheduleMentorDao();
+        WeeksDao wd = new WeeksDao();
         HttpSession session = request.getSession();
         Mentor m = (Mentor) session.getAttribute("mentor");
-        ScheduleMentorDao smd = new ScheduleMentorDao();
-        SkillDao sd = new SkillDao();
-        smd.deleteShedule(wid, m.getId());
-        if (key != null && key.length > 0) {
-            int[] skillArray = new int[key.length];
 
-            for (int i = 0; i < skillArray.length; i++) {
-                try {
-                    int id = Integer.parseInt(key[i]);
-                    smd.addShedule(wid, id, m.getId(), "open");
-                } catch (NumberFormatException e) {
-                    // Xử lý lỗi chuyển đổi (nếu có)
-                    e.printStackTrace();
+        if (schedules != null) {
+            for (String schedule : schedules) {
+                // Split the value to get slot and date
+                String[] parts = schedule.split(",");
+                int slot = Integer.parseInt(parts[0]);
+                String date = parts[1];
+                if (wd.getWeeksDayByDate(date) == null) {
+                    wd.addWeeksDay(date);
                 }
+                scd.addShedule(wd.getWeeksDayByDate(date).getId(), slot, m.getId(), fid, "Processing");
+                MentorDao md = new MentorDao();
+                Mentor me = md.getMentorByID(m.getId());
+                session.setAttribute("mentor", me);
             }
         }
-        WeeksDao wd = new WeeksDao();
-        
-            int idw = wid;
-            WeeksDay w = wd.getWeeksday(idw);
-            ScheduleMentorDao scd = new ScheduleMentorDao();
-            List<TimeSlot> listSch = scd.getTimeSlotInDay(idw, m.getId());
-            request.setAttribute("listS", listSch);
-            TimeSlotDao ssd = new TimeSlotDao();
-            List<TimeSlot> list = ssd.getTimeSlot();
-            request.setAttribute("listW", wd.getListWeeksDay());
-            request.setAttribute("list", list);
-            request.setAttribute("week", w);
-            MentorDao md = new MentorDao();
-            Mentor me = md .getMentorByID(m.getId());
-            session.setAttribute("mentor", me);
-            request.setAttribute("thongbao", "Update sccesfully!!");
-            request.getRequestDispatcher("schedule.jsp").forward(request, response);
+        response.sendRedirect("schedule");
     }
-
-
-
 
     /**
      * Returns a short description of the servlet.

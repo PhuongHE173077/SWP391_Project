@@ -22,13 +22,14 @@ public class Request {
     private Skill skill;
     private String status;
     private List<Schedule>schedule;
+    private String dateSent;
 
 
     public Request() {
         schedule = new ArrayList<>();
     }
 
-    public Request(int id, Mentor mentor, Mentee mentee, String subject, String deadlineday, int day_number, String content, Skill skill, String status, List<Schedule> schedule) {
+    public Request(int id, Mentor mentor, Mentee mentee, String subject, String deadlineday, int day_number, String content, Skill skill, String status, List<Schedule> schedule, String dateSent) {
         this.id = id;
         this.mentor = mentor;
         this.mentee = mentee;
@@ -39,6 +40,7 @@ public class Request {
         this.skill = skill;
         this.status = status;
         this.schedule = schedule;
+        this.dateSent = dateSent;
     }
 
     public int getId() {
@@ -120,10 +122,20 @@ public class Request {
     public void setSchedule(List<Schedule> schedule) {
         this.schedule = schedule;
     }
-    
-    
-    
+
+    public String getDateSent() {
+        return dateSent;
+    }
+
+    public void setDateSent(String dateSent) {
+        this.dateSent = dateSent;
+    }
+
     public double getTotal() {
-        return mentor.getPrice() * day_number;
-    }    
+        return mentor.getPrice()*day_number;
+    }
+    
+    
+
+     
 }

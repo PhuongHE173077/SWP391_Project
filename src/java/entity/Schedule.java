@@ -13,15 +13,17 @@ public class Schedule {
     private WeeksDay weeksDay;
     private TimeSlot timeSlot;
     private String status;
+    private DayStartAndEnd dayfromto;
 
     public Schedule() {
     }
 
-    public Schedule(int id, WeeksDay weeksDay, TimeSlot timeSlot, String status) {
+    public Schedule(int id, WeeksDay weeksDay, TimeSlot timeSlot, String status, DayStartAndEnd dayfromto) {
         this.id = id;
         this.weeksDay = weeksDay;
         this.timeSlot = timeSlot;
         this.status = status;
+        this.dayfromto = dayfromto;
     }
 
     public int getId() {
@@ -55,5 +57,15 @@ public class Schedule {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public DayStartAndEnd getDayfromto() {
+        return dayfromto;
+    }
+
+    public void setDayfromto(DayStartAndEnd dayfromto) {
+        this.dayfromto = dayfromto;
+    }
+
+    
     
 }
