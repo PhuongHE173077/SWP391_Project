@@ -4,6 +4,9 @@
  */
 package entity;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  *
  * @author TUF F15
@@ -27,17 +30,21 @@ public class DayStartAndEnd {
         this.id = id;
     }
 
-    public String getStartDay() {
-        return startDay;
-    }
+  
 
     public void setStartDay(String startDay) {
         this.startDay = startDay;
     }
 
+    public String getStartDay() {
+        return startDay;
+    }
+
     public String getEndDay() {
         return endDay;
     }
+
+    
 
     public void setEndDay(String endDay) {
         this.endDay = endDay;

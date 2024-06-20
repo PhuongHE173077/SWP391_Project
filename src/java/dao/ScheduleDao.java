@@ -61,7 +61,28 @@ public class ScheduleDao extends DBContext {
         }
         return null;
     }
-
+    
+    public List<Schedule> getlistScheduleMetorByIdInW(int mid,int weekid) {
+        String sql = "select * from schedul_mentor where mid =? and fid =?";
+        List<Schedule> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, mid);
+            st.setInt(2, weekid);
+            ResultSet rs = st.executeQuery();
+            WeeksDao wd = new WeeksDao();
+            TimeSlotDao tsd = new TimeSlotDao();
+            DayStartEndDao dsed = new DayStartEndDao();
+            while (rs.next()) {
+                  DayStartAndEnd date = dsed.getDayById(rs.getInt(6));
+                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(rs.getInt(3)), rs.getString(5),date);
+                list.add(s);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public List<Schedule> getlistScheduleByInRequest(int id) {
         List<Schedule> list = new ArrayList<>();
         String sql = "select * from schedul_request where rid =?";
@@ -74,7 +95,7 @@ public class ScheduleDao extends DBContext {
             DayStartEndDao dsed = new DayStartEndDao();
             while (rs.next()) {
                  DayStartAndEnd date = dsed.getDayById(rs.getInt(6));
-                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(3), rs.getString(5),date);
+                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(rs.getInt(3)), rs.getString(5),date);
                 list.add(s);
             }
         } catch (SQLException ex) {
@@ -118,6 +139,10 @@ public class ScheduleDao extends DBContext {
 
     public static void main(String[] args) {
         ScheduleDao sc = new ScheduleDao();
+        List<Schedule>list= sc.getlistScheduleMetorByIdInW(1, 1);
+        for (Schedule schedule : list) {
+            System.out.println(schedule.getTimeSlot().getName());
+        }
      
         
         

@@ -10,6 +10,8 @@ import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +26,26 @@ public class DayStartEndDao extends DBContext{
         List<DayStartAndEnd> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                DayStartAndEnd dt = new DayStartAndEnd(rs.getInt(1), rs.getString(2), rs.getString(3));
+                list.add(dt);
+            }
+                    
+        } catch (SQLException ex) {
+            Logger.getLogger(DayStartEndDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public  List<DayStartAndEnd> getGenderDayFEgenterToDay(){
+        String sql = "select top 8 * from fromDayToDay where endDay >= ?";
+        List<DayStartAndEnd> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String date = today.format(dateFormat);
+            st.setString(1, date);
             ResultSet rs = st.executeQuery();
             while(rs.next()){
                 DayStartAndEnd dt = new DayStartAndEnd(rs.getInt(1), rs.getString(2), rs.getString(3));
@@ -72,7 +94,7 @@ public class DayStartEndDao extends DBContext{
     }
     public static void main(String[] args) {
         DayStartEndDao dstd = new DayStartEndDao();
-        List<DayStartAndEnd> list = dstd.getAllDayFE();
+        List<DayStartAndEnd> list = dstd.getGenderDayFEgenterToDay();
         for (DayStartAndEnd dayStartAndEnd : list) {
             System.out.println(dayStartAndEnd.getStartDay());
         }

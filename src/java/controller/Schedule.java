@@ -26,6 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -92,8 +93,9 @@ public class Schedule extends HttpServlet {
             ArrayList<String> dates = new ArrayList<>();
             TimeSlotDao td = new TimeSlotDao();
             List<TimeSlot> timeSlots = td.getTimeSlot();
+            List<DayStartAndEnd> listDfeToday = dsd.getGenderDayFEgenterToDay();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat displayFormat = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             try {
                 Date startDate = sdf.parse(startDateStr);
@@ -107,6 +109,7 @@ public class Schedule extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            request.setAttribute("listDe", listDfeToday);
             request.setAttribute("de", de);
             request.setAttribute("listw", list);
             request.setAttribute("dates", dates);
@@ -123,6 +126,7 @@ public class Schedule extends HttpServlet {
             ArrayList<String> dates = new ArrayList<>();
             TimeSlotDao td = new TimeSlotDao();
             List<TimeSlot> timeSlots = td.getTimeSlot();
+            List<DayStartAndEnd> listDfeToday = dsd.getGenderDayFEgenterToDay();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -138,6 +142,7 @@ public class Schedule extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            request.setAttribute("listDe", listDfeToday);
             request.setAttribute("de", de);
             request.setAttribute("listw", list);
             request.setAttribute("dates", dates);
@@ -160,28 +165,106 @@ public class Schedule extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String[] schedules = request.getParameterValues("schedule");
-        int fid = Integer.parseInt(request.getParameter("week"));
-        ScheduleMentorDao scd = new ScheduleMentorDao();
-        WeeksDao wd = new WeeksDao();
-        HttpSession session = request.getSession();
-        Mentor m = (Mentor) session.getAttribute("mentor");
+        String[] week = request.getParameterValues("weeks");
+        if (week == null) {
+            int fid = Integer.parseInt(request.getParameter("week"));
+            ScheduleMentorDao scd = new ScheduleMentorDao();
+            WeeksDao wd = new WeeksDao();
+            HttpSession session = request.getSession();
+            Mentor m = (Mentor) session.getAttribute("mentor");
 
-        if (schedules != null) {
+            if (schedules != null) {
+                for (String schedule : schedules) {
+                    // Split the value to get slot and date
+                    String[] parts = schedule.split(",");
+                    int slot = Integer.parseInt(parts[0]);
+                    String date = parts[1];
+
+                    WeeksDay weekDay = wd.getWeeksDayByDate(date);
+                    if (weekDay == null) {
+                        wd.addWeeksDay(date);
+                        weekDay = wd.getWeeksDayByDate(date);
+                    }
+
+                    if (weekDay != null) {
+                        scd.addShedule(weekDay.getId(), slot, m.getId(), fid, "Approve");
+                        MentorDao md = new MentorDao();
+                        Mentor me = md.getMentorByID(m.getId());
+                        session.setAttribute("mentor", me);
+                    } else {
+                        
+                        System.err.println("Failed to retrieve or create WeeksDay for date: " + date);
+                    }
+                }
+
+            }
+            response.sendRedirect("schedule");
+        } else {
+            ScheduleMentorDao scd = new ScheduleMentorDao();
+            WeeksDao wd = new WeeksDao();
+            HttpSession session = request.getSession();
+            Mentor m = (Mentor) session.getAttribute("mentor");
+            DayStartEndDao dsd = new DayStartEndDao();
+            List<DayStartAndEnd> list = new ArrayList<>();
+            for (int i = 0; i < week.length; i++) {
+                int id = Integer.parseInt(week[i]);
+                DayStartAndEnd day = dsd.getDayById(id);
+                list.add(day);
+            }
             for (String schedule : schedules) {
-                // Split the value to get slot and date
                 String[] parts = schedule.split(",");
                 int slot = Integer.parseInt(parts[0]);
                 String date = parts[1];
-                if (wd.getWeeksDayByDate(date) == null) {
-                    wd.addWeeksDay(date);
+                for (DayStartAndEnd de : list) {
+                    String dates = getDateSample(de.getStartDay(), de.getEndDay(), date);
+                    WeeksDay weekDay = wd.getWeeksDayByDate(dates);
+                    if (weekDay == null) {
+                        wd.addWeeksDay(dates);
+                        weekDay = wd.getWeeksDayByDate(dates);
+                    }
+                    if (weekDay != null) {
+                        scd.addShedule(weekDay.getId(), slot, m.getId(), de.getId(), "Approve");
+                        MentorDao md = new MentorDao();
+                        Mentor me = md.getMentorByID(m.getId());
+                        session.setAttribute("mentor", me);
+                    } else {
+                        System.err.println("Failed to retrieve or create WeeksDay for date: " + date);
+                    }
                 }
-                scd.addShedule(wd.getWeeksDayByDate(date).getId(), slot, m.getId(), fid, "Processing");
-                MentorDao md = new MentorDao();
-                Mentor me = md.getMentorByID(m.getId());
-                session.setAttribute("mentor", me);
+
+            }
+            response.sendRedirect("schedule");
+        }
+    }
+
+    public String getDateSample(String start, String end, String dates) {
+        String specificDateStr = dates;   // Specific date as a string
+        String startDateStr = start;      // Start date of the week as a string
+        String endDateStr = end;        // End date of the week as a string
+
+        // Formatter for the date strings
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Convert strings to LocalDate
+        LocalDate specificDate = LocalDate.parse(specificDateStr, formatter);
+        LocalDate startDate = LocalDate.parse(startDateStr, formatter);
+        LocalDate endDate = LocalDate.parse(endDateStr, formatter);
+
+        // Get the day of the week of the specific date
+        DayOfWeek specificDayOfWeek = specificDate.getDayOfWeek();
+
+        // Variable to store the result
+        LocalDate matchingDay = null;
+
+        // Iterate through the days in the week
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            if (date.getDayOfWeek() == specificDayOfWeek) {
+                matchingDay = date;
+                break;
             }
         }
-        response.sendRedirect("schedule");
+        DateTimeFormatter fm1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return matchingDay.format(fm1);
     }
 
     /**

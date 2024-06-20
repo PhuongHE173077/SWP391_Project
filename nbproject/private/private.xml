@@ -10,17 +10,7 @@
             <file>file:/D:/SWP391%20(2)/SWP391_Project/src/java/controller/PaymentController.java</file>
         </group>
         <group name="SWP391">
-            <file>file:/D:/Ilter2/SWP391_Project/src/java/entity/Request.java</file>
-            <file>file:/D:/Ilter2/SWP391_Project/src/java/controller/HomeMentor.java</file>
-            <file>file:/D:/Ilter2/SWP391_Project/src/java/dao/RequestDao.java</file>
-            <file>file:/D:/Ilter2/SWP391_Project/src/java/dao/WeeksDao.java</file>
-            <file>file:/D:/Ilter2/SWP391_Project/src/java/entity/Payment.java</file>
-            <file>file:/D:/Ilter2/SWP391_Project/web/schedule.jsp</file>
-            <file>file:/D:/Ilter2/SWP391_Project/web/homeMentor.jsp</file>
-            <file>file:/D:/Ilter2/SWP391_Project/src/java/dao/ScheduleMentorDao.java</file>
-            <file>file:/D:/Ilter2/SWP391_Project/src/java/dao/DayStartEndDao.java</file>
-            <file>file:/D:/Ilter2/SWP391_Project/web/index.jsp</file>
-            <file>file:/D:/Ilter2/SWP391_Project/src/java/controller/RequestFromMentee.java</file>
+            <file>file:/D:/Ilter2/SWP391_Project/web/request.jsp</file>
             <file>file:/D:/Ilter2/SWP391_Project/src/java/controller/Schedule.java</file>
         </group>
     </open-files>

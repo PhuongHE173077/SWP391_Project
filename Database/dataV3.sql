@@ -59,7 +59,7 @@ create table timeSlot(
 		timeSlot nvarchar(max)
 	)
 	create table weeksday(
-		id int primary key,
+		id int IDENTITY (1,1) primary key,
 		name nvarchar(max),
 		
 	)
