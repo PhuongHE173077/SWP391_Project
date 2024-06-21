@@ -81,7 +81,7 @@ public class ScheduleMentorDao extends DBContext {
     public List<TimeSlot> getTimeSlotShedule(int Wid, int mid) {
         String sql = "SELECT *\n"
                 + "                FROM [dbo].[schedul_mentor]\n"
-                + "                where mid = 1 and WeeksDayId =4 and status ='Approve'";
+                + "                where mid = ? and WeeksDayId =? and status ='Approve'";
         List<TimeSlot> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);

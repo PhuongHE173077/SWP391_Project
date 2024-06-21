@@ -125,7 +125,7 @@
                                             <table class="table table-bordered schedule-table">
                                                 <thead>
 
-                                                <th>WEEK</th>
+                                                <th>WEEKDAY</th>
                                                 <th>MON </th>
                                                 <th>TUES</th>
                                                 <th>WEND</th>
@@ -134,22 +134,31 @@
                                                 <th>SAT</th>
                                                 <th>SUN</th>
                                                 </thead>
-                                                <th>Time \ Slot</th>
-                                                    <c:forEach items="${dates}" var="date">
-                                                    <td>${date}</td>
-                                                </c:forEach>
+
                                                 <tbody>
                                                     <c:forEach items="${timeSlots}" var="slot">
                                                         <tr>
                                                             <td>${slot.name}</td>
                                                             <c:forEach items="${dates}" var="date">
-                                                                <td>
-                                                                    <input type="checkbox" class="form-check-input" name="schedule" value="${slot.id},${date}">
-                                                                </td>
+                                                                <c:set var="hasSchedule" value="false" />
+                                                                <c:forEach items="${requestScope.listsch}" var="lch">
+                                                                    <c:if test="${lch.weeksDay.name == date && slot.id == lch.timeSlot.id}">
+                                                                        <c:set var="hasSchedule" value="true" />
+                                                                        <td>
+                                                                            <input type="checkbox" class="form-check-input" name="schedule" value="${slot.id},${date}" checked>
+                                                                        </td>
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                <c:if test="${not hasSchedule}">
+                                                                    <td>
+                                                                        <input type="checkbox" class="form-check-input" name="schedule" value="${slot.id},${date}">
+                                                                    </td>
+                                                                </c:if>
                                                             </c:forEach>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
+
                                             </table>
                                     </div>
                                 </div>
@@ -184,7 +193,7 @@
                                             <button type="submit" class="btn btn-primary" id="submitModal">Send</button>
                                         </div>
                                     </div>
-                                  </form>
+                                    </form>
                                 </div>
                             </div>
 
@@ -262,17 +271,13 @@
                                 <div class="card-body">
                                     <h6 class="card-title font-weight-bold">Your schedule of Mentor </h6>
                                     <c:forEach items="${me.schedule}" var="mch">
-                                        <h5 class="card-text">${mch.weeksday.name}</h5>
-                                        <c:forEach items="${mch.listTime}" var="mt">
-                                            <p>${mt.name}</p>
-                                        </c:forEach>
-
+                                        <h6 class="card-text">${mch.weeksday.name}</h6>
                                     </c:forEach>
 
 
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>

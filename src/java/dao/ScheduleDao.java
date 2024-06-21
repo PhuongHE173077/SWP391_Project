@@ -141,7 +141,7 @@ public class ScheduleDao extends DBContext {
         ScheduleDao sc = new ScheduleDao();
         List<Schedule>list= sc.getlistScheduleMetorByIdInW(1, 1);
         for (Schedule schedule : list) {
-            System.out.println(schedule.getTimeSlot().getName());
+            System.out.println(schedule.getId());
         }
      
         

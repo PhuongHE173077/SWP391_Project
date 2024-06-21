@@ -13,6 +13,7 @@ import dao.TimeSlotDao;
 import dao.WeeksDao;
 import entity.DayStartAndEnd;
 import entity.Mentor;
+import entity.Schedule;
 import entity.ScheduleMentor;
 import entity.TimeSlot;
 import entity.WeeksDay;
@@ -39,7 +40,7 @@ import java.util.List;
  * @author TUF F15
  */
 @WebServlet(name = "Schedule", urlPatterns = {"/schedule"})
-public class Schedule extends HttpServlet {
+public class UpdateSchedule extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -79,8 +80,10 @@ public class Schedule extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String schedule = request.getParameter("key");
-        if (schedule == null) {
+        String schedules = request.getParameter("key");
+        HttpSession session = request.getSession();
+        Mentor m = (Mentor) session.getAttribute("mentor");
+        if (schedules == null) {
             DayStartEndDao dsd = new DayStartEndDao();
             List<DayStartAndEnd> list = dsd.getAllDayFE();
             LocalDate today = LocalDate.now();
@@ -109,6 +112,9 @@ public class Schedule extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            ScheduleDao scd = new ScheduleDao();
+            List<Schedule> listsche = scd.getlistScheduleMetorByIdInW(m.getId(), de.getId());
+            request.setAttribute("listsch", listsche);
             request.setAttribute("listDe", listDfeToday);
             request.setAttribute("de", de);
             request.setAttribute("listw", list);
@@ -116,7 +122,7 @@ public class Schedule extends HttpServlet {
             request.setAttribute("timeSlots", timeSlots);
             request.getRequestDispatcher("schedule.jsp").forward(request, response);
         } else {
-            int week = Integer.parseInt(schedule);
+            int week = Integer.parseInt(schedules);
             DayStartEndDao dsd = new DayStartEndDao();
             List<DayStartAndEnd> list = dsd.getAllDayFE();
             DayStartAndEnd de = dsd.getDayById(week);
@@ -142,6 +148,10 @@ public class Schedule extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            ScheduleDao scd = new ScheduleDao();
+            List<Schedule> listsche = scd.getlistScheduleMetorByIdInW(m.getId(), de.getId());
+            request.setAttribute("listsch", listsche);
+            request.setAttribute("listsch", listsche);
             request.setAttribute("listDe", listDfeToday);
             request.setAttribute("de", de);
             request.setAttribute("listw", list);
@@ -192,7 +202,7 @@ public class Schedule extends HttpServlet {
                         Mentor me = md.getMentorByID(m.getId());
                         session.setAttribute("mentor", me);
                     } else {
-                        
+
                         System.err.println("Failed to retrieve or create WeeksDay for date: " + date);
                     }
                 }

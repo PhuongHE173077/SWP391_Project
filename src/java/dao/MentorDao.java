@@ -7,6 +7,7 @@ package dao;
 import context.DBContext;
 import entity.Mentor;
 import entity.Schedule;
+import entity.ScheduleMentor;
 import entity.Skill;
 import entity.User;
 import java.sql.Connection;
@@ -196,8 +197,9 @@ public class MentorDao extends DBContext {
 
     public static void main(String[] args) {
         MentorDao md = new MentorDao();
-        Mentor me = md .getMentorByID(20);
-        md.updateImgMentor(me.getId(), me.getCv().getImg());
+        Mentor me = md .getMentorByID(1);
+        System.out.println(me.getName());
+       
 
     }
 }

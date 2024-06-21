@@ -102,7 +102,7 @@ create table feedback(
 )
 create table payment(
 	id int IDENTITY (1,1) primary key,
-	request_id int null references request(id),
+	request_id int null ,
 	user_id int null references [User](user_id),
 	amount money null,
 	datail nvarchar(max) null,
