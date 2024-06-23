@@ -127,7 +127,7 @@
                                         <label>Skills</label><br>
                                         <div class="row">
                                             <c:forEach items="${requestScope.sk}" var="skill">
-                                            <div>
+                                                <div class="col-md-3">
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="skillHtml" name="skills" value="${skill.id}">
                                                     <label class="form-check-label" for="skill${skill.id}">${skill.skill}</label>

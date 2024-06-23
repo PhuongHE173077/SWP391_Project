@@ -23,7 +23,7 @@ public class ScheduleMentor {
         this.weeksday = weeksday;
         this.listTime = listTime;
     }
-    
+
 
     public WeeksDay getWeeksday() {
         return weeksday;
@@ -41,7 +41,7 @@ public class ScheduleMentor {
         this.listTime = listTime;
     }
 
-    
-    
+
+
     
 }

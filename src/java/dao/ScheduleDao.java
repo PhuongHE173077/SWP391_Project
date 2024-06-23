@@ -5,6 +5,7 @@
 package dao;
 
 import context.DBContext;
+import entity.DayStartAndEnd;
 import entity.Schedule;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,10 @@ public class ScheduleDao extends DBContext {
             ResultSet rs = st.executeQuery();
             WeeksDao wd = new WeeksDao();
             TimeSlotDao tsd = new TimeSlotDao();
+            DayStartEndDao dsed = new DayStartEndDao();
             while (rs.next()) {
-                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(3), rs.getString(4));
+                DayStartAndEnd date = dsed.getDayById(rs.getInt(6));
+                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(3), rs.getString(5),date);
                 list.add(s);
             }
         } catch (SQLException ex) {
@@ -47,8 +50,10 @@ public class ScheduleDao extends DBContext {
             ResultSet rs = st.executeQuery();
             WeeksDao wd = new WeeksDao();
             TimeSlotDao tsd = new TimeSlotDao();
+            DayStartEndDao dsed = new DayStartEndDao();
             while (rs.next()) {
-                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(3), rs.getString(4));
+                  DayStartAndEnd date = dsed.getDayById(rs.getInt(6));
+                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(3), rs.getString(5),date);
                 return s;
             }
         } catch (SQLException ex) {
@@ -56,7 +61,28 @@ public class ScheduleDao extends DBContext {
         }
         return null;
     }
-
+    
+    public List<Schedule> getlistScheduleMetorByIdInW(int mid,int weekid) {
+        String sql = "select * from schedul_mentor where mid =? and fid =?";
+        List<Schedule> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, mid);
+            st.setInt(2, weekid);
+            ResultSet rs = st.executeQuery();
+            WeeksDao wd = new WeeksDao();
+            TimeSlotDao tsd = new TimeSlotDao();
+            DayStartEndDao dsed = new DayStartEndDao();
+            while (rs.next()) {
+                  DayStartAndEnd date = dsed.getDayById(rs.getInt(6));
+                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(rs.getInt(3)), rs.getString(5),date);
+                list.add(s);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public List<Schedule> getlistScheduleByInRequest(int id) {
         List<Schedule> list = new ArrayList<>();
         String sql = "select * from schedul_request where rid =?";
@@ -66,8 +92,10 @@ public class ScheduleDao extends DBContext {
             ResultSet rs = st.executeQuery();
             WeeksDao wd = new WeeksDao();
             TimeSlotDao tsd = new TimeSlotDao();
+            DayStartEndDao dsed = new DayStartEndDao();
             while (rs.next()) {
-                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(3), "Active");
+                 DayStartAndEnd date = dsed.getDayById(rs.getInt(6));
+                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(rs.getInt(3)), rs.getString(5),date);
                 list.add(s);
             }
         } catch (SQLException ex) {
@@ -81,14 +109,16 @@ public class ScheduleDao extends DBContext {
         String sql = "INSERT INTO [dbo].[schedul_request]\n"
                 + "           ([WeeksDayId]\n"
                 + "           ,[timeId]\n"
-                + "           ,[rid])\n"
+                + "           ,[rid]"
+                + "           ,[fid])\n"
                 + "     VALUES\n"
-                + "           (?,?,?)";
+                + "           (?,?,?,?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, sch.getWeeksDay().getId());
             st.setInt(2, sch.getTimeSlot().getId());
             st.setInt(3, rid);
+            st.setInt(4, sch.getDayfromto().getId());
             st.executeUpdate();
             check= true;
          } catch (SQLException ex) {
@@ -109,8 +139,12 @@ public class ScheduleDao extends DBContext {
 
     public static void main(String[] args) {
         ScheduleDao sc = new ScheduleDao();
-       Schedule s = sc.getlistScheduleMetorById(32);
-        System.out.println(sc.addSchedule(1, s));
+        List<Schedule>list= sc.getlistScheduleMetorByIdInW(1, 1);
+        for (Schedule schedule : list) {
+            System.out.println(schedule.getId());
+        }
+     
+        
         
     }
 }

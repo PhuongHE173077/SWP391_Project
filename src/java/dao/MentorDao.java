@@ -7,6 +7,7 @@ package dao;
 import context.DBContext;
 import entity.Mentor;
 import entity.Schedule;
+import entity.ScheduleMentor;
 import entity.Skill;
 import entity.User;
 import java.sql.Connection;
@@ -48,7 +49,6 @@ public class MentorDao extends DBContext {
 
         return listMentor;
     }
-
     public List<Mentor> getAllMentorCVpre() {
         String sql = "SELECT mentor.*, [User].* FROM mentor INNER JOIN [User] ON mentor.userId = [User].user_id  where [User].status = 'Processing'";
         List<Mentor> listMentor = new ArrayList<>();
@@ -70,7 +70,6 @@ public class MentorDao extends DBContext {
 
         return listMentor;
     }
-
     public void updateStatusMentor(int mentorid, String status) {
         String query = "UPDATE [dbo].[User]\n"
                 + "   SET [status] = ?\n"
@@ -83,8 +82,7 @@ public class MentorDao extends DBContext {
         } catch (Exception e) {
         }
     }
-
-    public void updateImgMentor(int mentorid, String img) {
+     public void updateImgMentor(int mentorid, String img) {
         String query = "UPDATE [dbo].[User]\n"
                 + "   SET img = ?\n"
                 + " WHERE user_id = (select userId from mentor where mentor_id = ?)";
@@ -96,7 +94,6 @@ public class MentorDao extends DBContext {
         } catch (Exception e) {
         }
     }
-
     public Mentor getMentorByID(int id) {
         String sql = "SELECT    mentor.*, [User].*\n"
                 + "FROM         mentor INNER JOIN\n"
@@ -200,9 +197,9 @@ public class MentorDao extends DBContext {
 
     public static void main(String[] args) {
         MentorDao md = new MentorDao();
-//        Mentor me = md.getMentorByID(20);
-//        md.updateImgMentor(me.getId(), me.getCv().getImg());
-    }
+        Mentor me = md .getMentorByID(1);
+        System.out.println(me.getName());
+    }   
 
     public List<Mentor> searchMentorByName(String txtSearch) {
         List<Mentor> list = new ArrayList<>();

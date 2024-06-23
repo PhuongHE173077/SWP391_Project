@@ -4,13 +4,16 @@
  */
 package controller;
 
+import dao.DayStartEndDao;
 import dao.MentorDao;
 import dao.PaymentDao;
 import dao.RequestDao;
 import dao.ScheduleDao;
 import dao.SkillDao;
+import dao.TimeSlotDao;
 import dao.UserDao;
 import dao.WeeksDao;
+import entity.DayStartAndEnd;
 
 import entity.Mentee;
 import entity.Mentor;
@@ -18,6 +21,7 @@ import entity.Payment;
 import entity.Request;
 import entity.Schedule;
 import entity.Skill;
+import entity.TimeSlot;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -26,10 +30,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -78,7 +84,7 @@ public class request extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        ScheduleDao scd = new ScheduleDao();
         int id = Integer.parseInt(request.getParameter("id"));
         int sid = Integer.parseInt(request.getParameter("sid"));
         MentorDao menntorDao = new MentorDao();
@@ -86,6 +92,41 @@ public class request extends HttpServlet {
         Mentor m = menntorDao.getMentorByID(id);
         Skill skill = sd.searchSkill(sid);
         WeeksDao wd = new WeeksDao();
+        DayStartEndDao dsd = new DayStartEndDao();
+        List<DayStartAndEnd> list = dsd.getAllDayFE();
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = today.format(dateFormat);
+        DayStartAndEnd de = dsd.getDayinWeekday(date);
+        request.setAttribute("date", de);
+        String startDateStr = de.getStartDay();
+        String endDateStr = de.getEndDay();
+        ArrayList<String> dates = new ArrayList<>();
+        TimeSlotDao td = new TimeSlotDao();
+        List<TimeSlot> timeSlots = td.getTimeSlot();
+        List<DayStartAndEnd> listDfeToday = dsd.getGenderDayFEgenterToDay();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date startDate = sdf.parse(startDateStr);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(startDate);
+
+            for (int i = 0; i < 7; i++) {
+                dates.add(displayFormat.format(cal.getTime()));
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<Schedule>listsche = scd.getlistScheduleMetorByIdInW(id, de.getId());
+        request.setAttribute("listsch", listsche);
+        request.setAttribute("listDe", listDfeToday);
+        request.setAttribute("de", de);
+        request.setAttribute("listw", list);
+        request.setAttribute("dates", dates);
+        request.setAttribute("timeSlots", timeSlots);
         request.setAttribute("listWeek", wd.getListWeeksDay());
         request.setAttribute("mentor", m);
         request.setAttribute("skill", skill);
@@ -103,62 +144,72 @@ public class request extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int mid = Integer.parseInt(request.getParameter("id"));
-        int sid = Integer.parseInt(request.getParameter("sid"));
-        String subject = request.getParameter("subject");
-        String deadLineDay = request.getParameter("deadlineDate");
-        String content = request.getParameter("content");
-        int Day = Integer.parseInt(request.getParameter("dayNumber"));
-        String timeSchedule[] = request.getParameterValues("key");
-        HttpSession session = request.getSession();
-        Mentee mentee = (Mentee) session.getAttribute("mentee");
-        if (mentee == null) {
-            response.sendRedirect("login");
-        } else {
-            ScheduleDao sd = new ScheduleDao();
-            int[] skillArray = new int[timeSchedule.length];
-            List<Schedule> list = new ArrayList<>();
-            for (int i = 0; i < skillArray.length; i++) {
-                try {
-                    int id = Integer.parseInt(timeSchedule[i]);
-                    Schedule s = sd.getlistScheduleMetorById(id);
-                    list.add(s);
-                } catch (NumberFormatException e) {
-                    // Xử lý lỗi chuyển đổi (nếu có)
-                    e.printStackTrace();
-                }
-            }
-            SkillDao ssd = new SkillDao();
-            MentorDao md = new MentorDao();
-            RequestDao rd = new RequestDao();
-            UserDao ud = new UserDao();
-            PaymentDao pd = new PaymentDao();
-            Request rq = new Request(0, md.getMentorByID(mid), mentee, subject, deadLineDay, Day, content, ssd.searchSkill(sid), "Processing", list);
-            if (mentee.getBalance() < rq.getTotal()) {
-                MentorDao menntorDao = new MentorDao();
-                Mentor m = menntorDao.getMentorByID(mid);
-                Skill skill = ssd.searchSkill(sid);
-                WeeksDao wd = new WeeksDao();
-                request.setAttribute("listWeek", wd.getListWeeksDay());
-                request.setAttribute("mentor", m);
-                request.setAttribute("skill", skill);
-                String error = "So du khong du";
-                request.setAttribute("error", error);
-                request.getRequestDispatcher("request.jsp").forward(request, response);
-            } else {
-                rd.addRequest(rq);
-                ud.removeMoney(mentee, rq.getTotal());
-
-                LocalDateTime currentDateTime = LocalDateTime.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                String formattedDateTime = currentDateTime.format(formatter);
-
-                Payment payment = new Payment(sid, rd.getTop1Rq(), rq.getTotal(), formattedDateTime, content);
-                pd.addPayment(payment);
-//                String announce = "Tru tien thanh cong";
-                request.getRequestDispatcher("payment").forward(request, response);
-            }
+        String schedule[] = request.getParameterValues("schedule");
+        for (int i = 0; i < schedule.length; i++) {
+            System.out.println(schedule[i]);
+            
         }
+        
+        
+//        int mid = Integer.parseInt(request.getParameter("id"));
+//        int sid = Integer.parseInt(request.getParameter("sid"));
+//        String subject = request.getParameter("subject");
+//        String deadLineDay = request.getParameter("deadlineDate");
+//        String content = request.getParameter("content");
+//        int Day = Integer.parseInt(request.getParameter("dayNumber"));
+//        String timeSchedule[] = request.getParameterValues("key");
+//        HttpSession session = request.getSession();
+//        Mentee mentee = (Mentee) session.getAttribute("mentee");
+//        if (mentee == null) {
+//            response.sendRedirect("login");
+//        } else {
+//            ScheduleDao sd = new ScheduleDao();
+//            int[] skillArray = new int[timeSchedule.length];
+//            List<Schedule> list = new ArrayList<>();
+//            for (int i = 0; i < skillArray.length; i++) {
+//                try {
+//                    int id = Integer.parseInt(timeSchedule[i]);
+//                    Schedule s = sd.getlistScheduleMetorById(id);
+//                    list.add(s);
+//                } catch (NumberFormatException e) {
+//                    // Xử lý lỗi chuyển đổi (nếu có)
+//                    e.printStackTrace();
+//                }
+//            }
+//            SkillDao ssd = new SkillDao();
+//            MentorDao md = new MentorDao();
+//            RequestDao rd = new RequestDao();
+//            UserDao ud = new UserDao();
+//            PaymentDao pd = new PaymentDao();
+//            LocalDate today = LocalDate.now();
+//            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//            String date = today.format(dateFormat);
+//            Request rq = new Request(0, md.getMentorByID(mid), mentee, subject, deadLineDay, Day, content, ssd.searchSkill(sid), "Processing", list, date);
+//            if (mentee.getBalance() < rq.getTotal()) {
+//                MentorDao menntorDao = new MentorDao();
+//                Mentor m = menntorDao.getMentorByID(mid);
+//                Skill skill = ssd.searchSkill(sid);
+//                WeeksDao wd = new WeeksDao();
+//                request.setAttribute("listWeek", wd.getListWeeksDay());
+//                request.setAttribute("mentor", m);
+//                request.setAttribute("skill", skill);
+//                String error = "So du khong du";
+//                request.setAttribute("error", error);
+//                request.getRequestDispatcher("request.jsp").forward(request, response);
+//            } else {
+//                rd.addRequest(rq);
+//                ud.removeMoney(mentee, rq.getTotal());
+//
+//                LocalDateTime currentDateTime = LocalDateTime.now();
+//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//                String formattedDateTime = currentDateTime.format(formatter);
+//
+//                Payment payment = new Payment(sid, rd.getTop1Rq(), rq.getTotal(), formattedDateTime, content);
+//                pd.addPayment(payment);
+////                String announce = "Tru tien thanh cong";
+//                request.getRequestDispatcher("payment").forward(request, response);
+//            }
+//        }
     }
 
     /**

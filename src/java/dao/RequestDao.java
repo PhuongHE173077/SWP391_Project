@@ -40,7 +40,7 @@ public class RequestDao extends DBContext {
             SkillDao ssd = new SkillDao();
             while (rs.next()) {
 
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)));
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)),rs.getString(9));
                 list.add(rq);
             }
 
@@ -61,7 +61,7 @@ public class RequestDao extends DBContext {
             MenteeDao mentee = new MenteeDao();
             SkillDao ssd = new SkillDao();
             if (rs.next()) {
-              return new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)));
+              return new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)),rs.getString(9));
             }
         } catch (SQLException ex) {
             Logger.getLogger(RequestDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,7 +101,9 @@ public class RequestDao extends DBContext {
             SkillDao ssd = new SkillDao();
             while (rs.next()) {
 
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)));
+                Request rq;
+                rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)),rs.getString(9));
+;
                 list.add(rq);
             }
 
@@ -114,7 +116,7 @@ public class RequestDao extends DBContext {
 
     public List<Request> getAllRequestOfMentor(int id) {
         String query = "SELECT    request.*\n"
-                + "FROM         course INNER JOIN\n"
+                + "FROM course INNER JOIN\n"
                 + "request ON course.id = request.course_id\n"
                 + "Where course.status = 'active' and request.mentor_id=?";
         List<Request> list = new ArrayList<>();
@@ -128,7 +130,7 @@ public class RequestDao extends DBContext {
             SkillDao ssd = new SkillDao();
             while (rs.next()) {
 
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)));
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)),rs.getString(9));
                 list.add(rq);
             }
 
@@ -203,7 +205,7 @@ public class RequestDao extends DBContext {
             SkillDao ssd = new SkillDao();
             if (rs.next()) {
 
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)));
+                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)),rs.getString(9));
                 return rq;
             }
             
