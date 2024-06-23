@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -106,5 +108,52 @@ public boolean updateMentee(Mentee m) {
         
 
         System.out.println(me.getName());
+    }
+
+    public List<Mentee> getAllMentee() {
+        List<Mentee> list = new ArrayList<>();
+        String sql = "select * from \"User\" where rid = 0";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Mentee mentee = new Mentee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10));
+                list.add(mentee);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public List<Mentee> searchMenteeByName (String txtSearch) {
+        List<Mentee> list = new ArrayList<>();
+        String sql = "select * from [User] where rid = 0 and [name] like ?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, "%" + txtSearch + "%");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                Mentee mentee = new Mentee(rs.getInt(1), 
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(9),
+                        rs.getString(8),
+                        rs.getInt(11),
+                        rs.getString(13));
+                list.add(mentee);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MenteeDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public List<Mentee> getListByPage(List<Mentee> list, int start, int end) {
+        ArrayList<Mentee> arr = new ArrayList<>();
+        for(int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
     }
 }

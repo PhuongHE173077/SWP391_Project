@@ -2,15 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
-import dao.UserDao;
-import entity.User;
+import dao.MentorDao;
+import entity.Mentor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,30 +16,54 @@ import java.util.List;
 
 /**
  *
- * @author TUF F15
+ * @author Acer
  */
-@WebServlet(name="Search", urlPatterns={"/search"})
-public class Search extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+public class listMentor extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String txtSearch = request.getParameter("txt");
-        if (txtSearch == null) {
-            txtSearch = "";
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet listMentor</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet listMentor at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        UserDao ud = new UserDao();
-        List<User> list1 = ud.searchUserByName(txtSearch);
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //processRequest(request, response);
+        MentorDao dao = new MentorDao();
+        List<Mentor> m = dao.getAllMentor();
         
         int page, numberpage = 5;
-        int size = list1.size();
+        int size = m.size();
         int num = (size%5==0?(size/5) : ((size/5))+1);
         String xpage = request.getParameter("page");
         if (xpage == null) {
@@ -52,31 +74,17 @@ public class Search extends HttpServlet {
         int start, end;
         start = (page-1) * numberpage;
         end = Math.min(page*numberpage, size);
-        List<User> list = ud.getListByPage(list1, start, end);
+        List<Mentor> list = dao.getListByPage(m, start, end);
         
-        request.setAttribute("listS", list);
+        request.setAttribute("listmentor", list);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
-        request.setAttribute("txt", txtSearch);
-        request.getRequestDispatcher("Manager.jsp").forward(request, response);
-    } 
+        request.getRequestDispatcher("listMentorManager.jsp").forward(request, response);
+    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
-
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -84,12 +92,13 @@ public class Search extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

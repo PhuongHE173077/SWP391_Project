@@ -24,6 +24,16 @@ public class Mentee {
     public Mentee() {
     }
 
+    public Mentee(int id, String name, String email, String phone, String dob, int gender, String address) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.dob = dob;
+        this.gender = gender;
+        this.address = address;
+    }
+
     public Mentee(int id, String name, String email, String pass, String dob, String phone, String picture, int gender, double balance, String address) {
         this.id = id;
         this.name = name;

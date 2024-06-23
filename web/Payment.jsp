@@ -1,15 +1,14 @@
 <%-- 
     Document   : Payment
-    Created on : Jun 9, 2024, 2:21:45 PM
+    Created on : Jun 18, 2024, 11:10:15 PM
     Author     : Admin
 --%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List" %>
-<%@ page import="entity.Request" %>
-<%@ page import="entity.Payment" %>
 <!DOCTYPE html>
 <html>
     <head>
+        <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,22 +42,9 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <style>
-            h1, h2 {
+            h3 {
                 color: #D10024;
                 text-align: center;
-            }
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-            }
-            th, td {
-                border: 1px solid #ddd;
-                padding: 10px;
-                text-align: left;
-            }
-            th {
-                background-color: #f2f2f2;
             }
             tr:nth-child(even) {
                 background-color: #f9f9f9;
@@ -69,55 +55,27 @@
         </style>
     </head>
     <body>
-        <!-- SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- home button row -->
-                <div class="px-xl-3">
-                    <button class="btn btn-block btn-secondary">
-                        <i class="fa fa-home"></i>
-                        <a href="home"style="text-decoration: none; color: black"><span>Home
-                            </span></a>
-                    </button>
-                </div>
-                <h1>Payment History</h1>
-                <!-- row -->
-                <div class="row">
-                    <table>
-                        <tr>
-                            <th>Payment ID</th>
-                            <th>Request ID</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                        </tr>
-                        <%
-                            List<Payment> paymentList = (List<Payment>) request.getAttribute("paymentList");
-                            if (paymentList != null) {
-                                for (Payment payment : paymentList) {
-                        %>
-                        <tr>
-                            <td><%= payment.getId() %></td>
-                            <td><%= payment.getRequest_id().getId() %></td>
-                            <td><%= payment.getAmount() %></td>
-                            <td><%= payment.getDate_payment() %></td>
-                            <td><%= payment.getStatus() %></td>
-                        </tr>
-                        <%
-                                }
-                            } else {
-                        %>
-                        <tr>
-                            <td colspan="5">No payments found.</td>
-                        </tr>
-                        <%
-                            }
-                        %>
-                    </table>
-                </div>
+        <div class="container">
+            <h3>Tạo mới đơn hàng</h3>
+            <div class="table-responsive">
+                <form action="payment" id="frmCreateOrder" method="post">        
+                    <div class="form-group">
+                        <label for="amount">Số tiền</label>
+                        <input class="form-control" data-val="true" data-val-number="The field Amount must be a number." data-val-required="The Amount field is required." id="amount" max="100000000" min="1" name="amount" type="number" value="10000" />
+                    </div>
+                    <h4>Chọn phương thức thanh toán</h4>
+                    <div class="form-group">
+                        <h5>Chuyển hướng sang Cổng VNPAY</h5>
+                        <input type="radio" Checked="True" id="bankCode" name="bankCode" value="">
+                        <label for="bankCode">Cổng thanh toán VNPAYQR</label><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="OrderDescription">Nội dung thanh toán</label>
+                        <textarea class="form-control" cols="20" id="OrderDescription" name="OrderDescription" rows="2">${OrderDescription}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Thanh toán</button>
+                </form>
             </div>
         </div>
-        <!-- SECTION -->
     </body>
 </html>

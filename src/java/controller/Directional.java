@@ -62,7 +62,7 @@ public class Directional extends HttpServlet {
         }else if (key == 2) {//change pass word
             response.sendRedirect("change-password");
         } else if (key == 3) {
-            response.sendRedirect("payment");
+            response.sendRedirect("payment-history");
         }else{//log out
             response.sendRedirect("logout");
         }

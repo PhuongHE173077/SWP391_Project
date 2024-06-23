@@ -12,6 +12,14 @@
         <servlet-name>confirmCV</servlet-name>
         <servlet-class>controller.confirmCV</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>listMentee</servlet-name>
+        <servlet-class>controller.listMentee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>listMentor</servlet-name>
+        <servlet-class>controller.listMentor</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadControll</servlet-name>
         <url-pattern>/loadcontroll</url-pattern>
@@ -23,5 +31,13 @@
     <servlet-mapping>
         <servlet-name>confirmCV</servlet-name>
         <url-pattern>/confirmcv</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>listMentee</servlet-name>
+        <url-pattern>/listmentee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>listMentor</servlet-name>
+        <url-pattern>/listmentor</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -48,6 +48,7 @@ public class MentorDao extends DBContext {
 
         return listMentor;
     }
+
     public List<Mentor> getAllMentorCVpre() {
         String sql = "SELECT mentor.*, [User].* FROM mentor INNER JOIN [User] ON mentor.userId = [User].user_id  where [User].status = 'Processing'";
         List<Mentor> listMentor = new ArrayList<>();
@@ -69,6 +70,7 @@ public class MentorDao extends DBContext {
 
         return listMentor;
     }
+
     public void updateStatusMentor(int mentorid, String status) {
         String query = "UPDATE [dbo].[User]\n"
                 + "   SET [status] = ?\n"
@@ -81,7 +83,8 @@ public class MentorDao extends DBContext {
         } catch (Exception e) {
         }
     }
-     public void updateImgMentor(int mentorid, String img) {
+
+    public void updateImgMentor(int mentorid, String img) {
         String query = "UPDATE [dbo].[User]\n"
                 + "   SET img = ?\n"
                 + " WHERE user_id = (select userId from mentor where mentor_id = ?)";
@@ -93,6 +96,7 @@ public class MentorDao extends DBContext {
         } catch (Exception e) {
         }
     }
+
     public Mentor getMentorByID(int id) {
         String sql = "SELECT    mentor.*, [User].*\n"
                 + "FROM         mentor INNER JOIN\n"
@@ -196,8 +200,42 @@ public class MentorDao extends DBContext {
 
     public static void main(String[] args) {
         MentorDao md = new MentorDao();
-        Mentor me = md .getMentorByID(20);
-        md.updateImgMentor(me.getId(), me.getCv().getImg());
+//        Mentor me = md.getMentorByID(20);
+//        md.updateImgMentor(me.getId(), me.getCv().getImg());
+    }
 
+    public List<Mentor> searchMentorByName(String txtSearch) {
+        List<Mentor> list = new ArrayList<>();
+        String sql = "SELECT mentor.*, [User].*\n"
+                + "FROM mentor INNER JOIN\n"
+                + "[User] ON mentor.userId = [User].user_id"
+                + "WHERE [User].name like ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, "%" + txtSearch + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Mentor mentor = new Mentor(
+                        rs.getInt(1),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getInt(11),
+                        rs.getString(13));
+                list.add(mentor);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MentorDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<Mentor> getListByPage(List<Mentor> list, int start, int end) {
+        ArrayList<Mentor> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
     }
 }

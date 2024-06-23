@@ -4,10 +4,8 @@
  */
 package controller;
 
-import dao.CvDao;
-import dao.MentorDao;
-import entity.CvMentor;
-import entity.Mentor;
+import dao.UserDao;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -51,10 +49,27 @@ public class loadControll extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        MentorDao dao = new MentorDao();
-        List<Mentor> list = dao.getAllMentorCVpre();
+        UserDao ud = new UserDao();
+        List<User> list1 = ud.getUser();
+        
+        int page, numberpage = 5;
+        int size = list1.size();
+        int num = (size%5==0?(size/5) : ((size/5))+1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page-1) * numberpage;
+        end = Math.min(page*numberpage, size);
+        List<User> list = ud.getListByPage(list1, start, end);
+        
         request.setAttribute("listS", list);
-        request.getRequestDispatcher("nhap.jsp").forward(request, response);
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
+        request.getRequestDispatcher("Manager.jsp").forward(request, response);
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

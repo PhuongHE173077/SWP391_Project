@@ -85,8 +85,9 @@ public class UserDao extends DBContext {
 
     public static void main(String[] args) {
         UserDao ud = new UserDao();
-        LocalDate dateRq = LocalDate.now();
-        System.out.println(dateRq);
+//        LocalDate dateRq = LocalDate.now();
+//        System.out.println(dateRq);
+//        System.out.println(ud.totalPage());
     }
 
     public User checkLogin(String email, String pass) {
@@ -154,7 +155,34 @@ public class UserDao extends DBContext {
         return null;
     }
     
+    public List<User> searchUserByName (String txtSearch) {
+        List<User> list = new ArrayList<>();
+        String sql = "select * from [User] where [name] like ?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, "%" + txtSearch + "%");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                User user = new User(rs.getInt(1), 
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(6),
+                        rs.getString(12));
+                list.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     
+    public List<User> getListByPage(List<User> list, int start, int end) {
+        ArrayList<User> arr = new ArrayList<>();
+        for(int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
     
     public void removeMoney(Mentee mentee, double money) {
         String sql = "UPDATE [dbo].[User]\n"

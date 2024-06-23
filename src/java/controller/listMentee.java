@@ -4,53 +4,33 @@
  */
 package controller;
 
-import dao.PaymentDao;
-import dao.RequestDao;
+import dao.MenteeDao;
 import entity.Mentee;
-import entity.Payment;
-import entity.Request;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Admin
- */
-@WebServlet(name = "PaymentController", urlPatterns = {"/payment"})
-public class PaymentController extends HttpServlet {
+public class listMentee extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        RequestDao rd = new RequestDao();
-        PaymentDao pd = new PaymentDao();
-        HttpSession session = request.getSession();
-        Mentee mentee = (Mentee) session.getAttribute("mentee");
-
-        List<Request> requestList = rd.getAllRequestOfMentee(mentee.getId());
-        List<Payment> paymentList = new ArrayList<>();
-        paymentList = pd.getPaymentByUserID(mentee);
-        
-        request.setAttribute("requestList", requestList);
-        request.setAttribute("paymentList", paymentList);
-        request.getRequestDispatcher("Payment.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet listMentee</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet listMentee at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -65,7 +45,28 @@ public class PaymentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        MenteeDao dao = new MenteeDao();
+        List<Mentee> m = dao.getAllMentee();
+
+        int page, numberpage = 5;
+        int size = m.size();
+        int num = (size % 5 == 0 ? (size / 5) : ((size / 5)) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numberpage;
+        end = Math.min(page * numberpage, size);
+        List<Mentee> list = dao.getListByPage(m, start, end);
+
+        request.setAttribute("lm", list);
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
+        request.getRequestDispatcher("listMenteeManager.jsp").forward(request, response);
     }
 
     /**

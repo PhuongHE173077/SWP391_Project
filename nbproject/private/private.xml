@@ -13,12 +13,6 @@
             <file>file:/D:/Ilter2/SWP391_Project/web/index.jsp</file>
             <file>file:/D:/Ilter2/SWP391_Project/src/java/controller/ViewCVMentor.java</file>
         </group>
-        <group>
-            <file>file:/D:/SWP391%20(2)/SWP391_Project/src/java/dao/RequestDao.java</file>
-            <file>file:/D:/SWP391%20(2)/SWP391_Project/web/request.jsp</file>
-            <file>file:/D:/SWP391%20(2)/SWP391_Project/src/java/dao/PaymentDao.java</file>
-            <file>file:/D:/SWP391%20(2)/SWP391_Project/web/Payment.jsp</file>
-            <file>file:/D:/SWP391%20(2)/SWP391_Project/src/java/controller/PaymentController.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

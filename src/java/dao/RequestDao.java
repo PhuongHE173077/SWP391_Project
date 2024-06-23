@@ -237,7 +237,44 @@ public class RequestDao extends DBContext {
         return check;
     }
     
+    public boolean isEnrolled(int userID, int requestID) throws SQLException {
+        boolean isEnrolled = false;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
+        try {
+            String sql = "SELECT COUNT(*) AS count\n"
+                    + "FROM dbo.request r\n"
+                    + "JOIN dbo.User u ON r.id = u.id\n"
+                    + "WHERE r.mentee_id = ? AND r.id = ? AND r.status = 1";
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ps.setInt(2, requestID);
+
+            rs = ps.executeQuery(); // Use executeQuery() to retrieve results
+
+            if (rs.next()) {
+                int count = rs.getInt("count");
+                isEnrolled = count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exception
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return isEnrolled;
+    }
+    
     public static void main(String[] args) {
         RequestDao r = new RequestDao();
         System.out.println(r.getAllRequestOfMentor(3).get(0));

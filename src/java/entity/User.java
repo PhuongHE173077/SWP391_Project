@@ -25,6 +25,14 @@ public class User {
     public User() {
     }
 
+    public User(int id, String name, String email, String phone, String status) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.status = status;
+    }
+
     public User(int id, String name, String email, String pass, String dob, String phone, String picture, int gender, double balance, String address, int role_id, String status) {
         this.id = id;
         this.name = name;
