@@ -124,7 +124,7 @@
                                         <option value="4">Logout</option>
                                     </select>
                                 </form>
-                                <li><a href="#"><i class="fa fa-dollar"></i> USD: ${c.balance} $</a></li>
+                                <li><a href="wallet"><i class="fa fa-dollar"></i> USD: ${c.balance} $</a></li>
                                 </c:otherwise>
 
                         </c:choose>

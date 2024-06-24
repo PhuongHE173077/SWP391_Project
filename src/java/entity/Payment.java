@@ -12,21 +12,45 @@ import java.util.Date;
  */
 public class Payment {
     private int id;
-    private Request request_id;
+    private int requestId;
+    private int userId;
     private double amount;
-    private String date_payment;
-    private String status;
+    private String detail;
+    private Date paymentDate;
+    private String note;
+    private String transactionType;
+    private String bankCode;
+    private String bankTranNo;
+    private String cardType;
+    private String transactionNo;
+    private String transactionStatus;
+    private String txnRef;
+    private String secureHash;
+    private int status;
 
     public Payment() {
     }
 
-    public Payment(int id, Request request_id, double amount, String date_payment, String status) {
+    public Payment(int id, int requestId, int userId, double amount, String detail, Date paymentDate, String note, String transactionType, String bankCode, String bankTranNo, String cardType, String transactionNo, String transactionStatus, String txnRef, String secureHash, int status) {
         this.id = id;
-        this.request_id = request_id;
+        this.requestId = requestId;
+        this.userId = userId;
         this.amount = amount;
-        this.date_payment = date_payment;
+        this.detail = detail;
+        this.paymentDate = paymentDate;
+        this.note = note;
+        this.transactionType = transactionType;
+        this.bankCode = bankCode;
+        this.bankTranNo = bankTranNo;
+        this.cardType = cardType;
+        this.transactionNo = transactionNo;
+        this.transactionStatus = transactionStatus;
+        this.txnRef = txnRef;
+        this.secureHash = secureHash;
         this.status = status;
     }
+    
+    
 
     public int getId() {
         return id;
@@ -36,12 +60,20 @@ public class Payment {
         this.id = id;
     }
 
-    public Request getRequest_id() {
-        return request_id;
+    public int getRequestId() {
+        return requestId;
     }
 
-    public void setRequest_id(Request request_id) {
-        this.request_id = request_id;
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public double getAmount() {
@@ -52,21 +84,103 @@ public class Payment {
         this.amount = amount;
     }
 
-    public String getDate_payment() {
-        return date_payment;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setDate_payment(String date_payment) {
-        this.date_payment = date_payment;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
-    public String getStatus() {
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
+    public String getBankTranNo() {
+        return bankTranNo;
+    }
+
+    public void setBankTranNo(String bankTranNo) {
+        this.bankTranNo = bankTranNo;
+    }
+
+    public String getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
+    }
+
+    public String getTransactionNo() {
+        return transactionNo;
+    }
+
+    public void setTransactionNo(String transactionNo) {
+        this.transactionNo = transactionNo;
+    }
+
+    public String getTransactionStatus() {
+        return transactionStatus;
+    }
+
+    public void setTransactionStatus(String transactionStatus) {
+        this.transactionStatus = transactionStatus;
+    }
+
+    public String getTxnRef() {
+        return txnRef;
+    }
+
+    public void setTxnRef(String txnRef) {
+        this.txnRef = txnRef;
+    }
+
+    public String getSecureHash() {
+        return secureHash;
+    }
+
+    public void setSecureHash(String secureHash) {
+        this.secureHash = secureHash;
+    }
+
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
+
+    
 
     
 }

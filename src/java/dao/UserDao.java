@@ -197,4 +197,20 @@ public class UserDao extends DBContext {
             System.out.println(e);
         }
     }
+
+    public boolean updateUserBalance(int userId, double amount) {
+        boolean rowUpdated = false;
+        String UPDATE_USER_BALANCE_SQL = "UPDATE [SWP391_project].[dbo].[User] SET balance = balance + ? WHERE user_id = ?";
+        try (
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_BALANCE_SQL)) {
+
+            preparedStatement.setDouble(1, amount);
+            preparedStatement.setInt(2, userId);
+
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowUpdated;
+    }
 }
