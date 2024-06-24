@@ -50,7 +50,7 @@ public class UserDao extends DBContext {
                 + "           ,[gender]\n"
                 + "           ,[balance]\n"
                 + "           ,[address]\n"
-                + "           ,[rid])\n"
+                + "           ,[rid],[status])\n"
                 + "     VALUES\n"
                 + "           (?\n"
                 + "           ,?\n"
@@ -61,6 +61,7 @@ public class UserDao extends DBContext {
                 + "           ,?\n"
                 + "           ,?\n"
                 + "           ,?\n"
+                + "           ,?"
                 + "           ,?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -73,6 +74,7 @@ public class UserDao extends DBContext {
             st.setDouble(7, user.getBalance());
             st.setString(8, user.getAddress());
             st.setInt(9, user.getRole_id());
+            st.setString(10, user.getStatus());
             st.executeUpdate();
             check = true;
         } catch (SQLException ex) {
@@ -151,5 +153,20 @@ public class UserDao extends DBContext {
         }
         return null;
     }
-
+    
+    
+    
+    public void removeMoney(Mentee mentee, double money) {
+        String sql = "UPDATE [dbo].[User]\n"
+                + "   SET [balance] = ?\n"
+                + " WHERE [user_id] = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setDouble(1, mentee.getBalance() - money);
+            ps.setInt(2, mentee.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }

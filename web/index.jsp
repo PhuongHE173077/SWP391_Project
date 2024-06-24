@@ -140,18 +140,18 @@
                         <!-- SEARCH BAR -->
                         <div class="col-md-6">
                             <div class="header-search">
-                                <form>
-                                    <select class="input-select">
-                                        <option value="0">Course Name</option>
-                                        <option value="1">Mentor Name</option>
-
+                                <form action="ViewAllMentor.jsp" method="get">
+                                    <select class="input-select" name="searchType">
+                                        <option value="course">Course Name</option>
+                                        <option value="mentor">Mentor Name</option>
                                     </select>
-                                    <input class="input" placeholder="Search here">
+                                    <input class="input" name="searchQuery" placeholder="Search here">
                                     <button class="search-btn">Search</button>
                                 </form>
                             </div>
                         </div>
                         <!-- /SEARCH BAR -->
+
 
                         <!-- ACCOUNT -->
                         <div class="col-md-3 clearfix">
@@ -179,12 +179,12 @@
                                                 <div class="product-widget">
                                                     <c:forEach items="${requestScope.reList}" var="re">
                                                         <div class="product-img">
-                                                            <img src="${re.course.skill.images}" alt="">
+                                                            <img src="${re.skill.images}" alt="">
                                                         </div>
                                                         <div class="product-body">
-                                                            <h3 class="product-name"><a href="#">${re.course.courseName}</a></h3>
+                                                            <h3 class="product-name"><a href="#">${re.skill.skill}</a></h3>
                                                             <h4 class="product-price">
-                                                                <span class="qty">${re.status} </span>
+                                                                <span class="qty">${re.status}</span>
                                                             </h4>
                                                         </div>
                                                     </c:forEach>
@@ -354,7 +354,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="add-to-cart">
-                                                    <a href="ViewCourse?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> View all Course</button> </a>
+                                                    <a href="ViewMentor?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> View all Mentor</button> </a>
 
                                                 </div>
                                             </div>
@@ -411,23 +411,19 @@
                                 <!-- tab -->
                                 <div id="tab2" class="tab-pane fade in active">
                                     <div class="products-slick" data-nav="#slick-nav-2">
-                                        <c:forEach items="${requestScope.listTop}" var="listtop">
+                                        <c:forEach items="${requestScope.listT}" var="listtop">
                                             <!-- product -->
                                             <div class="product">
                                                 <div class="product-img">
-                                                    <img src="${listtop.skill.images}" alt="">
+                                                    <img src="${listtop.images}" alt="">
                                                     <div class="product-label">
-                                                        <span class="sale">
-                                                            <c:forEach items="${listtop.listWeek}" var="lw">
-                                                                ${lw.name}
-                                                            </c:forEach>
-                                                            ${listtop.timeSlot.name}</span>
+                                                        <span class="new">HOT</span>
                                                     </div>
                                                 </div>
                                                 <div class="product-body">
-                                                    <a href="url"><p class="product-category"><i class="fa fa-user"></i> ${listtop.mentor.name}</p></a>
-                                                    <h3 class="product-name"><a href="ViewMentor?id=${listtop.id}">${listtop.courseName}</a></h3><!--view file-->
-                                                    <h4 class="product-price">${listtop.price} $</h4>
+                                                    <a href="url"><p class="product-category"> ${listtop.cs.name}</p></a>
+                                                    <h3 class="product-name"><a href="ViewMentor?id=${listtop.id}">${listtop.skill}</a></h3><!--view file-->
+
                                                     <div class="product-btns">
                                                         <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                         <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
@@ -435,7 +431,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="add-to-cart">
-                                                    <a href="request?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> BOOk Course</button> </a>
+                                                    <a href="ViewMentor?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> View all Course</button> </a>
 
                                                 </div>
                                             </div>

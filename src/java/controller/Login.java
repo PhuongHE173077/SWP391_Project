@@ -5,8 +5,10 @@
 package controller;
 
 import dao.MenteeDao;
+import dao.MentorDao;
 import dao.UserDao;
 import entity.Mentee;
+import entity.Mentor;
 import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -84,15 +86,23 @@ public class Login extends HttpServlet {
         MenteeDao md = new MenteeDao();
         PrintWriter out = response.getWriter();
         User m = ud.checkLogin(email, password);
+        HttpSession session = request.getSession();
+        Cookie em = new Cookie("email", email);
+        Cookie pas = new Cookie("cpass", password);
+        Cookie re = new Cookie("re", Rmb);
         if (m == null) {
             String erro = "Email and passworld is not correct";
             request.setAttribute("erro", erro);
+            em.setMaxAge(0);
+            pas.setMaxAge(0);
+            re.setMaxAge(0);
+            response.addCookie(em);
+            response.addCookie(pas);
+            response.addCookie(re);
             request.getRequestDispatcher("login.jsp").forward(request, response);
+
         } else {
-            HttpSession session = request.getSession();
-            Cookie em = new Cookie("email", email);
-            Cookie pas = new Cookie("cpass", password);
-            Cookie re = new Cookie("re", Rmb);
+
             if (Rmb != null) {
 
                 em.setMaxAge(60 * 60 * 24 * 7);
@@ -112,8 +122,29 @@ public class Login extends HttpServlet {
                     session.setAttribute("mentee", mentee);
                     response.sendRedirect("home");
                     break;
-                case 1: // Mentor
-                    out.print("Mentor");
+                case 1: // Mentor 
+                    MentorDao mod = new MentorDao();
+                    Mentor mentor = mod.getMentorByUserID(m.getId());
+                    String status = m.getStatus();
+                    if ("Block".equals(status)) {
+                        String error = "The Account is blocked! Please contact admin via phone number: 0123456789";
+                        request.setAttribute("error", error);
+                        request.getRequestDispatcher("login.jsp").forward(request, response);
+                    } else if ("Processing".equals(status)) {
+                        if (mentor.getCv() == null) {
+                            session.setAttribute("mentor", mentor);
+                            request.getRequestDispatcher("updateCvMentor").forward(request, response);
+                        } else {
+                            String thongbao = "Your CV is reviewing by management. Please waitting!";
+                            request.setAttribute("thongbao", thongbao);
+                            request.getRequestDispatcher("login.jsp").forward(request, response);
+                        }
+
+                    } else {
+
+                        session.setAttribute("mentor", mentor);
+                        response.sendRedirect("HomeMentor");
+                    }
                     break;
                 case 2: // Admin
                     out.print("Admin");

@@ -5,6 +5,11 @@
 
 package controller;
 
+
+import dao.CvDao;
+import dao.MentorDao;
+import entity.CvMentor;
+import entity.Mentor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,10 +20,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author TUF F15
+ * @author Dell
  */
-@WebServlet(name="Search", urlPatterns={"/search"})
-public class Search extends HttpServlet {
+@WebServlet(name="ViewCVMentor", urlPatterns={"/viewCVMentor"})
+public class ViewCVMentor extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,18 +35,20 @@ public class Search extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Search</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Search at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String sid_raw =request.getParameter("sid");
+        int sid =0;
+        if (sid_raw != null) {
+             sid = Integer.parseInt(sid_raw);
         }
+        MentorDao cvmd = new MentorDao();
+        Mentor c = cvmd.getMentorByID(id);
+        request.setAttribute("sid", sid);
+        request.setAttribute("detail", c);
+        request.getRequestDispatcher("ViewProfileMentor.jsp").forward(request, response);
+        
+        
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

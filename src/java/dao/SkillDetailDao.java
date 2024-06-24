@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class SkillDetailDao extends DBContext {
 
-    public boolean addSkillDetail(int rid, Skill skill) {
+    public boolean addSkillDetail(int mid, Skill skill) {
         boolean check = false;
         String sql = "INSERT INTO [dbo].[skill_detail]\n"
                 + "           ([skill_id]\n"
@@ -30,8 +30,8 @@ public class SkillDetailDao extends DBContext {
                 + "           (?,?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, rid);
-            st.setInt(2, skill.getId());
+            st.setInt(1, skill.getId());
+            st.setInt(2, mid);
             st.executeUpdate();
             check = true;
         } catch (SQLException ex) {

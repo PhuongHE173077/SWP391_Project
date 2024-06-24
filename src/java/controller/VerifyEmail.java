@@ -4,8 +4,13 @@
  */
 package controller;
 
+import dao.CvDao;
+import dao.MentorDao;
+import dao.SkillDao;
 import dao.UserDao;
 import entity.Mentee;
+import entity.Mentor;
+import entity.Skill;
 import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +20,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -81,17 +87,23 @@ public class VerifyEmail extends HttpServlet {
                 request.getParameter("fifth") + request.getParameter("sixth");
         HttpSession session = request.getSession();
         String code =(String) session.getAttribute("code");
+        MentorDao md = new MentorDao();
         
         if(code_ip.equals(code)){
             UserDao ud = new UserDao();
-            User user = (User)session.getAttribute("user");
-            ud.addUser(user);
+            User user1 = (User)session.getAttribute("user");
+            ud.addUser(user1);
+            User user =  ud.getUserByEmail(user1.getEmail());
             if(user.getRole_id() == 0){
                 Mentee mentee = new Mentee(user.getId(), user.getName(), user.getEmail(), user.getPass(), user.getDob(), user.getPhone(), user.getPicture(), user.getGender(), 0, user.getAddress());
                 session.setAttribute("mentee", mentee);
                 response.sendRedirect("home");
             }else{
-                out.print("Wellcome to Happy Progarmming"+user.getName());
+                md.addMentor(user, 0);
+                Mentor m = md.getMentorByUserID(user.getId());
+                session.setAttribute("mentor", m);
+                
+                response.sendRedirect("registerCv");
             }
             
         }else{

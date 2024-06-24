@@ -13,6 +13,7 @@ public class CvMentor {
     private String fullName;
     private String email;
     private String dob;
+    private int gender;
     private String phone;
     private String address;
     private String img;
@@ -24,11 +25,12 @@ public class CvMentor {
     public CvMentor() {
     }
 
-    public CvMentor(int id, String fullName, String email, String dob, String phone, String address, String img, String education, String wordexpereice, String achievements, String status) {
+    public CvMentor(int id, String fullName, String email, String dob, int gender, String phone, String address, String img, String education, String wordexpereice, String achievements, String status) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.dob = dob;
+        this.gender = gender;
         this.phone = phone;
         this.address = address;
         this.img = img;
@@ -68,6 +70,14 @@ public class CvMentor {
 
     public void setDob(String dob) {
         this.dob = dob;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public String getPhone() {
@@ -125,6 +135,9 @@ public class CvMentor {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+
+   
 
    
     

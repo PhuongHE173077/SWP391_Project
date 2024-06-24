@@ -102,10 +102,9 @@ public boolean updateMentee(Mentee m) {
 
     public static void main(String[] args) {
         MenteeDao m = new MenteeDao();
-        Mentee me = m.getMenteeById(2);
-        me.setName("Bao");
-        System.out.println(me.getEmail());
+        Mentee me = m.getMenteeById(1);
+        
 
-        System.out.println(m.updateMentee(me));
+        System.out.println(me.getName());
     }
 }

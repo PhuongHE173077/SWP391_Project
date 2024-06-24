@@ -8,6 +8,7 @@ package context;
  *
  * @author TUF F15
  */
+import java.lang.System.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,22 +22,18 @@ public class DBContext {
     public DBContext() {
         try {
             // Edit URL , username, password to authenticate with your MS SQL Server
-            String url = "jdbc:sqlserver://localhost:1433;databaseName= SWP391_project";
-            String username = "sa";
-            String password = "123";
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(url, username, password);
-        } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println(ex);
+            String url = "jdbc:sqlserver://localhost\\SQLEPXRESS:1433;databaseName=SWP391;"
+                    + "encrypt=true;trustServerCertificate=true";
+            String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+            Class.forName(driver);
+            String user = "sa";
+            String passwd = "12345";
+            connection = (Connection) DriverManager
+                    .getConnection(url, user, passwd);
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Loi");
         }
 
-    }
-
-    public static void main(String[] args) {
-        try {
-            System.out.println(new DBContext().connection);
-        } catch (Exception e) {
-        }
     }
 
     public Connection getConnection() {

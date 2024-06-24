@@ -22,7 +22,7 @@ public class User {
     private int role_id;
     private String status;
 
-    public User() {
+    public User(int aInt, String string) {
     }
 
     public User(int id, String name, String email, String pass, String dob, String phone, String picture, int gender, double balance, String address, int role_id, String status) {

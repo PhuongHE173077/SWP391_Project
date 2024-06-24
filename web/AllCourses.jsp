@@ -117,7 +117,7 @@
                             <c:when test="${empty c}">
                                 <li><a href="login" style="font-size: 16px;"><i class="fa fa-user-o"> Login</i></a></li>
                                 <li><i style="font-size: 16px;" class="fa "> / </i></li>
-                                <li><a href="login.jsp" style="font-size: 16px;"><i class="fa "> Sing up </i></a></li>
+                                <li><a href="login.jsp" style="font-size: 16px;"><i class="fa "> Sign up </i></a></li>
                                 </c:when>
                                 <c:otherwise>
                                 <form id="f2" action="directional">
@@ -198,10 +198,10 @@
                                                 <div class="product-widget">
                                                     <c:forEach items="${requestScope.reList}" var="re">
                                                         <div class="product-img">
-                                                            <img src="${re.course.skill.images}" alt="">
+                                                            <img src="${re.skill.images}" alt="">
                                                         </div>
                                                         <div class="product-body">
-                                                            <h3 class="product-name"><a href="#">${re.course.courseName}</a></h3>
+                                                            <h3 class="product-name"><a href="#">${re.skill.skill}</a></h3>
                                                             <h4 class="product-price">
                                                                 <span class="qty">${re.status} </span>
                                                             </h4>
@@ -255,10 +255,8 @@
                     <ul class="main-nav nav navbar-nav">
                         <li class="active"><a href="home">Home</a></li>
                         <li><a href="Course?cid=0">All course</a></li>
-                            <c:forEach items="${requestScope.listCs}" var="lsc">
-                            <li><a href="Course?cid=${lsc.id}">${lsc.name}</a></li>
-                            </c:forEach>
-
+                         <li><a href="AllMentor">All Mentor</a></li>   
+                         <li><a href="Course?cid=0">Blogs</a></li>
 
                     </ul>
                     <!-- /NAV -->
@@ -300,8 +298,8 @@
                         <!-- aside Widget -->
                         <div class="aside">
                             <h3 class="aside-title">skills</h3>
-                            ̣<c:forEach items="${requestScope.listS}" var="ls">
-                                <a href="url" >${ls.skill}</a></br>
+                            ̣<c:forEach items="${requestScope.listCs}" var="ls">
+                                <a href="url" >${ls.name}</a></br>
                             </c:forEach>
                             
 
@@ -338,23 +336,20 @@
 
 
 
-                            <c:forEach items="${requestScope.listC}" var="lc">
+                            <c:forEach items="${requestScope.listS}" var="lc">
 
                                 <div class="col-md-4 col-xs-6">
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="${lc.skill.images}" alt="">
+                                            <img src="${lc.images}" alt="">
                                             <div class="product-label">
-                                                <span class="sale"><c:forEach items="${lc.listWeek}" var="lw">
-                                                                ${lw.name}
-                                                            </c:forEach>
-                                                            ${lc.timeSlot.name}</span>
+                                                
                                             </div>
                                         </div>
                                         <div class="product-body">
-                                            <a href="url"><p class="product-category"><i class="fa fa-user"></i> ${lc.mentor.name}</p></a>
-                                            <h3 class="product-name"><a href="ViewMentor?id=${lc.id}">${lc.courseName}</a></h3><!--view file-->
-                                            <h4 class="product-price">${lc.price} $</h4>
+                                            <a href="url"><p class="product-category"><i class="fa fa-user"></i> ${lc.cs.name}</p></a>
+                                            <h3 class="product-name"><a href="ViewMentor?id">${lc.skill}</a></h3><!--view file-->
+                                            
                                             <div class="product-btns">
                                                 <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                                 <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
@@ -362,7 +357,7 @@
                                             </div>
                                         </div>
                                         <div class="add-to-cart">
-                                            <a href="request?id=${lc.id}" > <button class="add-to-cart-btn"><i class="fa fa-send"></i> Create Request</button> </a>
+                                            <a href="request?id=${lc.id}" > <button class="add-to-cart-btn"><i class="fa fa-send"></i> View Mentor Request</button> </a>
 
                                         </div>
                                     </div>

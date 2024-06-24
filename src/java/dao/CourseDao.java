@@ -79,8 +79,8 @@ public class CourseDao extends DBContext {
             WeeksDao wd = new WeeksDao();
             TimeSlotDao tsd = new TimeSlotDao();
             while (rs.next()) {
-                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)),tsd.getTimeSlotByid(rs.getInt(9)), sd.searchSkill(rs.getInt(7)),rs.getString(8),wd.getListWeeksDayByCid(rs.getInt(1)));
-                list.add(course);
+                //Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)),tsd.getTimeSlotByid(rs.getInt(9)), sd.searchSkill(rs.getInt(7)),rs.getString(8),wd.getListWeeksDayByCid(rs.getInt(1)));
+                //list.add(course);
             }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -109,7 +109,27 @@ public class CourseDao extends DBContext {
         return list;
         
     }
-
+    public List<Course> getCourseByMentorId(int id){
+          String sql = "select * from course where mentor_id = ?;";
+        List<Course> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+             MentorDao md = new MentorDao();
+            SkillDao sd = new SkillDao();
+            WeeksDao wd = new WeeksDao();
+            TimeSlotDao tsd = new TimeSlotDao();
+            while (rs.next()) {
+                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getString(5), md.getMentorByID(rs.getInt(6)),tsd.getTimeSlotByid(rs.getInt(9)), sd.searchSkill(rs.getInt(7)),rs.getString(8),wd.getListWeeksDayByCid(rs.getInt(1)));
+                list.add(course);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+        
+    }
     public Course getCourse(int course_id) {
         String sql = "select * from course\n"
                 + "where id =?";

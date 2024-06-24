@@ -41,19 +41,19 @@
                                                 <div class="col-12 col-sm-auto mb-3">
                                                     <div class="mx-auto" style="width: 140px;">
                                                         <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                                                            <img style="width: 140px;height: 140px;" src="${course.skill.images}" alt="alt"/>
+                                                            <img style="width: 140px;height: 140px;" src="${mentor.picture}" alt="alt"/>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                                                     <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                        <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">${course.courseName}</h4>
-                                                        <p class="mb-0">${course.timeSlot}</p>
+                                                        <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">${mentor.name}</h4>
+                                                        <p class="mb-0">${mentor.email}</p>
                                                         <div class="text-muted"><small></small></div>
 
                                                     </div>
                                                     <div class="text-center text-sm-right">
-                                                        <span class="badge badge-secondary">${course.price} $</span>
+                                                        <span class="badge badge-secondary">${mentor.price}00 VND/Day</span>
                                                         <div class="text-muted"><small> </small></div>
                                                     </div>
                                                 </div>
@@ -66,12 +66,13 @@
                                                     <form class="form" novalidate="">
                                                         <div class="row">
                                                             <div class="col">
-                                                                <input type="hidden" name="id" value="${course.id}"/>
+                                                                <input type="hidden" name="id" value="${mentor.id}"/>
+                                                                <input type="hidden" name="sid" value="${skill.id}"/>
                                                                 <div class="row">
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label>Subject</label>
-                                                                            
+
                                                                             <input name="subject" class="form-control" required>
                                                                         </div>
                                                                     </div>
@@ -80,7 +81,13 @@
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label>Deadline Day</label>
-                                                                            <input type="number" name="deadlineDate" class="form-control" required>
+                                                                            <input type="date" name="deadlineDate" class="form-control" required>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <div class="form-group">
+                                                                            <label>Day Study</label>
+                                                                            <input type="number" name="dayNumber" class="form-control" required>
                                                                         </div>
                                                                     </div>
 
@@ -91,6 +98,44 @@
                                                                         <div class="form-group">
                                                                             <label>Content</label>
                                                                             <textarea name="content" class="form-control" rows="5" required></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col mb-3" >
+                                                                        <div class="form-group">
+                                                                            <label>Mentor Schedul</label>
+                                                                            
+                                                                        
+                                                                        <div style="border: 1px solid gainsboro; border-radius: 10px;">
+                                                                        <div class="row" style="margin: 10px 0 10px 0">
+                                                                            <div class="col">
+                                                                                Weeksday
+                                                                            </div>
+                                                                            <div class="col">
+                                                                                Time slot
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        <c:forEach items="${requestScope.mentor.schedule}" var="lsch">
+                                                                            <div class="row" style="border: 1px solid gainsboro; margin-bottom: 10px;border-radius: 10px;">
+                                                                                <div class="col">
+                                                                                    ${lsch.weeksday.name} 
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <c:forEach items="${lsch.listTime}" var="ltss">
+                                                                                        <div class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" name="key" value="${ltss.id}" id="checkbox${ltss.id}">
+                                                                                            <label class="form-check-label" for="checkbox${ltss.id}">
+                                                                                                ${ltss.name}
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </c:forEach>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </c:forEach> 
+                                                                        </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -126,14 +171,14 @@
                             </div>
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title font-weight-bold">Course of Mentor</h6>
-                                    <img style="width:140px " src="${course.mentor.picture}" alt="alt"/>
-                                    <p class="card-text">${course.mentor.name}
-                                       
+                                    <h6 class="card-title font-weight-bold">Skill request</h6>
+                                    <img style="width:140px " src="${skill.images}" alt="alt"/>
+                                    <p class="card-text">${skill.skill}
+
 
                                     </p>
 
-                                    <a href="ViewMentor?id=${course.mentor.id}"><button type="button" class="btn btn-primary">View cv mentor</button></a>
+<!--                                    <a href="ViewMentor?id=${course.mentor.id}"><button type="button" class="btn btn-primary">Change Mentor</button></a>-->
                                 </div>
                             </div>
                         </div>

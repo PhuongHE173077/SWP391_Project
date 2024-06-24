@@ -4,6 +4,7 @@
  */
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,24 +16,31 @@ public class Request {
     private Mentor mentor;
     private Mentee mentee;
     private String subject;
-    private int deadlineday;
+    private String deadlineday;
+    private int day_number;
     private String content;
+    private Skill skill;
     private String status;
-    private Course course;
+    private List<Schedule>schedule;
+    private String dateSent;
 
 
     public Request() {
+        schedule = new ArrayList<>();
     }
 
-    public Request(int id, Mentor mentor, Mentee mentee, String subject, int deadlineday, String content, String status, Course course) {
+    public Request(int id, Mentor mentor, Mentee mentee, String subject, String deadlineday, int day_number, String content, Skill skill, String status, List<Schedule> schedule, String dateSent) {
         this.id = id;
         this.mentor = mentor;
         this.mentee = mentee;
         this.subject = subject;
         this.deadlineday = deadlineday;
+        this.day_number = day_number;
         this.content = content;
+        this.skill = skill;
         this.status = status;
-        this.course = course;
+        this.schedule = schedule;
+        this.dateSent = dateSent;
     }
 
     public int getId() {
@@ -67,12 +75,20 @@ public class Request {
         this.subject = subject;
     }
 
-    public int getDeadlineday() {
+    public String getDeadlineday() {
         return deadlineday;
     }
 
-    public void setDeadlineday(int deadlineday) {
+    public void setDeadlineday(String deadlineday) {
         this.deadlineday = deadlineday;
+    }
+
+    public int getDay_number() {
+        return day_number;
+    }
+
+    public void setDay_number(int day_number) {
+        this.day_number = day_number;
     }
 
     public String getContent() {
@@ -83,6 +99,14 @@ public class Request {
         this.content = content;
     }
 
+    public Skill getSkill() {
+        return skill;
+    }
+
+    public void setSkill(Skill skill) {
+        this.skill = skill;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -91,21 +115,27 @@ public class Request {
         this.status = status;
     }
 
-    public Course getCourse() {
-        return course;
+    public List<Schedule> getSchedule() {
+        return schedule;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setSchedule(List<Schedule> schedule) {
+        this.schedule = schedule;
     }
 
+    public String getDateSent() {
+        return dateSent;
+    }
+
+    public void setDateSent(String dateSent) {
+        this.dateSent = dateSent;
+    }
+
+    public double getTotal() {
+        return mentor.getPrice()*day_number;
+    }
+    
     
 
-    
-    
-    
-
-    
-    
-    
+     
 }
