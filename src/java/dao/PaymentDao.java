@@ -7,13 +7,16 @@ package dao;
 import context.DBContext;
 import entity.Mentee;
 import entity.Payment;
-import entity.Request;
+
 import entity.User;
 import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,76 +25,61 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class PaymentDao extends DBContext {
+    
+    public boolean createPayment(Payment payment) {
+        boolean rowInserted = false;
+        String INSERT_PAYMENT_SQL = "INSERT INTO [SWP391_project].[dbo].[payment] " +
+        "(request_id, user_id, amount, datail, paymentDate, note, transactionType, bankCode, bankTranNo, cardType, transactionNo, transactionStatus, txnRef, secureHash, status) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PAYMENT_SQL)) {
 
-    public boolean addPayment(Payment payment) {
-        boolean check = false;
-        String sql = "INSERT INTO [dbo].[payment]\n"
-                + "           ([request_id]\n"
-                + "           ,[amount]\n"
-                + "           ,[date_payment]\n"
-                + "           ,[status])\n"
-                + "     VALUES\n"
-                + "           (?,?,?,?)\n";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, payment.getRequest_id().getId());
-            st.setDouble(2, payment.getAmount());
-            st.setString(3, payment.getDate_payment());
-            st.setString(4, payment.getStatus());
-            st.executeUpdate();
-            check = true;
-        } catch (SQLException ex) {
-            Logger.getLogger(PaymentDao.class.getName()).log(Level.SEVERE, null, ex);
+            preparedStatement.setInt(1, payment.getRequestId());
+            preparedStatement.setInt(2, payment.getUserId());
+            preparedStatement.setDouble(3, payment.getAmount());
+            preparedStatement.setString(4, payment.getDetail());
+            preparedStatement.setDate(5, new java.sql.Date(payment.getPaymentDate().getTime()));
+            preparedStatement.setString(6, payment.getNote());
+            preparedStatement.setString(7, payment.getTransactionType());
+            preparedStatement.setString(8, payment.getBankCode());
+            preparedStatement.setString(9, payment.getBankTranNo());
+            preparedStatement.setString(10, payment.getCardType());
+            preparedStatement.setString(11, payment.getTransactionNo());
+            preparedStatement.setString(12, payment.getTransactionStatus());
+            preparedStatement.setString(13, payment.getTxnRef());
+            preparedStatement.setString(14, payment.getSecureHash());
+            preparedStatement.setInt(15, payment.getStatus());
+
+            rowInserted = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("createPayment: " + e.getMessage());
         }
-        return check;
+        return rowInserted;
     }
+    
+    public boolean updatePayment(String txnRef, int status, String transactionStatus, String bankCode) {
+        boolean rowUpdated = false;
+        String UPDATE_PAYMENT_SQL = "UPDATE [SWP391_project].[dbo].[payment] SET " +
+        "status = ?, transactionStatus = ?, bankCode = ? WHERE txnRef = ?";
+        try (
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PAYMENT_SQL)) {
 
-    public List<Payment> getPaymentByUserID(Mentee mentee) {
-        String sql = "SELECT payment.*\n"
-                + "FROM   payment INNER JOIN\n"
-                + "             request ON payment.request_id = request.id INNER JOIN\n"
-                + "             [User] ON request.mentee_id = [User].user_id\n"
-                + "WHERE [User].user_id = ?";
-        List<Payment> list = new ArrayList<>();
-        PreparedStatement st = null;
-        ResultSet rs = null;
-        RequestDao rd = new RequestDao();
+            preparedStatement.setInt(1, status);
+            preparedStatement.setString(2, transactionStatus);
+            preparedStatement.setString(3, bankCode);
+            preparedStatement.setString(4, txnRef);
 
-        try {
-            st = connection.prepareStatement(sql);
-            st.setInt(1, mentee.getId());
-            rs = st.executeQuery();
-            while (rs.next()) {
-                Payment payment = new Payment(
-                        rs.getInt("id"),
-                        rd.getRequestById(rs.getInt(2)),
-                        rs.getDouble("amount"),
-                        rs.getString("date_payment"),
-                        rs.getString("status")
-                );
-                list.add(payment);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PaymentDao.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (st != null) {
-                    st.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(PaymentDao.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("updatePayment: " + e.getMessage());
         }
-        return list;
+        return rowUpdated;
     }
-
     public static void main(String[] args) {
         PaymentDao pd = new PaymentDao();
-        RequestDao rq = new RequestDao();
-        System.out.println(pd.addPayment(new Payment(1, rq.getTop1Rq(), 1000, "20-02-2024", "payed")));
-
+         Date date = Date.valueOf(LocalDate.now());
+        Payment p = new Payment(0, 0, 1, 5000.00, "abc", date, "abc", "abc", "abc", "abc", "abc", "abc", "abc", "abc", "abc", 0);
+        System.out.println(pd.createPayment(p));
     }
+
 }

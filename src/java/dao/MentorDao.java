@@ -7,7 +7,6 @@ package dao;
 import context.DBContext;
 import entity.Mentor;
 import entity.Schedule;
-import entity.ScheduleMentor;
 import entity.Skill;
 import entity.User;
 import java.sql.Connection;
@@ -37,10 +36,10 @@ public class MentorDao extends DBContext {
             ResultSet rs = st.executeQuery();
             CvDao cvd = new CvDao();
             SkillDao sd = new SkillDao();
-            ScheduleMentorDao scd = new ScheduleMentorDao();
+            
             while (rs.next()) {
                 List<Skill> list = sd.getSkillOfMentor(rs.getInt(1));
-                Mentor mentor = new Mentor(rs.getInt(1), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getDouble(3), rs.getDouble(12), rs.getString(13), cvd.getCvMentorByID(rs.getInt(1)), sd.getSkillOfMentor(rs.getInt(1)), scd.getListScheduleByMentor(rs.getInt(1)));
+                Mentor mentor = new Mentor(rs.getInt(1), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getDouble(3), rs.getDouble(12), rs.getString(13), cvd.getCvMentorByID(rs.getInt(1)), sd.getSkillOfMentor(rs.getInt(1)));
                 listMentor.add(mentor);
             }
         } catch (SQLException ex) {
@@ -58,10 +57,9 @@ public class MentorDao extends DBContext {
             ResultSet rs = st.executeQuery();
             CvDao cvd = new CvDao();
             SkillDao sd = new SkillDao();
-            ScheduleMentorDao scd = new ScheduleMentorDao();
             while (rs.next()) {
                 List<Skill> list = sd.getSkillOfMentor(rs.getInt(1));
-                Mentor mentor = new Mentor(rs.getInt(1), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getDouble(3), rs.getDouble(12), rs.getString(13), cvd.getCvMentorByID(rs.getInt(1)), sd.getSkillOfMentor(rs.getInt(1)), scd.getListScheduleByMentor(rs.getInt(1)));
+                Mentor mentor = new Mentor(rs.getInt(1), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getDouble(3), rs.getDouble(12), rs.getString(13), cvd.getCvMentorByID(rs.getInt(1)), sd.getSkillOfMentor(rs.getInt(1)));
                 listMentor.add(mentor);
             }
         } catch (SQLException ex) {
@@ -106,9 +104,9 @@ public class MentorDao extends DBContext {
             ResultSet rs = st.executeQuery();
             CvDao cvd = new CvDao();
             SkillDao sd = new SkillDao();
-            ScheduleMentorDao scd = new ScheduleMentorDao();
+            
             if (rs.next()) {
-                Mentor mentor = new Mentor(rs.getInt(1), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getDouble(3), rs.getDouble(12), rs.getString(13), cvd.getCvMentorByID(rs.getInt(1)), sd.getSkillOfMentor(rs.getInt(1)), scd.getListScheduleByMentor(rs.getInt(1)));
+                Mentor mentor = new Mentor(rs.getInt(1), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getDouble(3), rs.getDouble(12), rs.getString(13), cvd.getCvMentorByID(rs.getInt(1)), sd.getSkillOfMentor(rs.getInt(1)));
                 return mentor;
             }
         } catch (SQLException ex) {
@@ -130,9 +128,9 @@ public class MentorDao extends DBContext {
             ResultSet rs = st.executeQuery();
             CvDao cvd = new CvDao();
             SkillDao sd = new SkillDao();
-            ScheduleMentorDao scd = new ScheduleMentorDao();
+     
             if (rs.next()) {
-                Mentor mentor = new Mentor(rs.getInt(1), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getDouble(3), rs.getDouble(12), rs.getString(13), cvd.getCvMentorByID(rs.getInt(1)), sd.getSkillOfMentor(rs.getInt(1)), scd.getListScheduleByMentor(rs.getInt(1)));
+                Mentor mentor = new Mentor(rs.getInt(1), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getDouble(3), rs.getDouble(12), rs.getString(13), cvd.getCvMentorByID(rs.getInt(1)), sd.getSkillOfMentor(rs.getInt(1)));
                 return mentor;
             }
         } catch (SQLException ex) {

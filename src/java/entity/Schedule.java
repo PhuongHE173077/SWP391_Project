@@ -4,26 +4,32 @@
  */
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author TUF F15
  */
 public class Schedule {
     private int id;
-    private WeeksDay weeksDay;
-    private TimeSlot timeSlot;
+    private String startDay;
+    private String endDay;
+    private List<ScheduleDetail>listschedule;
+    private Mentor mementor;
     private String status;
-    private DayStartAndEnd dayfromto;
 
     public Schedule() {
+        listschedule = new ArrayList<>();
     }
 
-    public Schedule(int id, WeeksDay weeksDay, TimeSlot timeSlot, String status, DayStartAndEnd dayfromto) {
+    public Schedule(int id, String startDay, String endDay, List<ScheduleDetail> listschedule, Mentor mementor, String status) {
         this.id = id;
-        this.weeksDay = weeksDay;
-        this.timeSlot = timeSlot;
+        this.startDay = startDay;
+        this.endDay = endDay;
+        this.listschedule = listschedule;
+        this.mementor = mementor;
         this.status = status;
-        this.dayfromto = dayfromto;
     }
 
     public int getId() {
@@ -34,20 +40,36 @@ public class Schedule {
         this.id = id;
     }
 
-    public WeeksDay getWeeksDay() {
-        return weeksDay;
+    public String getStartDay() {
+        return startDay;
     }
 
-    public void setWeeksDay(WeeksDay weeksDay) {
-        this.weeksDay = weeksDay;
+    public void setStartDay(String startDay) {
+        this.startDay = startDay;
     }
 
-    public TimeSlot getTimeSlot() {
-        return timeSlot;
+    public String getEndDay() {
+        return endDay;
     }
 
-    public void setTimeSlot(TimeSlot timeSlot) {
-        this.timeSlot = timeSlot;
+    public void setEndDay(String endDay) {
+        this.endDay = endDay;
+    }
+
+    public List<ScheduleDetail> getListschedule() {
+        return listschedule;
+    }
+
+    public void setListschedule(List<ScheduleDetail> listschedule) {
+        this.listschedule = listschedule;
+    }
+
+    public Mentor getMementor() {
+        return mementor;
+    }
+
+    public void setMementor(Mentor mementor) {
+        this.mementor = mementor;
     }
 
     public String getStatus() {
@@ -58,14 +80,7 @@ public class Schedule {
         this.status = status;
     }
 
-    public DayStartAndEnd getDayfromto() {
-        return dayfromto;
-    }
+   
 
-    public void setDayfromto(DayStartAndEnd dayfromto) {
-        this.dayfromto = dayfromto;
-    }
-
-    
     
 }

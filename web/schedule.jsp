@@ -1,9 +1,3 @@
-<%-- 
-    Document   : request
-    Created on : May 23, 2024, 3:47:27 PM
-    Author     : TUF F15
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -89,6 +83,35 @@
             function change() {
                 document.getElementById("f2").submit();
             }
+
+            // Utility function to get the day of the week from a date string
+            function getDayOfWeek(dateString) {
+                console.log(`Parsing date: ${dateString}`);
+                const dateParts = dateString.split('-');
+                const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]); // Adjust month for 0-based index
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const dayOfWeek = days[date.getDay()];
+                console.log(`Day of week: ${dayOfWeek}`);
+                return dayOfWeek;
+            }
+
+            // This function shows the selected slots and days of the week in the modal
+            function showSelectedSlots() {
+                const checkboxes = document.querySelectorAll('input[name="schedule"]:checked');
+                const valuesList = document.getElementById('checkboxValuesList');
+                valuesList.innerHTML = '';
+
+                checkboxes.forEach(checkbox => {
+                    const [slotId, date] = checkbox.value.split(',');
+                    const dayOfWeek = getDayOfWeek(date);
+
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Slot: ${slotId}, Day: ${dayOfWeek}`;
+                    valuesList.appendChild(listItem);
+                });
+
+                $('#checkboxModal').modal('show');
+            }
         </script>
     </head>
     <body>
@@ -120,21 +143,21 @@
                                         </select>
                                         </form>
 
-                                        <form action="schedule" method="post">
+                                        <form id="mainForm" action="schedule" method="post">
                                             <input type="hidden" name="week" value="${de.id}"/>
                                             <table class="table table-bordered schedule-table">
                                                 <thead>
-
-                                                <th>WEEKDAY</th>
-                                                <th>MON </th>
-                                                <th>TUES</th>
-                                                <th>WEND</th>
-                                                <th>THUS</th>
-                                                <th>FRI</th>
-                                                <th>SAT</th>
-                                                <th>SUN</th>
+                                                    <tr>
+                                                        <th>WEEKDAY</th>
+                                                        <th>MON</th>
+                                                        <th>TUES</th>
+                                                        <th>WEND</th>
+                                                        <th>THUS</th>
+                                                        <th>FRI</th>
+                                                        <th>SAT</th>
+                                                        <th>SUN</th>
+                                                    </tr>
                                                 </thead>
-
                                                 <tbody>
                                                     <c:forEach items="${timeSlots}" var="slot">
                                                         <tr>
@@ -142,7 +165,7 @@
                                                             <c:forEach items="${dates}" var="date">
                                                                 <c:set var="hasSchedule" value="false" />
                                                                 <c:forEach items="${requestScope.listsch}" var="lch">
-                                                                    <c:if test="${lch.weeksDay.name == date && slot.id == lch.timeSlot.id}">
+                                                                    <c:if test="${lch.day == date && slot.id == lch.timeslot.id}">
                                                                         <c:set var="hasSchedule" value="true" />
                                                                         <td>
                                                                             <input type="checkbox" class="form-check-input" name="schedule" value="${slot.id},${date}" checked>
@@ -158,102 +181,59 @@
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
-
                                             </table>
                                     </div>
                                 </div>
-
                             </div> 
                             <div class="button-container">
-                                <a id="showDiv" href="#"><button type="button" class="btn btn-primary">gender</button></a>           
+                                <button type="button" class="btn btn-primary" onclick="showSelectedSlots()">Gender</button>           
                                 <button type="submit" class="btn btn-primary btn-save">Send</button>
                             </div>
                             <div class="modal fade" id="checkboxModal" tabindex="-1" role="dialog" aria-labelledby="checkboxModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-
                                             <h5 class="modal-title" id="checkboxModalLabel">Week gender</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <div>You can gender most 8 months from now </div>
-                                            <div>
-                                                <c:forEach items="${requestScope.listDe}" var="ld">
-                                                    <input type="checkbox" name="weeks" value="${ld.id}" id="modalInput"/>${ld.startDay} to ${ld.endDay}</br>
-                                                </c:forEach>
-
+                                            <div>You can gender most 2 months from now </div>
+                                            <div style="display: flex">
+                                                <div class="col-md-6">
+                                                    <label>Start Date</label></br>
+                                                    <input type="date" id="start-date" name="start-date">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>End Date</label></br>
+                                                    <input type="date" id="end-date" name="end-date">
+                                                </div>
                                             </div>
+
                                             <ul id="checkboxValuesList"></ul>
                                         </div>
-                                        <div class="modal-footer" style="display: flex">
+                                        <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             <button type="submit" class="btn btn-primary" id="submitModal">Send</button>
                                         </div>
                                     </div>
-                                    </form>
                                 </div>
                             </div>
 
                             <script>
-                                document.getElementById('showDiv').addEventListener('click', function (event) {
-                                    event.preventDefault();
+                                const today = new Date().toISOString().split('T')[0];
 
-                                    var checkboxes = document.querySelectorAll('input[name="schedule"]:checked');
-                                    var values = [];
+                                // Lấy ngày 2 tháng sau
+                                const twoMonthsLater = new Date();
+                                twoMonthsLater.setMonth(twoMonthsLater.getMonth() + 2);
+                                const maxEndDate = twoMonthsLater.toISOString().split('T')[0];
 
-                                    checkboxes.forEach(function (checkbox) {
-                                        values.push(checkbox.value);
-                                    });
-
-                                    var valuesList = document.getElementById('checkboxValuesList');
-                                    valuesList.innerHTML = '';
-
-                                    values.forEach(function (value) {
-                                        var listItem = document.createElement('li');
-                                        listItem.textContent = value;
-                                        valuesList.appendChild(listItem);
-                                    });
-
-                                    $('#checkboxModal').modal('show');
-                                });
-
-                                document.getElementById('submitModal').addEventListener('click', function () {
-                                    var modalInput = document.getElementById('modalInput').value;
-                                    var checkboxes = document.querySelectorAll('input[name="schedule"]:checked');
-                                    var mainForm = document.getElementById('mainForm');
-
-                                    // Clear previous hidden inputs
-                                    var hiddenInputs = document.querySelectorAll('.hiddenInput');
-                                    hiddenInputs.forEach(function (input) {
-                                        input.remove();
-                                    });
-
-                                    // Add hidden input for modal input
-                                    var hiddenModalInput = document.createElement('input');
-                                    hiddenModalInput.type = 'hidden';
-                                    hiddenModalInput.name = 'input';
-                                    hiddenModalInput.value = modalInput;
-                                    hiddenModalInput.classList.add('hiddenInput');
-                                    mainForm.appendChild(hiddenModalInput);
-
-                                    // Add hidden inputs for checked checkboxes
-                                    checkboxes.forEach(function (checkbox) {
-                                        var hiddenCheckboxInput = document.createElement('input');
-                                        hiddenCheckboxInput.type = 'hidden';
-                                        hiddenCheckboxInput.name = 'schedule';
-                                        hiddenCheckboxInput.value = checkbox.value;
-                                        hiddenCheckboxInput.classList.add('hiddenInput');
-                                        mainForm.appendChild(hiddenCheckboxInput);
-                                    });
-
-                                    // Submit the main form
-                                    mainForm.submit();
-                                });
+                                // Thiết lập giá trị min và max cho start-date và end-date
+                                document.getElementById('start-date').setAttribute('min', today);
+                                document.getElementById('end-date').setAttribute('min', today);
+                                document.getElementById('end-date').setAttribute('max', maxEndDate);
                             </script>
-
                         </div>
                         <div class="col-12 col-md-3 mb-3">
                             <div class="card mb-3">
@@ -267,17 +247,8 @@
                                 </div>
                             </div>
                             <div class="card">
-                                <c:set value="${sessionScope.mentor}" var="me"/>
-                                <div class="card-body">
-                                    <h6 class="card-title font-weight-bold">Your schedule of Mentor </h6>
-                                    <c:forEach items="${me.schedule}" var="mch">
-                                        <h6 class="card-text">${mch.weeksday.name}</h6>
-                                    </c:forEach>
-
-
-                                </div>
+                               
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -289,4 +260,3 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>
-

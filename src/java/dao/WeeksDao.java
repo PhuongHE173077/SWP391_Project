@@ -10,6 +10,8 @@ import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +29,7 @@ public class WeeksDao extends DBContext {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return new WeeksDay(rs.getInt(1), rs.getString(2));
+                return new WeeksDay(rs.getInt(1), rs.getString(2), rs.getString(3));
 
             }
         } catch (SQLException ex) {
@@ -45,7 +47,7 @@ public class WeeksDao extends DBContext {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                WeeksDay w = new WeeksDay(rs.getInt(1), rs.getString(2));
+                WeeksDay w = new WeeksDay(rs.getInt(1), rs.getString(2), rs.getString(3));
                 list.add(w);
             }
 
@@ -55,66 +57,29 @@ public class WeeksDao extends DBContext {
         return list;
     }
 
-    public boolean addWeeksDay(String day) {
-        boolean check = false;
-        String sql = "INSERT INTO [dbo].[weeksday]\n"
-                + "           ([name])\n"
-                + "     VALUES\n"
-                + "           (?)";
-
+    public WeeksDay getWeekNow(String today) {
+        String sql = "select * from weeksday where startDay <= ? and endDay>=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, day);
-            st.executeUpdate();
-            check =true;
-        } catch (SQLException ex) {
-            Logger.getLogger(WeeksDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return check;
-    }
-    
-    public  WeeksDay getWeeksDayByDate(String Date){
-        String sql ="select * from weeksday where name =?";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, Date);
+            st.setString(1, today);
+            st.setString(2, today);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                WeeksDay wd = new WeeksDay(rs.getInt(1), rs.getString(2));
-                return  wd;
+                WeeksDay w = new WeeksDay(rs.getInt(1), rs.getString(2), rs.getString(3));
+                return w;
             }
         } catch (SQLException ex) {
             Logger.getLogger(WeeksDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    public List<WeeksDay> getListWeeksDaybyMid(int id) {
-        String sql = "SELECT DISTINCT WeeksDayId\n"
-                + "FROM [dbo].[schedul_mentor]\n"
-                + "where mid = ? \n"
-                + "ORDER BY WeeksDayId ";
-        List<WeeksDay> list = new ArrayList<>();
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
-            WeeksDao wd = new WeeksDao();
-            while (rs.next()) {
-                WeeksDay w = wd.getWeeksday(rs.getInt(1));
-                list.add(w);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(WeeksDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
-    }
 
     public static void main(String[] args) {
         WeeksDao wd = new WeeksDao();
-        List<WeeksDay> list = wd.getListWeeksDay();
-        for (WeeksDay weeksDay : list) {
-            System.out.println(weeksDay.getName());
-        }
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = today.format(dateFormat);
+        WeeksDay w = wd.getWeekNow(date);
+        System.out.println(w.getStartDay());
     }
 }

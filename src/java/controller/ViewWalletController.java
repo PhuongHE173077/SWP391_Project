@@ -5,8 +5,6 @@
 
 package controller;
 
-import dao.RequestDao;
-import dao.ScheduleDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,10 +15,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Dell
+ * @author Legion
  */
-@WebServlet(name="DeleteControl", urlPatterns={"/delete"})
-public class DeleteControl extends HttpServlet {
+@WebServlet(name="ViewWalletController", urlPatterns={"/wallet"})
+public class ViewWalletController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,17 +29,19 @@ public class DeleteControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");       
-        int id = Integer.parseInt(request.getParameter("id"));
-
-        ScheduleDao scd = new ScheduleDao();
-        RequestDao rqd = new RequestDao();
-        
-//        scd.deleteSchedul(id);
-        rqd.deleteRequest(id);
-        response.sendRedirect("ViewRequest");
-        
-        
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ViewWalletController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ViewWalletController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,7 +55,7 @@ public class DeleteControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("wallet.jsp");
     } 
 
     /** 

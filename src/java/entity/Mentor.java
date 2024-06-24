@@ -24,15 +24,16 @@ public class Mentor {
     private double balance;
     private String address; 
     private CvMentor cv;
-    private List<Skill> skillList ; 
-    private List<ScheduleMentor> schedule;
+    private List<Skill> skillList ;
+    
+    
 
     public Mentor() {
         skillList = new ArrayList<>();
-        schedule = new ArrayList<>();
+        
     }
 
-    public Mentor(int id, String name, String email, String pass, String dob, String phone, String picture, int render, double price, double balance, String address, CvMentor cv, List<Skill> skillList, List<ScheduleMentor> schedule) {
+    public Mentor(int id, String name, String email, String pass, String dob, String phone, String picture, int render, double price, double balance, String address, CvMentor cv, List<Skill> skillList) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -46,9 +47,8 @@ public class Mentor {
         this.address = address;
         this.cv = cv;
         this.skillList = skillList;
-        this.schedule = schedule;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -153,24 +153,6 @@ public class Mentor {
         this.skillList = skillList;
     }
 
-    public List<ScheduleMentor> getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(List<ScheduleMentor> schedule) {
-        this.schedule = schedule;
-    }
-
-    
-
-    
-   
-    
-
-   
-    
-
-   
     
 
     

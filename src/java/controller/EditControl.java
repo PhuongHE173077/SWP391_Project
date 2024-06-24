@@ -97,11 +97,11 @@ public class EditControl extends HttpServlet {
         
 
         if ("Processing".equals(r.getStatus())) {
-            r.setDeadlineday(rdealine);
-            r.setSubject(rsubject);
-            r.setContent(rcontent);
-            r.setDay_number(rdaynumber);
-            rqd.editRequest(r);
+//            r.setDeadlineday(rdealine);
+//            r.setSubject(rsubject);
+//            r.setContent(rcontent);
+//            r.setDay_number(rdaynumber);
+//            rqd.editRequest(r);
         }
         response.sendRedirect("ViewRequest");
     }

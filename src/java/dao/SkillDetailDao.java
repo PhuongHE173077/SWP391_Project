@@ -5,7 +5,7 @@
 package dao;
 
 import context.DBContext;
-import entity.Request;
+
 import entity.Skill;
 import java.util.List;
 import java.sql.PreparedStatement;

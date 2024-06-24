@@ -98,10 +98,10 @@ public class ViewCreateRequestControl extends HttpServlet {
         
 
         if ("Processing".equals(r.getStatus())) {
-            r.setDeadlineday(rdealine);
-            r.setSubject(rsubject);
-            r.setContent(rcontent);
-            r.setDay_number(rdaynumber);
+//            r.setDeadlineday(rdealine);
+//            r.setSubject(rsubject);
+//            r.setContent(rcontent);
+//            r.setDay_number(rdaynumber);
             
         }
         response.sendRedirect("ViewRequest");

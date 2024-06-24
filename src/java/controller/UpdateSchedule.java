@@ -4,17 +4,15 @@
  */
 package controller;
 
-import dao.DayStartEndDao;
 import dao.MentorDao;
 import dao.ScheduleDao;
-import dao.ScheduleMentorDao;
+import dao.ScheduleDetailDao;
 import dao.SkillDao;
 import dao.TimeSlotDao;
 import dao.WeeksDao;
-import entity.DayStartAndEnd;
 import entity.Mentor;
 import entity.Schedule;
-import entity.ScheduleMentor;
+import entity.ScheduleDetail;
 import entity.TimeSlot;
 import entity.WeeksDay;
 import java.io.IOException;
@@ -84,19 +82,17 @@ public class UpdateSchedule extends HttpServlet {
         HttpSession session = request.getSession();
         Mentor m = (Mentor) session.getAttribute("mentor");
         if (schedules == null) {
-            DayStartEndDao dsd = new DayStartEndDao();
-            List<DayStartAndEnd> list = dsd.getAllDayFE();
             LocalDate today = LocalDate.now();
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String date = today.format(dateFormat);
-            DayStartAndEnd de = dsd.getDayinWeekday(date);
-            request.setAttribute("date", de);
-            String startDateStr = de.getStartDay();
-            String endDateStr = de.getEndDay();
+            WeeksDao wd = new WeeksDao();
+            WeeksDay week = wd.getWeekNow(date);
+            List<WeeksDay> list = wd.getListWeeksDay();
+            String startDateStr = week.getStartDay();
             ArrayList<String> dates = new ArrayList<>();
             TimeSlotDao td = new TimeSlotDao();
             List<TimeSlot> timeSlots = td.getTimeSlot();
-            List<DayStartAndEnd> listDfeToday = dsd.getGenderDayFEgenterToDay();
+
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -112,27 +108,24 @@ public class UpdateSchedule extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ScheduleDao scd = new ScheduleDao();
-            List<Schedule> listsche = scd.getlistScheduleMetorByIdInW(m.getId(), de.getId());
+            ScheduleDetailDao scd = new ScheduleDetailDao();
+            List<ScheduleDetail> listsche = scd.getScheduleDtByMid(m.getId(), week.getId());
             request.setAttribute("listsch", listsche);
-            request.setAttribute("listDe", listDfeToday);
-            request.setAttribute("de", de);
+            request.setAttribute("de", week);
             request.setAttribute("listw", list);
             request.setAttribute("dates", dates);
             request.setAttribute("timeSlots", timeSlots);
             request.getRequestDispatcher("schedule.jsp").forward(request, response);
         } else {
-            int week = Integer.parseInt(schedules);
-            DayStartEndDao dsd = new DayStartEndDao();
-            List<DayStartAndEnd> list = dsd.getAllDayFE();
-            DayStartAndEnd de = dsd.getDayById(week);
-            request.setAttribute("date", de);
-            String startDateStr = de.getStartDay();
-            String endDateStr = de.getEndDay();
+            int weekId = Integer.parseInt(schedules);
+            WeeksDao wd = new WeeksDao();
+            WeeksDay week = wd.getWeeksday(weekId);
+            List<WeeksDay> list = wd.getListWeeksDay();
+            String startDateStr = week.getStartDay();
             ArrayList<String> dates = new ArrayList<>();
             TimeSlotDao td = new TimeSlotDao();
             List<TimeSlot> timeSlots = td.getTimeSlot();
-            List<DayStartAndEnd> listDfeToday = dsd.getGenderDayFEgenterToDay();
+
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -148,19 +141,16 @@ public class UpdateSchedule extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ScheduleDao scd = new ScheduleDao();
-            List<Schedule> listsche = scd.getlistScheduleMetorByIdInW(m.getId(), de.getId());
+            ScheduleDetailDao scd = new ScheduleDetailDao();
+            List<ScheduleDetail> listsche = scd.getScheduleDtByMid(m.getId(), week.getId());
             request.setAttribute("listsch", listsche);
-            request.setAttribute("listsch", listsche);
-            request.setAttribute("listDe", listDfeToday);
-            request.setAttribute("de", de);
+            request.setAttribute("de", week);
             request.setAttribute("listw", list);
             request.setAttribute("dates", dates);
             request.setAttribute("timeSlots", timeSlots);
             request.getRequestDispatcher("schedule.jsp").forward(request, response);
 
         }
-
     }
 
     /**
@@ -175,82 +165,57 @@ public class UpdateSchedule extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String[] schedules = request.getParameterValues("schedule");
-        String[] week = request.getParameterValues("weeks");
-        if (week == null) {
-            int fid = Integer.parseInt(request.getParameter("week"));
-            ScheduleMentorDao scd = new ScheduleMentorDao();
+        String startDay = request.getParameter("start-date");
+        String endDay = request.getParameter("end-date");
+        ScheduleDao sd = new ScheduleDao();
+        ScheduleDetailDao sdd = new ScheduleDetailDao();
+        if (startDay == "" || endDay == "") {
+            int wid = Integer.parseInt(request.getParameter("week"));
+
             WeeksDao wd = new WeeksDao();
             HttpSession session = request.getSession();
             Mentor m = (Mentor) session.getAttribute("mentor");
-
+            sd.createSchedule(m.getId(), wd.getWeeksday(wid).getStartDay(), wd.getWeeksday(wid).getEndDay(), "Processing");
+            int sid = sd.getscheduleNewID();
             if (schedules != null) {
                 for (String schedule : schedules) {
                     // Split the value to get slot and date
                     String[] parts = schedule.split(",");
                     int slot = Integer.parseInt(parts[0]);
                     String date = parts[1];
-
-                    WeeksDay weekDay = wd.getWeeksDayByDate(date);
-                    if (weekDay == null) {
-                        wd.addWeeksDay(date);
-                        weekDay = wd.getWeeksDayByDate(date);
-                    }
-
-                    if (weekDay != null) {
-                        scd.addShedule(weekDay.getId(), slot, m.getId(), fid, "Approve");
-                        MentorDao md = new MentorDao();
-                        Mentor me = md.getMentorByID(m.getId());
-                        session.setAttribute("mentor", me);
-                    } else {
-
-                        System.err.println("Failed to retrieve or create WeeksDay for date: " + date);
-                    }
+                    sdd.createScheduleDetail(date, sid, wid, slot);
                 }
-
             }
             response.sendRedirect("schedule");
         } else {
-            ScheduleMentorDao scd = new ScheduleMentorDao();
             WeeksDao wd = new WeeksDao();
             HttpSession session = request.getSession();
             Mentor m = (Mentor) session.getAttribute("mentor");
-            DayStartEndDao dsd = new DayStartEndDao();
-            List<DayStartAndEnd> list = new ArrayList<>();
-            for (int i = 0; i < week.length; i++) {
-                int id = Integer.parseInt(week[i]);
-                DayStartAndEnd day = dsd.getDayById(id);
-                list.add(day);
-            }
-            for (String schedule : schedules) {
-                String[] parts = schedule.split(",");
-                int slot = Integer.parseInt(parts[0]);
-                String date = parts[1];
-                for (DayStartAndEnd de : list) {
-                    String dates = getDateSample(de.getStartDay(), de.getEndDay(), date);
-                    WeeksDay weekDay = wd.getWeeksDayByDate(dates);
-                    if (weekDay == null) {
-                        wd.addWeeksDay(dates);
-                        weekDay = wd.getWeeksDayByDate(dates);
-                    }
-                    if (weekDay != null) {
-                        scd.addShedule(weekDay.getId(), slot, m.getId(), de.getId(), "Approve");
-                        MentorDao md = new MentorDao();
-                        Mentor me = md.getMentorByID(m.getId());
-                        session.setAttribute("mentor", me);
-                    } else {
-                        System.err.println("Failed to retrieve or create WeeksDay for date: " + date);
-                    }
+            sd.createSchedule(m.getId(), startDay, endDay, "Processing");
+            int sid = sd.getscheduleNewID();
+            if (schedules != null) {
+                for (String schedule : schedules) {
+                    // Split the value to get slot and date
+                    String[] parts = schedule.split(",");
+                    int slot = Integer.parseInt(parts[0]);
+                    String date = parts[1];
+                    List<String> result = getDatesWithSameDayOfWeek(startDay, endDay, date);
+                    for (String string : result) {
+                        sdd.createScheduleDetail(string, sid, wd.getWeekNow(date).getId(), slot);
+                    }   
+                    
                 }
-
             }
             response.sendRedirect("schedule");
+
         }
     }
+    
 
-    public String getDateSample(String start, String end, String dates) {
-        String specificDateStr = dates;   // Specific date as a string
-        String startDateStr = start;      // Start date of the week as a string
-        String endDateStr = end;        // End date of the week as a string
+   public List<String> getDatesWithSameDayOfWeek(String start, String end, String dates) {
+        String specificDateStr = dates;   
+        String startDateStr = start;      
+        String endDateStr = end;         
 
         // Formatter for the date strings
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -263,18 +228,17 @@ public class UpdateSchedule extends HttpServlet {
         // Get the day of the week of the specific date
         DayOfWeek specificDayOfWeek = specificDate.getDayOfWeek();
 
-        // Variable to store the result
-        LocalDate matchingDay = null;
+        // List to store the result
+        List<String> matchingDays = new ArrayList<>();
 
         // Iterate through the days in the week
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
             if (date.getDayOfWeek() == specificDayOfWeek) {
-                matchingDay = date;
-                break;
+                matchingDays.add(date.format(formatter));
             }
         }
-        DateTimeFormatter fm1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return matchingDay.format(fm1);
+
+        return matchingDays;
     }
 
     /**

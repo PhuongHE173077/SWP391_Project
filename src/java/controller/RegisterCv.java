@@ -11,7 +11,7 @@ import dao.SkillDetailDao;
 import entity.CvMentor;
 import entity.Mentee;
 import entity.Mentor;
-import entity.Schedule;
+
 import entity.Skill;
 import java.io.IOException;
 import java.io.PrintWriter;

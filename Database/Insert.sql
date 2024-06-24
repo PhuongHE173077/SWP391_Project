@@ -344,9 +344,9 @@ UPDATE [dbo].[mentor]
    SET [price] = 400
  WHERE  mentor_id = 10
 
- INSERT INTO [dbo].[fromDayToDay]
-           ([startday]
-           ,[endday])
+ INSERT INTO [dbo].[weeksday]
+           ([startDay]
+           ,[endDay])
      VALUES
            ('2024-06-17', '2024-06-23'),
            ('2024-06-24', '2024-06-30'),
