@@ -5,20 +5,26 @@
 
 package controller;
 
+import dao.SkillDao;
+import entity.Skill;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 /**
  *
- * @author TUF F15
+ * @author Dell
  */
-@WebServlet(name="directional", urlPatterns={"/directional"})
-public class Directional extends HttpServlet {
+@MultipartConfig
+@WebServlet(name="ViewSkill", urlPatterns={"/ViewSkill"})
+public class ViewSkill extends HttpServlet {
+
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,18 +36,11 @@ public class Directional extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet directional</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet directional at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        int id = Integer.parseInt(request.getParameter("id"));
+        SkillDao sd = new SkillDao();
+        Skill s = sd.searchSkill(id);
+        request.setAttribute("detail", s);
+        request.getRequestDispatcher("viewskillmanage.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,18 +54,7 @@ public class Directional extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int key = Integer.parseInt(request.getParameter("key"));
-        //my profile
-        if (key == 1) {
-            response.sendRedirect("profile");
-        }else if (key == 2) {//change pass word
-            response.sendRedirect("change-password");
-        } else if (key == 3) {
-            response.sendRedirect("payment-history");
-        }else{//log out
-            response.sendRedirect("logout");
-        }
-        
+        processRequest(request, response);
     } 
 
     /** 
@@ -79,7 +67,39 @@ public class Directional extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+         
+        
+        
+//        Part filePart = request.getPart("skillImage");
+//        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+//        String name = request.getParameter("skillName");
+//        String description = request.getParameter("skillDescription");
+//        int category = Integer.parseInt(request.getParameter("skillCategory"));
+//
+//        
+//        String uploadFilePath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIR;
+//        File uploadDir = new File(uploadFilePath);
+//        if (!uploadDir.exists()) {
+//            uploadDir.mkdirs();
+//        }
+//
+//        Path filePath = Paths.get(uploadFilePath, fileName);
+//        boolean redirectToHome = false;
+//        if (filePart != null && filePart.getSize() > 0) {
+//            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+//
+//            String newPicturePath = UPLOAD_DIR + File.separator + fileName;
+//            // Save the new profile picture file
+//            try (InputStream fileContent = filePart.getInputStream()) {
+//               
+//                Files.copy(fileContent, filePath, StandardCopyOption.REPLACE_EXISTING);  
+//                SkillDao sd = new SkillDao();
+//                sd.insertNewSkill(newPicturePath, name, description, category);
+//                response.sendRedirect("viewListSkill");
+//            } catch (Exception e) {
+//                throw new ServletException("Database error", e);
+//            }
+//        }
     }
 
     /** 

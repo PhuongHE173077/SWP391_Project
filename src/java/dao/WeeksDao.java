@@ -37,7 +37,7 @@ public class WeeksDao extends DBContext {
         }
         return null;
     }
-
+    
     public List<WeeksDay> getListWeeksDay() {
         String sql = "select * from weeksday ";
         List<WeeksDay> list = new ArrayList<>();
@@ -76,10 +76,7 @@ public class WeeksDao extends DBContext {
 
     public static void main(String[] args) {
         WeeksDao wd = new WeeksDao();
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String date = today.format(dateFormat);
-        WeeksDay w = wd.getWeekNow(date);
+        WeeksDay w = wd.getWeeksday(1);
         System.out.println(w.getStartDay());
     }
 }

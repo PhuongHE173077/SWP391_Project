@@ -79,7 +79,7 @@ public class ScheduleDetailDao extends DBContext {
             TimeSlotDao td = new TimeSlotDao();
             WeeksDao wd = new WeeksDao();
             while (rs.next()) {
-                ScheduleDetail sd = new ScheduleDetail(rs.getInt(1), rs.getString(2), td.getTimeSlotByid(rs.getInt(3)), wd.getWeeksday(rs.getInt(4)), rs.getString(5));
+                ScheduleDetail sd = new ScheduleDetail(rs.getInt(1), rs.getString(2), td.getTimeSlotByid(rs.getInt(6)), wd.getWeeksday(rs.getInt(4)), rs.getString(5));
                 list.add(sd);
             }
         } catch (SQLException ex) {
@@ -132,8 +132,8 @@ public class ScheduleDetailDao extends DBContext {
 
     public static void main(String[] args) {
         ScheduleDetailDao sd = new ScheduleDetailDao();
-        for (ScheduleDetail scheduleDetail : sd.getScheduleDtInTime(1, "2024-06-25", "2024-07-01")) {
-            System.out.println(scheduleDetail.getDay());
+        for (ScheduleDetail scheduleDetail : sd.getScheduleDtByMid(1, 2)) {
+            System.out.println(scheduleDetail.getTimeslot().getName());
         }
     }
 }

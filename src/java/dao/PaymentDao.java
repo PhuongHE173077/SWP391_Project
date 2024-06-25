@@ -75,6 +75,45 @@ public class PaymentDao extends DBContext {
         }
         return rowUpdated;
     }
+      public List<Payment> getAllPayment() {
+        List<Payment> list = new ArrayList<>();
+        String query = "SELECT * FROM [dbo].[Payment] ORDER BY [id] DESC";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            CategorySkillDao cs = new CategorySkillDao();
+
+            while (rs.next()) {
+                Payment p = new Payment(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getDate(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12), 
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15),
+                        rs.getInt(16));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public List<Payment> getListByPage(List<Payment> list, int start, int end) {
+        ArrayList<Payment> arr = new ArrayList<>();
+        for(int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
     public static void main(String[] args) {
         PaymentDao pd = new PaymentDao();
          Date date = Date.valueOf(LocalDate.now());

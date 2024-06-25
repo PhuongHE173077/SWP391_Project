@@ -193,29 +193,26 @@ public class UpdateSchedule extends HttpServlet {
             Mentor m = (Mentor) session.getAttribute("mentor");
             sd.createSchedule(m.getId(), startDay, endDay, "Processing");
             int sid = sd.getscheduleNewID();
-            if (schedules != null) {
-                for (String schedule : schedules) {
-                    // Split the value to get slot and date
-                    String[] parts = schedule.split(",");
-                    int slot = Integer.parseInt(parts[0]);
-                    String date = parts[1];
-                    List<String> result = getDatesWithSameDayOfWeek(startDay, endDay, date);
-                    for (String string : result) {
-                        sdd.createScheduleDetail(string, sid, wd.getWeekNow(date).getId(), slot);
-                    }   
-                    
+            for (String schedule : schedules) {
+
+                String[] parts = schedule.split(",");
+                int slot = Integer.parseInt(parts[0]);
+                String date = parts[1];
+                List<String> result = getDatesWithSameDayOfWeek(startDay, endDay, date);
+                for (String string : result) {
+                    sdd.createScheduleDetail(string, sid, wd.getWeekNow(date).getId(), slot);
                 }
+
             }
             response.sendRedirect("schedule");
 
         }
     }
-    
 
-   public List<String> getDatesWithSameDayOfWeek(String start, String end, String dates) {
-        String specificDateStr = dates;   
-        String startDateStr = start;      
-        String endDateStr = end;         
+    public List<String> getDatesWithSameDayOfWeek(String start, String end, String dates) {
+        String specificDateStr = dates;
+        String startDateStr = start;
+        String endDateStr = end;
 
         // Formatter for the date strings
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

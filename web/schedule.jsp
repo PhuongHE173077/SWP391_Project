@@ -220,7 +220,7 @@
                                     </div>
                                 </div>
                             </div>
-
+</form>                        
                             <script>
                                 const today = new Date().toISOString().split('T')[0];
 
@@ -247,7 +247,7 @@
                                 </div>
                             </div>
                             <div class="card">
-                               
+                                
                             </div>
                         </div>
                     </div>
