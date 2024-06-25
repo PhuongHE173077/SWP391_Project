@@ -37,7 +37,7 @@ public class PaymentController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse respone) throws ServletException, IOException {
-        int amount = Integer.parseInt(request.getParameter("amount")) ;
+        int amount = Integer.parseInt(request.getParameter("amount")) *100;
         System.out.println(amount);
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";

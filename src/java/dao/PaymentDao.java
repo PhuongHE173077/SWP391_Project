@@ -32,7 +32,7 @@ public class PaymentDao extends DBContext {
 
             preparedStatement.setInt(1, payment.getRequestId());
             preparedStatement.setInt(2, payment.getUserId());
-            preparedStatement.setDouble(3, payment.getAmount());
+            preparedStatement.setDouble(3, payment.getAmount()/100);
             preparedStatement.setString(4, payment.getDetail());
             preparedStatement.setDate(5, new java.sql.Date(payment.getPaymentDate().getTime()));
             preparedStatement.setString(6, payment.getNote());

@@ -17,9 +17,12 @@
             <file>file:/D:/Ilter2/SWP391_Project/web/request.jsp</file>
             <file>file:/D:/Ilter2/SWP391_Project/src/java/controller/Schedule.java</file>
         </group>
-        <group/>
         <group>
-            <file>file:/D:/SWP391%20(2)/SWP391_Project/web/wallet.jsp</file>
+            <file>file:/D:/SWP391%20(2)/SWP391_Project/src/java/dao/PaymentDao.java</file>
+            <file>file:/D:/SWP391%20(2)/SWP391_Project/src/java/controller/HandlePaymentResponseController.java</file>
+            <file>file:/D:/SWP391%20(2)/SWP391_Project/src/java/controller/PaymentController.java</file>
+            <file>file:/D:/SWP391%20(2)/SWP391_Project/web/PaymentHistory.jsp</file>
         </group>
+        <group/>
     </open-files>
 </project-private>
