@@ -7,13 +7,16 @@ package dao;
 import context.DBContext;
 import entity.Mentee;
 import entity.Payment;
-import entity.Request;
+
 import entity.User;
 import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +25,7 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class PaymentDao extends DBContext {
+    
     public boolean createPayment(Payment payment) {
         boolean rowInserted = false;
         String INSERT_PAYMENT_SQL = "INSERT INTO [SWP391_project].[dbo].[payment] " +
@@ -71,8 +75,7 @@ public class PaymentDao extends DBContext {
         }
         return rowUpdated;
     }
-
-    public List<Payment> getAllPayment() {
+      public List<Payment> getAllPayment() {
         List<Payment> list = new ArrayList<>();
         String query = "SELECT * FROM [dbo].[Payment] ORDER BY [id] DESC";
         try {
@@ -111,4 +114,11 @@ public class PaymentDao extends DBContext {
         }
         return arr;
     }
+    public static void main(String[] args) {
+        PaymentDao pd = new PaymentDao();
+         Date date = Date.valueOf(LocalDate.now());
+        Payment p = new Payment(0, 0, 1, 5000.00, "abc", date, "abc", "abc", "abc", "abc", "abc", "abc", "abc", "abc", "abc", 0);
+        System.out.println(pd.createPayment(p));
+    }
+
 }

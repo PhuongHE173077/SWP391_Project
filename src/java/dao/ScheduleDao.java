@@ -5,10 +5,8 @@
 package dao;
 
 import context.DBContext;
-import entity.DayStartAndEnd;
 import entity.Schedule;
-import java.util.ArrayList;
-import java.util.List;
+import entity.ScheduleDetail;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,130 +19,60 @@ import java.util.logging.Logger;
  */
 public class ScheduleDao extends DBContext {
 
-    public List<Schedule> getlistScheduleByMentor(int id) {
-        List<Schedule> list = new ArrayList<>();
-        String sql = "select * from schedul_mentor where mid =?";
+    public Schedule getscheduleMentorNow(int mid, String day) {
+        String sql = "select * from schedule where mentor_id =? and startDay >= ? and endDay <= ";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, id);
+            st.setInt(1, mid);
+            st.setString(2, day);
             ResultSet rs = st.executeQuery();
-            WeeksDao wd = new WeeksDao();
-            TimeSlotDao tsd = new TimeSlotDao();
-            DayStartEndDao dsed = new DayStartEndDao();
-            while (rs.next()) {
-                DayStartAndEnd date = dsed.getDayById(rs.getInt(6));
-                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(3), rs.getString(5),date);
-                list.add(s);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
-    }
-
-    public Schedule getlistScheduleMetorById(int id) {
-        String sql = "select * from schedul_mentor where id =?";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
-            WeeksDao wd = new WeeksDao();
-            TimeSlotDao tsd = new TimeSlotDao();
-            DayStartEndDao dsed = new DayStartEndDao();
-            while (rs.next()) {
-                  DayStartAndEnd date = dsed.getDayById(rs.getInt(6));
-                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(3), rs.getString(5),date);
-                return s;
+            MentorDao md = new MentorDao();
+            ScheduleDetailDao sdd = new ScheduleDetailDao();
+            if (rs.next()) {
+                return new Schedule(rs.getInt(1), rs.getString(3), rs.getString(4), sdd.getScheduleDtBySid(rs.getInt(1)), md.getMentorByID(rs.getInt(2)), rs.getString(5));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
-    public List<Schedule> getlistScheduleMetorByIdInW(int mid,int weekid) {
-        String sql = "select * from schedul_mentor where mid =? and fid =?";
-        List<Schedule> list = new ArrayList<>();
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, mid);
-            st.setInt(2, weekid);
-            ResultSet rs = st.executeQuery();
-            WeeksDao wd = new WeeksDao();
-            TimeSlotDao tsd = new TimeSlotDao();
-            DayStartEndDao dsed = new DayStartEndDao();
-            while (rs.next()) {
-                  DayStartAndEnd date = dsed.getDayById(rs.getInt(6));
-                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(rs.getInt(3)), rs.getString(5),date);
-                list.add(s);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
-    }
-    public List<Schedule> getlistScheduleByInRequest(int id) {
-        List<Schedule> list = new ArrayList<>();
-        String sql = "select * from schedul_request where rid =?";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
-            WeeksDao wd = new WeeksDao();
-            TimeSlotDao tsd = new TimeSlotDao();
-            DayStartEndDao dsed = new DayStartEndDao();
-            while (rs.next()) {
-                 DayStartAndEnd date = dsed.getDayById(rs.getInt(6));
-                Schedule s = new Schedule(rs.getInt(1), wd.getWeeksday(rs.getInt(2)), tsd.getTimeSlotByid(rs.getInt(3)), rs.getString(5),date);
-                list.add(s);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
-    }
 
-    public boolean addSchedule(int rid, Schedule sch) {
+    public boolean createSchedule(int mid, String startDay, String endDay, String Status) {
         boolean check = false;
-        String sql = "INSERT INTO [dbo].[schedul_request]\n"
-                + "           ([WeeksDayId]\n"
-                + "           ,[timeId]\n"
-                + "           ,[rid]"
-                + "           ,[fid])\n"
+        String sql = "INSERT INTO [dbo].[schedule]\n"
+                + "           ([mentor_id]\n"
+                + "           ,[startDay]\n"
+                + "           ,[endDay]\n"
+                + "           ,[status])\n"
                 + "     VALUES\n"
                 + "           (?,?,?,?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, sch.getWeeksDay().getId());
-            st.setInt(2, sch.getTimeSlot().getId());
-            st.setInt(3, rid);
-            st.setInt(4, sch.getDayfromto().getId());
-            st.executeUpdate();
-            check= true;
-         } catch (SQLException ex) {
+            st.setInt(1, mid);
+            st.setString(2, startDay);
+            st.setString(3, endDay);
+            st.setString(4, Status);
+            check = st.executeUpdate() > 0;
+        } catch (SQLException ex) {
             Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
-        }  
+        }
         return check;
     }
-    public void deleteSchedul(int id) {//bien request
-        String query = "delete from schedul_request where rid = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setInt(1, id);
-            st.executeUpdate();
-        } catch (SQLException e) {
-            
-        }
-    }
 
-    public static void main(String[] args) {
-        ScheduleDao sc = new ScheduleDao();
-        List<Schedule>list= sc.getlistScheduleMetorByIdInW(1, 1);
-        for (Schedule schedule : list) {
-            System.out.println(schedule.getId());
+    public int getscheduleNewID() {
+        String sql = "select top 1 * from schedule\n"
+                + "order by id desc ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            MentorDao md = new MentorDao();
+            ScheduleDetailDao sdd = new ScheduleDetailDao();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
-        
-        
+        return 0;
     }
 }

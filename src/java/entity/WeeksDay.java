@@ -9,18 +9,19 @@ package entity;
  * @author TUF F15
  */
 public class WeeksDay {
-    int id;
-    String name;
+    private int id;
+    private String startDay;
+    private String endDay;
 
     public WeeksDay() {
     }
 
-    public WeeksDay(int id, String name) {
+    public WeeksDay(int id, String startDay, String endDay) {
         this.id = id;
-        this.name = name;
+        this.startDay = startDay;
+        this.endDay = endDay;
     }
     
-
     public int getId() {
         return id;
     }
@@ -29,13 +30,22 @@ public class WeeksDay {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getStartDay() {
+        return startDay;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStartDay(String startDay) {
+        this.startDay = startDay;
     }
+
+    public String getEndDay() {
+        return endDay;
+    }
+
+    public void setEndDay(String endDay) {
+        this.endDay = endDay;
+    }
+    
     
     
     

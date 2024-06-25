@@ -9,133 +9,89 @@ import java.util.List;
 
 /**
  *
- * @author ADMIN
+ * @author TUF F15
  */
 public class Request {
     private int id;
-    private Mentor mentor;
-    private Mentee mentee;
     private String subject;
-    private String deadlineday;
-    private int day_number;
+    private Mentee mentee;
+    private Mentor mentor;
     private String content;
+    private String startDay;
+    private String endDay;
+    private int slot_number;
     private Skill skill;
-    private String status;
-    private List<Schedule>schedule;
     private String dateSent;
-
+    private String status;
+    private List<ScheduleRequest> list;
 
     public Request() {
-        schedule = new ArrayList<>();
+        list = new ArrayList<>();
     }
+    
 
-    public Request(int id, Mentor mentor, Mentee mentee, String subject, String deadlineday, int day_number, String content, Skill skill, String status, List<Schedule> schedule, String dateSent) {
+    public Request(int id, String subject, Mentee mentee, Mentor mentor, String content, String startDay, String endDay, int slot_number, Skill skill, String dateSent, String status, List<ScheduleRequest> list) {
         this.id = id;
-        this.mentor = mentor;
-        this.mentee = mentee;
         this.subject = subject;
-        this.deadlineday = deadlineday;
-        this.day_number = day_number;
+        this.mentee = mentee;
+        this.mentor = mentor;
         this.content = content;
+        this.startDay = startDay;
+        this.endDay = endDay;
+        this.slot_number = slot_number;
         this.skill = skill;
-        this.status = status;
-        this.schedule = schedule;
         this.dateSent = dateSent;
+        this.status = status;
+        this.list = list;
     }
-
+    
+    
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Mentor getMentor() {
-        return mentor;
-    }
-
-    public void setMentor(Mentor mentor) {
-        this.mentor = mentor;
-    }
-
-    public Mentee getMentee() {
-        return mentee;
-    }
-
-    public void setMentee(Mentee mentee) {
-        this.mentee = mentee;
     }
 
     public String getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public Mentee getMentee() {
+        return mentee;
     }
 
-    public String getDeadlineday() {
-        return deadlineday;
-    }
-
-    public void setDeadlineday(String deadlineday) {
-        this.deadlineday = deadlineday;
-    }
-
-    public int getDay_number() {
-        return day_number;
-    }
-
-    public void setDay_number(int day_number) {
-        this.day_number = day_number;
+    public Mentor getMentor() {
+        return mentor;
     }
 
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public String getStartDay() {
+        return startDay;
+    }
+
+    public String getEndDay() {
+        return endDay;
+    }
+
+    public int getSlot_number() {
+        return slot_number;
     }
 
     public Skill getSkill() {
         return skill;
     }
 
-    public void setSkill(Skill skill) {
-        this.skill = skill;
+    public String getDateSent() {
+        return dateSent;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public List<Schedule> getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(List<Schedule> schedule) {
-        this.schedule = schedule;
-    }
-
-    public String getDateSent() {
-        return dateSent;
-    }
-
-    public void setDateSent(String dateSent) {
-        this.dateSent = dateSent;
-    }
-
-    public double getTotal() {
-        return mentor.getPrice()*day_number;
+    public List<ScheduleRequest> getList() {
+        return list;
     }
     
-    
-
-     
 }

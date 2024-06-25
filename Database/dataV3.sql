@@ -1,5 +1,5 @@
-drop database SWP391_project
-create database SWP391_project
+--drop database SWP391_project
+--create database SWP391_project
 
 create table roles(
 	id int primary key,
@@ -57,49 +57,47 @@ create table skill_detail(
 create table timeSlot(
 		id int IDENTITY (1,1) primary key,
 		timeSlot nvarchar(max)
-	)
-	create table weeksday(
+)
+create table weeksday(
 		id int IDENTITY (1,1) primary key,
-		name nvarchar(max),
-		
+		startDay nvarchar(max),
+		endDay nvarchar(max)		
 	)
-create table schedul_mentor(
+create table schedule(
 	id int IDENTITY (1,1) primary key,
-	WeeksDayId int references weeksday(id),
-	timeId int references timeSlot(id),
-	mid int references mentor(mentor_id),
+	mentor_id int references mentor(mentor_id),
+	startDay nvarchar(max),
+	endDay nvarchar(max),
+	status nvarchar(max)
+)
+create table schedule_datail(
+	id int IDENTITY (1,1) primary key,
+	date nvarchar(max),
+	sid int references schedule(id),
+	wid int references weeksday(id),
 	status nvarchar(max), 
 )
-
-
 
 create table request(
 	id int IDENTITY (1,1) PRIMARY KEY,
 	[subject] nvarchar(max),
 	mentee_id int references [User](user_id),
 	mentor_id int references mentor(mentor_id),
-	DeadlineDay nvarchar(max),
 	content nvarchar(max),
+	startDay nvarchar(max),
+	endDay nvarchar(max),
+	slot_number int,
 	skill_id int references skill(id),
+	dateSent nvarchar(max),
 	[status] nvarchar(max)
-	
 )
-alter table request
-add number_stady int 
-create table schedul_request(
+
+create table schedule_request(
 	id int IDENTITY (1,1) primary key,
-	WeeksDayId int references weeksday(id),
-	timeId int references timeSlot(id),
+	scheduledd_id int references schedule_datail(id),
 	rid int references request(id),	
 )
-create table feedback(
-	id int IDENTITY (1,1) PRIMARY KEY,
-	mentee_id int references [User](user_id),
-	mentor_id int references mentor(mentor_id),
-	comment nvarchar(max),
-	rate int,
 
-)
 create table payment(
 	id int IDENTITY (1,1) primary key,
 	request_id int null ,
@@ -131,19 +129,7 @@ create table payment(
 	/*Status of user : Active, Block, Processing*/
 	alter table [User]
 	add status nvarchar(max)
+	alter table schedule_datail
+	add tid int references  timeSlot(id)
 	
-	create table fromDayToDay(
-		id int IDENTITY (1,1) primary key,
-		startday nvarchar(max),
-		endday nvarchar(max)
-
-	)
-	 alter table schedul_request
-	 add fid int references fromDayToDay(id)
-
-	 alter table schedul_mentor
-	 add fid int references fromDayToDay(id)
-
-	alter table request
-	add dateSent nvarchar(max)
-
+	

@@ -39,8 +39,8 @@ public class RequestDao extends DBContext {
             MenteeDao mentee = new MenteeDao();
             SkillDao ssd = new SkillDao();
             while (rs.next()) {
-
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)),rs.getString(9));
+                ScheduleRequestDao srd = new ScheduleRequestDao();
+                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(9), rs.getString(10), rs.getString(11), srd.getScheduleRequestsByRid(rs.getInt(1)));
                 list.add(rq);
             }
 
@@ -50,25 +50,21 @@ public class RequestDao extends DBContext {
 
         return list;
     }
-    
-    public Request getTop1Rq() {
-        String sql ="select top 1 * from request order by id desc";
+
+    public int getTop1Rq() {
+        String sql = "select top 1 * from request order by id desc";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            ScheduleDao sd = new ScheduleDao();
-            MentorDao mentor = new MentorDao();
-            MenteeDao mentee = new MenteeDao();
-            SkillDao ssd = new SkillDao();
+           
             if (rs.next()) {
-              return new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)),rs.getString(9));
+                return rs.getInt(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(RequestDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return 0;
     }
-
 
     public int getCountRequest(int id) {
         String query = "select count(*) from request where mentee_id = ?";
@@ -101,9 +97,8 @@ public class RequestDao extends DBContext {
             SkillDao ssd = new SkillDao();
             while (rs.next()) {
 
-                Request rq;
-                rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)),rs.getString(9));
-;
+                ScheduleRequestDao srd = new ScheduleRequestDao();
+                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(9), rs.getString(10), rs.getString(11), srd.getScheduleRequestsByRid(rs.getInt(1)));
                 list.add(rq);
             }
 
@@ -129,8 +124,8 @@ public class RequestDao extends DBContext {
             MenteeDao mentee = new MenteeDao();
             SkillDao ssd = new SkillDao();
             while (rs.next()) {
-
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)),rs.getString(9));
+                ScheduleRequestDao srd = new ScheduleRequestDao();
+                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(9), rs.getString(10), rs.getString(11), srd.getScheduleRequestsByRid(rs.getInt(1)));
                 list.add(rq);
             }
 
@@ -141,47 +136,40 @@ public class RequestDao extends DBContext {
         return list;
     }
 
-    public boolean addRequest(Request r) {
-        boolean check = false;
+    public boolean createRequest(Request r) {
+        boolean result = false;
         String sql = "INSERT INTO [dbo].[request]\n"
                 + "           ([subject]\n"
                 + "           ,[mentee_id]\n"
                 + "           ,[mentor_id]\n"
-                + "           ,[DeadlineDay]\n"
                 + "           ,[content]\n"
+                + "           ,[startDay]\n"
+                + "           ,[endDay]\n"
+                + "           ,[slot_number]\n"
                 + "           ,[skill_id]\n"
-                + "           ,[status]\n"
-                + "           ,[number_stady])\n"
+                + "           ,[dateSent]\n"
+                + "           ,[status])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, r.getSubject());
             st.setInt(2, r.getMentee().getId());
             st.setInt(3, r.getMentor().getId());
-            st.setString(4, r.getDeadlineday());
-            st.setString(5, r.getContent());
-            st.setInt(6, r.getSkill().getId());
-            st.setString(7, r.getStatus());
-            st.setInt(8, r.getDay_number());
-            st.executeUpdate();
-            String sql2 = "select top 1 * from request\n"
-                    + "Order by id desc";
-            PreparedStatement st2 = connection.prepareStatement(sql2);
-            ResultSet rs = st2.executeQuery();
-            ScheduleDao sd = new ScheduleDao();
-            if (rs.next()) {
-                for (Schedule s : r.getSchedule()) {
-                    sd.addSchedule(rs.getInt(1), s);
-                }
-                check =true;
-            }
+            st.setString(4, r.getContent());
+            st.setString(5, r.getStartDay());
+            st.setString(6, r.getEndDay());
+            st.setInt(7, r.getSlot_number());
+            st.setInt(8, r.getSkill().getId());
+            st.setString(9, r.getDateSent());
+            st.setString(10, r.getStatus());
+            result = st.executeUpdate()>0;
         } catch (SQLException ex) {
             Logger.getLogger(RequestDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return check;
-
+        return result;
     }
+
     public void deleteRequest(int id) {//bien request
         String query = "delete from request where id = ?";
         try {
@@ -204,11 +192,10 @@ public class RequestDao extends DBContext {
             MenteeDao mentee = new MenteeDao();
             SkillDao ssd = new SkillDao();
             if (rs.next()) {
-
-                Request rq = new Request(rs.getInt(1), mentor.getMentorByID(rs.getInt(4)), mentee.getMenteeById(3), rs.getString(2), rs.getString(5), rs.getInt(9), rs.getString(6), ssd.searchSkill(rs.getInt(7)), rs.getString(8), sd.getlistScheduleByInRequest(rs.getInt(1)),rs.getString(9));
+                ScheduleRequestDao srd = new ScheduleRequestDao();
+                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(9), rs.getString(10), rs.getString(11), srd.getScheduleRequestsByRid(rs.getInt(1)));
                 return rq;
             }
-            
 
         } catch (SQLException ex) {
             Logger.getLogger(RequestDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -217,66 +204,27 @@ public class RequestDao extends DBContext {
         return null;
     }
 
-    public boolean editRequest(Request r) {
-        boolean check = false;
-        String query = "UPDATE [dbo].[request]\n"
-                + "   SET [subject] = ?\n"
-                + "      ,[DeadlineDay] = ?\n"
-                + "      ,[content] = ?\n"
-                + "      ,[number_stady] = ?\n"
-                + " WHERE id = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(query);
-            st.setString(1, r.getSubject());
-            st.setString(2, r.getDeadlineday());
-            st.setString(3, r.getContent());
-            st.setInt(4, r.getDay_number());
-            st.setInt(5, r.getId());
-            st.executeUpdate();
-            check = true;
-        } catch (SQLException e) {
-        }
-        return check;
-    }
-    
-    public boolean isEnrolled(int userID, int requestID) throws SQLException {
-        boolean isEnrolled = false;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            String sql = "SELECT COUNT(*) AS count\n"
-                    + "FROM dbo.request r\n"
-                    + "JOIN dbo.User u ON r.id = u.id\n"
-                    + "WHERE r.mentee_id = ? AND r.id = ? AND r.status = 1";
-            ps = connection.prepareStatement(sql);
-            ps.setInt(1, userID);
-            ps.setInt(2, requestID);
-
-            rs = ps.executeQuery(); // Use executeQuery() to retrieve results
-
-            if (rs.next()) {
-                int count = rs.getInt("count");
-                isEnrolled = count > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle exception
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return isEnrolled;
-    }
-    
+//    public boolean editRequest(Request r) {
+//        boolean check = false;
+//        String query = "UPDATE [dbo].[request]\n"
+//                + "   SET [subject] = ?\n"
+//                + "      ,[DeadlineDay] = ?\n"
+//                + "      ,[content] = ?\n"
+//                + "      ,[number_stady] = ?\n"
+//                + " WHERE id = ?";
+//        try {
+//            PreparedStatement st = connection.prepareStatement(query);
+//            st.setString(1, r.getSubject());
+//            st.setString(2, r.getDeadlineday());
+//            st.setString(3, r.getContent());
+//            st.setInt(4, r.getDay_number());
+//            st.setInt(5, r.getId());
+//            st.executeUpdate();
+//            check = true;
+//        } catch (SQLException e) {
+//        }
+//        return check;
+//    }
     public static void main(String[] args) {
         RequestDao r = new RequestDao();
         System.out.println(r.getAllRequestOfMentor(3).get(0));
