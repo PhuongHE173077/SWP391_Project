@@ -76,7 +76,7 @@ public class WeeksDao extends DBContext {
 
     public static void main(String[] args) {
         WeeksDao wd = new WeeksDao();
-        WeeksDay w = wd.getWeeksday(1);
+        WeeksDay w = wd.getWeekNow("2024-06-27");
         System.out.println(w.getStartDay());
     }
 }

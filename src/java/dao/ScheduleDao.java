@@ -10,8 +10,13 @@ import entity.ScheduleDetail;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.time.LocalDateTime;
+import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -35,6 +40,25 @@ public class ScheduleDao extends DBContext {
             Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    public List<Schedule> getSchedulesProcessing(int mid){
+        String sql = "select * from schedule where mentor_id = ? and status = 'Processing'and startDay >= ?";
+        List<Schedule>list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, mid);
+            st.setDate(2,Date.valueOf(LocalDate.now()) );
+            ResultSet rs = st.executeQuery();
+             MentorDao md = new MentorDao();
+            ScheduleDetailDao sdd = new ScheduleDetailDao();
+            while (rs.next()) {
+                 Schedule scc = new Schedule(rs.getInt(1), rs.getString(3), rs.getString(4), sdd.getScheduleDtBySid(rs.getInt(1)), md.getMentorByID(rs.getInt(2)), rs.getString(5));
+                 list.add(scc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     public boolean createSchedule(int mid, String startDay, String endDay, String Status) {

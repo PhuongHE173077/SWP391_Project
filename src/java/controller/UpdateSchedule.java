@@ -109,7 +109,10 @@ public class UpdateSchedule extends HttpServlet {
                 e.printStackTrace();
             }
             ScheduleDetailDao scd = new ScheduleDetailDao();
+            ScheduleDao sd = new ScheduleDao();
+            List<Schedule>listS =sd.getSchedulesProcessing(m.getId());
             List<ScheduleDetail> listsche = scd.getScheduleDtByMid(m.getId(), week.getId());
+            request.setAttribute("listS", listS);
             request.setAttribute("listsch", listsche);
             request.setAttribute("de", week);
             request.setAttribute("listw", list);
@@ -200,7 +203,7 @@ public class UpdateSchedule extends HttpServlet {
                 String date = parts[1];
                 List<String> result = getDatesWithSameDayOfWeek(startDay, endDay, date);
                 for (String string : result) {
-                    sdd.createScheduleDetail(string, sid, wd.getWeekNow(date).getId(), slot);
+                    sdd.createScheduleDetail(string, sid, wd.getWeekNow(string).getId(), slot);
                 }
 
             }

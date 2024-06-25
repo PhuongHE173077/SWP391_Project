@@ -66,10 +66,9 @@ public class ScheduleDetailDao extends DBContext {
 
     public List<ScheduleDetail> getScheduleDtByMid(int mid, int wid) {
         String sql = "SELECT    schedule_datail.*\n"
-                + "FROM         categorySkill INNER JOIN\n"
-                + "                      schedule ON categorySkill.id = schedule.id INNER JOIN\n"
-                + "                      schedule_datail ON schedule.id = schedule_datail.sid\n"
-                + "					  where schedule.mentor_id = ? and schedule_datail.wid =?";
+                + "FROM         schedule INNER JOIN\n"
+                + "                      schedule_datail ON schedule.id = schedule_datail.sid \n"
+                + "					  where schedule.mentor_id =? and schedule_datail.wid =?";
         List<ScheduleDetail> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);

@@ -247,7 +247,11 @@
                                 </div>
                             </div>
                             <div class="card">
-                                
+                                <c:forEach items="${requestScope.listS}" var="ls">
+                                    <span>${ls.startDay} to ${ls.endDay}</span></br>
+                                    <span>${ls.status}</span></br>
+                                    
+                                </c:forEach> 
                             </div>
                         </div>
                     </div>
