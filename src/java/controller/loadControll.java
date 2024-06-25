@@ -6,8 +6,10 @@ package controller;
 
 import dao.CvDao;
 import dao.MentorDao;
+import dao.UserDao;
 import entity.CvMentor;
 import entity.Mentor;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -51,10 +53,37 @@ public class loadControll extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        MentorDao dao = new MentorDao();
-        List<Mentor> list = dao.getAllMentorCVpre();
+        CvDao cvd = new CvDao();
+        //List<User> list = dao.getUser();
+        UserDao ud = new UserDao();
+        List<User> list1 = cvd.getUser();
+        
+        int page, numberpage = 10;
+        int size = list1.size();
+        int num = (size%10==0?(size/10) : ((size/10))+1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page-1) * numberpage;
+        end = Math.min(page*numberpage, size);
+        List<User> list = cvd.getListByPage(list1, start, end);
+        
+        request.setAttribute("page", page);
+        request.setAttribute("num", num);
         request.setAttribute("listS", list);
-        request.getRequestDispatcher("nhap.jsp").forward(request, response);
+        request.getRequestDispatcher("Manager.jsp").forward(request, response);
+        
+        
+        
+//List<CvMentor> list = cvd.getUser();
+// MentorDao dao = new MentorDao();
+//        List<Mentor> list = dao.getAllMentorCVpre();
+//        request.setAttribute("listS", list);
+//        request.getRequestDispatcher("Manager.jsp").forward(request, response);
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

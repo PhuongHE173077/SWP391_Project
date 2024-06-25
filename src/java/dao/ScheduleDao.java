@@ -41,19 +41,20 @@ public class ScheduleDao extends DBContext {
         }
         return null;
     }
-    public List<Schedule> getSchedulesProcessing(int mid){
+
+    public List<Schedule> getSchedulesProcessing(int mid) {
         String sql = "select * from schedule where mentor_id = ? and status = 'Processing'and startDay >= ?";
-        List<Schedule>list = new ArrayList<>();
+        List<Schedule> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, mid);
-            st.setDate(2,Date.valueOf(LocalDate.now()) );
+            st.setDate(2, Date.valueOf(LocalDate.now()));
             ResultSet rs = st.executeQuery();
-             MentorDao md = new MentorDao();
+            MentorDao md = new MentorDao();
             ScheduleDetailDao sdd = new ScheduleDetailDao();
             while (rs.next()) {
-                 Schedule scc = new Schedule(rs.getInt(1), rs.getString(3), rs.getString(4), sdd.getScheduleDtBySid(rs.getInt(1)), md.getMentorByID(rs.getInt(2)), rs.getString(5));
-                 list.add(scc);
+                Schedule scc = new Schedule(rs.getInt(1), rs.getString(3), rs.getString(4), sdd.getScheduleDtBySid(rs.getInt(1)), md.getMentorByID(rs.getInt(2)), rs.getString(5));
+                list.add(scc);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,4 +100,81 @@ public class ScheduleDao extends DBContext {
         }
         return 0;
     }
+
+    public List<Schedule> getAllSchedule() {
+        List<Schedule> list = new ArrayList<>();
+        String query = "select * from	schedule";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            MentorDao md = new MentorDao();
+            ScheduleDetailDao sdd = new ScheduleDetailDao();
+            while (rs.next()) {
+                Schedule sd = new Schedule(rs.getInt(1), rs.getString(3), rs.getString(4), sdd.getScheduleDtBySid(rs.getInt(1)), md.getMentorByID(rs.getInt(2)), rs.getString(5));
+                list.add(sd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+
+    }
+
+    public List<Schedule> getListByPage(List<Schedule> list, int start, int end) {
+        ArrayList<Schedule> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
+
+    public boolean updateSchedule(int mid, String startDay, String endDay, String Status) {
+        boolean check = false;
+        String sql = "UPDATE [dbo].[schedule]\n"
+                + "   SET [mentor_id] = ?\n"
+                + "      ,[startDay] = ?\n"
+                + "      ,[endDay] = ?\n"
+                + "      ,[status] = ?\n"
+                + " WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, mid);
+            st.setString(2, startDay);
+            st.setString(3, endDay);
+            st.setString(4, Status);
+            st.executeUpdate();
+            check = true;
+        } catch (SQLException ex) {
+
+        }
+        return check;
+    }
+
+    public Schedule searchScheduleById(int id) {
+        String query = "select * from	schedule where id = ?";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            MentorDao md = new MentorDao();
+            ScheduleDetailDao sdd = new ScheduleDetailDao();
+
+            if (rs.next()) {
+                Schedule scd = new Schedule(rs.getInt(1), rs.getString(3), rs.getString(4), sdd.getScheduleDtBySid(rs.getInt(1)), md.getMentorByID(rs.getInt(2)), rs.getString(5));
+                return scd;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+    public static void main(String[] args) {
+        ScheduleDao sd = new ScheduleDao();
+        for (Schedule schedule : sd.getSchedulesProcessing(1)) {
+            System.out.println(schedule.getMementor().getName());
+        }
+    }
+
 }

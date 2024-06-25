@@ -7,9 +7,12 @@ package dao;
 import context.DBContext;
 import entity.CvMentor;
 import entity.Mentor;
+import entity.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +38,7 @@ public class CvDao extends DBContext {
         return null;
 
     }
-   
+
     public Boolean addCvMentor(Mentor mentor) {
         boolean check = false;
         String sql = "INSERT INTO [dbo].[Cv_Mentor]\n"
@@ -85,6 +88,99 @@ public class CvDao extends DBContext {
             st.executeUpdate();
         } catch (Exception e) {
         }
+    }
+    
+
+    public void updateStatusUser(int userId, String status) {
+        String query = "UPDATE [dbo].[User] "
+                + "SET [status] = ? "
+                + "WHERE user_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(query);
+            st.setString(1, status);
+            st.setInt(2, userId);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<User> getUser() {
+        List<User> list = new ArrayList<>();
+        String sql = "select * from [User] where rid = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                //CvMentor user = new CvMentor(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12));
+                User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10), rs.getInt(11), rs.getString(12));
+                list.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<User> searchUserByName(String txtSearch) {
+        List<User> list = new ArrayList<>();
+        String sql = "SELECT [User].user_id, Cv_Mentor.full_name, Cv_Mentor.email, Cv_Mentor.dob, Cv_Mentor.gender, Cv_Mentor.phone, Cv_Mentor.address, Cv_Mentor.img, Cv_Mentor.education, Cv_Mentor.word_experice, Cv_Mentor.achievements,Cv_Mentor.[status]\n"
+                + "             FROM     Cv_Mentor INNER JOIN\n"
+                + "         mentor ON Cv_Mentor.metor_id = mentor.mentor_id INNER JOIN[User] ON mentor.userId = [User].user_id  where Cv_Mentor.full_name like ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, "%" + txtSearch + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                //CvMentor user = new CvMentor(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12));
+                User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9), rs.getString(10), rs.getInt(11), rs.getString(12));
+                list.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<User> getListByPage(List<User> list, int start, int end) {
+        ArrayList<User> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
+
+    public CvMentor getCvMentorByIDs(int id) {
+        String sql = "SELECT [User].user_id, Cv_Mentor.full_name, Cv_Mentor.email, Cv_Mentor.dob, Cv_Mentor.gender, Cv_Mentor.phone, Cv_Mentor.img, Cv_Mentor.address, Cv_Mentor.education, Cv_Mentor.word_experice, Cv_Mentor.achievements, \n"
+                + "                  Cv_Mentor.status\n"
+                + "FROM     Cv_Mentor INNER JOIN\n"
+                + "                  mentor ON Cv_Mentor.metor_id = mentor.mentor_id INNER JOIN\n"
+                + "                  [User] ON mentor.userId = [User].user_id where [User].user_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                CvMentor cv = new CvMentor(
+                        rs.getInt("user_id"), // 1
+                        rs.getString("full_name"), // 2
+                        rs.getString("email"), // 3
+                        rs.getString("dob"), // 4
+                        rs.getInt("gender"), // 5
+                        rs.getString("phone"), // 6
+                        rs.getString("address"), // 7
+                        rs.getString("img"), // 8
+                        rs.getString("education"), // 9
+                        rs.getString("word_experice"), // 10
+                        rs.getString("achievements"), // 11
+                        rs.getString("status") // 12
+                );
+                return cv;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CvDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public static void main(String[] args) {
