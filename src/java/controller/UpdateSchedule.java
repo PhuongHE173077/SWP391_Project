@@ -144,8 +144,11 @@ public class UpdateSchedule extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ScheduleDetailDao scd = new ScheduleDetailDao();
+           ScheduleDetailDao scd = new ScheduleDetailDao();
+            ScheduleDao sd = new ScheduleDao();
+            List<Schedule>listS =sd.getSchedulesProcessing(m.getId());
             List<ScheduleDetail> listsche = scd.getScheduleDtByMid(m.getId(), week.getId());
+            request.setAttribute("listS", listS);
             request.setAttribute("listsch", listsche);
             request.setAttribute("de", week);
             request.setAttribute("listw", list);

@@ -214,17 +214,19 @@
                                                 <td>
 
                                                     <button type="button" class="view btn btn-primary" title="View">
-                                                        <a href="aprrove?id=${ls.id}" style="color: white"class="view" title="View" ><i></i> View</a>
+                                                        <a href="approveSchedule?id=${ls.id}&&tid=1" style="color: white"class="view" title="View" ><i></i> View</a>
 
                                                     </button>
-
-                                                    <button type="button" class="edit btn btn-secondary" title="Edit" >
-                                                        <a href="aprrove?id=${ls.id}" style="color: white" class="edit" title="Edit" ><i></i> Approve</a>
+                                                        <c:if test="${ls.status == 'Processing'}">
+                                                             <button type="button" class="edit btn btn-secondary" title="Edit" >
+                                                        <a href="approveSchedule?id=${ls.id}&&tid=2" style="color: white" class="edit" title="Edit" ><i></i> Approve</a>
                                                     </button>
 
-                                                    <button type="button" class="delete btn btn-danger" title="Reject" data-toggle="tooltip" onclick="window.location.href = 'aprrove?id=${ls.id}'">
+                                                    <button type="button" class="delete btn btn-danger" title="Reject" data-toggle="tooltip" onclick="window.location.href = 'approveSchedule?id=${ls.id}&&tid=3'">
                                                         <i class="mdi mdi-delete"></i> Reject
                                                     </button>
+                                                        </c:if>
+                                                   
                                                 </td>
                                             </tr>
                                         </c:forEach>

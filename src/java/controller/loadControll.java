@@ -56,7 +56,7 @@ public class loadControll extends HttpServlet {
         CvDao cvd = new CvDao();
         //List<User> list = dao.getUser();
         UserDao ud = new UserDao();
-        List<User> list1 = cvd.getUser();
+        List<CvMentor> list1 = cvd.getCvUSer();
         
         int page, numberpage = 10;
         int size = list1.size();
@@ -70,7 +70,7 @@ public class loadControll extends HttpServlet {
         int start, end;
         start = (page-1) * numberpage;
         end = Math.min(page*numberpage, size);
-        List<User> list = cvd.getListByPage(list1, start, end);
+        List<CvMentor> list = cvd.getListByPageCv(list1, start, end);
         
         request.setAttribute("page", page);
         request.setAttribute("num", num);

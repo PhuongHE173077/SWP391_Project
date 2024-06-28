@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.MenteeDao;
 import dao.MentorDao;
 import dao.PaymentDao;
 import dao.RequestDao;
@@ -14,7 +15,6 @@ import dao.SkillDao;
 import dao.TimeSlotDao;
 import dao.UserDao;
 import dao.WeeksDao;
-
 import entity.Mentee;
 import entity.Mentor;
 import entity.Payment;
@@ -95,7 +95,9 @@ public class request extends HttpServlet {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = today.format(dateFormat);
         WeeksDao wd = new WeeksDao();
-        WeeksDay week = wd.getWeekNow(date);
+        ScheduleDetailDao scd = new ScheduleDetailDao();
+        int wid =scd.widScheduele();
+        WeeksDay week = wd.getWeeksday(wid);
         List<WeeksDay> list = wd.getListWeeksDay();
         String startDateStr = week.getStartDay();
         ArrayList<String> dates = new ArrayList<>();
@@ -120,8 +122,8 @@ public class request extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ScheduleDetailDao scd = new ScheduleDetailDao();
-        List<ScheduleDetail> listsche = scd.getScheduleDtByMid(mid, week.getId());
+        
+        List<ScheduleDetail> listsche = scd.getScheduleDtByMidAppro(mid, week.getId());
         request.setAttribute("listsch", listsche);
         request.setAttribute("de", week);
         request.setAttribute("listw", list);
@@ -172,7 +174,7 @@ public class request extends HttpServlet {
             ScheduleRequestDao srd = new ScheduleRequestDao();
             int slotNumber = getSlotRequest(startDay, endDay, mid, lists);
 
-            double total_menoy = slotNumber * md.getMentorByID(mid).getPrice();
+            double total_menoy = slotNumber * md.getMentorByID(mid).getPrice()*1000;
             if (mentee.getBalance() < total_menoy) {
                 request.setAttribute("tbao", "so du ban ko du");
                 LocalDate today = LocalDate.now();
@@ -232,9 +234,12 @@ public class request extends HttpServlet {
                 UserDao ud = new UserDao();
                 PaymentDao pd = new PaymentDao();
                 ud.removeMoney(mentee, total_menoy);
-                Payment payment = new Payment(0, rid, mentee.getId(), total_menoy, "Thanh toan request",java.sql.Date.valueOf(LocalDate.now()), date, content, null, null, null, null, null, null, null, 0);
+                Payment payment = new Payment(0, rid, mentee.getId(), total_menoy, "Thanh toan request cho "+rq.getSkill().getSkill(),java.sql.Date.valueOf(LocalDate.now()), date, content, null, null, null, null, null, null, null, 0);
                 pd.createPayment(payment);
-                request.getRequestDispatcher("payment").forward(request, response);
+                MenteeDao menteeDao = new MenteeDao();
+                Mentee me = menteeDao.getMenteeById(mentee.getId());
+                session.setAttribute("mentee", me);
+                response.sendRedirect("payment-history");
             }
 
         }
@@ -247,7 +252,7 @@ public class request extends HttpServlet {
         int count = 0;
         for (ScheduleDetail scheduleDetail : list) {
             for (ScheduleDetail sch : lists) {
-                if (areSameDayOfWeek(scheduleDetail.getDay(), sch.getDay())) {
+                if (areSameDayOfWeek(scheduleDetail.getDay(), sch.getDay()) && scheduleDetail.getTimeslot().getId() == sch.getTimeslot().getId()) {
                     count++;
                 }
             }

@@ -114,7 +114,7 @@ public class PaymentController extends HttpServlet {
         
         Payment newPayment = new Payment();
         if(paymentType.equalsIgnoreCase("wallet")) {
-            newPayment.setAmount(amount);
+            newPayment.setAmount(amount/100);
             newPayment.setRequestId(0);
             newPayment.setUserId(mentee.getId());
             newPayment.setDetail(locate);

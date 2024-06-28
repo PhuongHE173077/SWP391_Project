@@ -149,39 +149,35 @@ public class CvDao extends DBContext {
         }
         return arr;
     }
+    public List<CvMentor> getListByPageCv(List<CvMentor> list, int start, int end) {
+        ArrayList<CvMentor> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
 
-    public CvMentor getCvMentorByIDs(int id) {
-        String sql = "SELECT [User].user_id, Cv_Mentor.full_name, Cv_Mentor.email, Cv_Mentor.dob, Cv_Mentor.gender, Cv_Mentor.phone, Cv_Mentor.img, Cv_Mentor.address, Cv_Mentor.education, Cv_Mentor.word_experice, Cv_Mentor.achievements, \n"
+    
+    public List<CvMentor> getCvUSer() {
+        List<CvMentor> list = new ArrayList<>();
+        String sql = "SELECT [User].user_id, Cv_Mentor.full_name, Cv_Mentor.email, Cv_Mentor.dob, Cv_Mentor.gender, Cv_Mentor.phone, Cv_Mentor.address, Cv_Mentor.img, Cv_Mentor.education, Cv_Mentor.word_experice, Cv_Mentor.achievements, \n"
                 + "                  Cv_Mentor.status\n"
                 + "FROM     Cv_Mentor INNER JOIN\n"
                 + "                  mentor ON Cv_Mentor.metor_id = mentor.mentor_id INNER JOIN\n"
-                + "                  [User] ON mentor.userId = [User].user_id where [User].user_id = ?";
+                + "                  [User] ON mentor.userId = [User].user_id  where rid = 1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                CvMentor cv = new CvMentor(
-                        rs.getInt("user_id"), // 1
-                        rs.getString("full_name"), // 2
-                        rs.getString("email"), // 3
-                        rs.getString("dob"), // 4
-                        rs.getInt("gender"), // 5
-                        rs.getString("phone"), // 6
-                        rs.getString("address"), // 7
-                        rs.getString("img"), // 8
-                        rs.getString("education"), // 9
-                        rs.getString("word_experice"), // 10
-                        rs.getString("achievements"), // 11
-                        rs.getString("status") // 12
-                );
-                return cv;
+            while (rs.next()) {
+                CvMentor user = new CvMentor(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12));
+                list.add(user);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CvDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return list;
     }
+
 
     public static void main(String[] args) {
         CvDao cvd = new CvDao();

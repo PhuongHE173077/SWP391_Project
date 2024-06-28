@@ -58,6 +58,7 @@
 
                 updateCheckboxCount();
             });
+            
         </script>
 
 
@@ -108,7 +109,7 @@
                                                         <div class="text-muted"><small></small></div>
                                                     </div>
                                                     <div class="text-center text-sm-right">
-                                                        <span class="badge badge-secondary">${mentor.price}00 VND/Day</span>
+                                                        <span class="badge badge-secondary">${mentor.price}000 VND/Day</span>
                                                         <div class="text-muted"><small> </small></div>
                                                     </div>
                                                 </div>

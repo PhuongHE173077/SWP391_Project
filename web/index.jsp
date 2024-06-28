@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -124,7 +125,8 @@
                                         <option value="4">Logout</option>
                                     </select>
                                 </form>
-                                <li><a href="wallet"><i class="fa fa-dollar"></i> USD: ${c.balance} $</a></li>
+                                <li><a href="wallet"><i class="fa fa-dollar"></i> 
+                                         <fmt:formatNumber value="${c.balance}" type="currency"  groupingUsed="true"/> VND</li>
                                 </c:otherwise>
 
                         </c:choose>

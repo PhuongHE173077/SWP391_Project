@@ -41,9 +41,26 @@ public class ScheduleDao extends DBContext {
         }
         return null;
     }
+    public Schedule getscheduleByID(int id) {
+        String sql = "select * from schedule where id =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            
+            ResultSet rs = st.executeQuery();
+            MentorDao md = new MentorDao();
+            ScheduleDetailDao sdd = new ScheduleDetailDao();
+            if (rs.next()) {
+                return new Schedule(rs.getInt(1), rs.getString(3), rs.getString(4), sdd.getScheduleDtBySid(rs.getInt(1)), md.getMentorByID(rs.getInt(2)), rs.getString(5));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public List<Schedule> getSchedulesProcessing(int mid) {
-        String sql = "select * from schedule where mentor_id = ? and status = 'Processing'and startDay >= ?";
+        String sql = "select * from schedule where mentor_id = ? and startDay >= ?";
         List<Schedule> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -61,7 +78,7 @@ public class ScheduleDao extends DBContext {
         }
         return list;
     }
-
+    
     public boolean createSchedule(int mid, String startDay, String endDay, String Status) {
         boolean check = false;
         String sql = "INSERT INTO [dbo].[schedule]\n"
@@ -127,6 +144,21 @@ public class ScheduleDao extends DBContext {
             arr.add(list.get(i));
         }
         return arr;
+    }public boolean updateStatus(String Status,int id) {
+        boolean check = false;
+        String sql = "UPDATE [dbo].[schedule]\n"
+                + "     SET  [status] = ?\n"
+                + " WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, Status);
+            st.setInt(2, id);
+            st.executeUpdate();
+            check = true;
+        } catch (SQLException ex) {
+
+        }
+        return check;
     }
 
     public boolean updateSchedule(int mid, String startDay, String endDay, String Status) {
@@ -172,9 +204,8 @@ public class ScheduleDao extends DBContext {
     }
     public static void main(String[] args) {
         ScheduleDao sd = new ScheduleDao();
-        for (Schedule schedule : sd.getSchedulesProcessing(1)) {
-            System.out.println(schedule.getMementor().getName());
-        }
+        
+                System.out.println(sd.updateStatus("Approve", 10));
     }
 
 }

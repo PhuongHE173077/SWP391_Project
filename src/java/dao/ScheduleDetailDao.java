@@ -5,6 +5,7 @@
 package dao;
 
 import context.DBContext;
+import controller.request;
 import entity.ScheduleDetail;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +42,8 @@ public class ScheduleDetailDao extends DBContext {
 
     public List<ScheduleDetail> getScheduleDtInTime(int mid, String startDay, String endDay) {
         String sql = "SELECT    schedule_datail.*\n"
-                + "                FROM         categorySkill INNER JOIN\n"
-                + "    schedule ON categorySkill.id = schedule.id INNER JOIN\n"
-                + "  schedule_datail ON schedule.id = schedule_datail.sid\n"
+                + "FROM         schedule INNER JOIN\n"
+                + "                      schedule_datail ON schedule.id = schedule_datail.sid"
                 + "   where schedule.mentor_id = ? and schedule_datail.date>= ? and schedule_datail.date <=?";
         List<ScheduleDetail> list = new ArrayList<>();
         try {
@@ -85,6 +85,43 @@ public class ScheduleDetailDao extends DBContext {
             Logger.getLogger(ScheduleDetailDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    public List<ScheduleDetail> getScheduleDtByMidAppro(int mid, int wid) {
+        String sql = "SELECT    schedule_datail.*\n" +
+"                FROM         schedule INNER JOIN\n" +
+"                                     schedule_datail ON schedule.id = schedule_datail.sid \n" +
+"                				  where schedule.mentor_id =? and schedule_datail.wid =? and schedule.status='Approve'";
+        List<ScheduleDetail> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, mid);
+            st.setInt(2, wid);
+            ResultSet rs = st.executeQuery();
+            TimeSlotDao td = new TimeSlotDao();
+            WeeksDao wd = new WeeksDao();
+            while (rs.next()) {
+                ScheduleDetail sd = new ScheduleDetail(rs.getInt(1), rs.getString(2), td.getTimeSlotByid(rs.getInt(6)), wd.getWeeksday(rs.getInt(4)), rs.getString(5));
+                list.add(sd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDetailDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public int widScheduele() {
+        String sql = "SELECT  top 1  schedule_datail.wid\n"
+                + "                FROM         schedule INNER JOIN\n"
+                + "                                     schedule_datail ON schedule.id = schedule_datail.sid ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
     }
 
     public boolean createScheduleDetail(String date, int sid, int wid, int tid) {
@@ -131,8 +168,16 @@ public class ScheduleDetailDao extends DBContext {
 
     public static void main(String[] args) {
         ScheduleDetailDao sd = new ScheduleDetailDao();
-        for (ScheduleDetail scheduleDetail : sd.getScheduleDtByMid(1, 2)) {
-            System.out.println(scheduleDetail.getTimeslot().getName());
+        String timeSchedule[] = {"21", "22"};
+        List<ScheduleDetail> lists = new ArrayList<>();
+        for (int i = 0; i < timeSchedule.length; i++) {
+            int sdid = Integer.parseInt(timeSchedule[i]);
+            ScheduleDetail sdt = sd.getScheduleDtById(sdid);
+            lists.add(sdt);
         }
+        request rq = new request();
+        int slotNumber = rq.getSlotRequest("2024-06-25", "2024-07-25", 1, lists);
+        System.out.println(slotNumber);
+
     }
 }

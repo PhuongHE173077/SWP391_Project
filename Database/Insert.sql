@@ -232,6 +232,9 @@ INSERT INTO [dbo].[Cv_Mentor]
 
 INSERT INTO skill_detail (skill_id, mentor_id)
 VALUES
+	(4,6),
+	(4,5),
+	(5,4),
 	(10,4),
     (2, 1),
     (6, 1),

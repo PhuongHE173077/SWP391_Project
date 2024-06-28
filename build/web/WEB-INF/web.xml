@@ -12,6 +12,26 @@
         <servlet-name>confirmCV</servlet-name>
         <servlet-class>controller.confirmCV</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>listMentee</servlet-name>
+        <servlet-class>controller.listMentee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>listMentor</servlet-name>
+        <servlet-class>controller.listMentor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchMentee</servlet-name>
+        <servlet-class>controller.SearchMentee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchMentor</servlet-name>
+        <servlet-class>controller.SearchMentor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAllMentor</servlet-name>
+        <servlet-class>controller.ViewAllMentor</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadControll</servlet-name>
         <url-pattern>/loadcontroll</url-pattern>
@@ -24,4 +44,24 @@
         <servlet-name>confirmCV</servlet-name>
         <url-pattern>/confirmcv</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>listMentee</servlet-name>
+        <servlet-class>controller.listMentee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>listMentor</servlet-name>
+        <servlet-class>controller.listMentor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchMentee</servlet-name>
+        <servlet-class>controller.SearchMentee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchMentor</servlet-name>
+        <servlet-class>controller.SearchMentor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAllMentor</servlet-name>
+        <servlet-class>controller.ViewAllMentor</servlet-class>
+    </servlet>
 </web-app>

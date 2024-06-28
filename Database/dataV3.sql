@@ -131,5 +131,15 @@ create table payment(
 	add status nvarchar(max)
 	alter table schedule_datail
 	add tid int references  timeSlot(id)
-	
+
+	Create table Booking(
+		id int IDENTITY (1,1) primary key,
+		user_Id int references [User](user_id),
+		mentor_id int references mentor(mentor_id)
+	)
+	create table Attended(
+		id int IDENTITY (1,1) primary key,
+		booking_id int references Booking(id),
+		Status nvarchar(max)
+	)
 	
