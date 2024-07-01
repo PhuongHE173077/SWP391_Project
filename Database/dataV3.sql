@@ -129,6 +129,23 @@ create table payment(
 	/*Status of user : Active, Block, Processing*/
 	alter table [User]
 	add status nvarchar(max)
+	alter table schedule_datail
+	add tid int references  timeSlot(id)
+
 	
-	alter table schedule_request
-	add status nvarchar(max) null
+	
+	create table note_Schedule(
+		id int IDENTITY (1,1)	primary key,
+		description nvarchar(max),
+		sid int references schedule(id)
+	)
+	create table feedBack(
+		id int IDENTITY (1,1)	primary key,
+		rate int,
+		comment nvarchar(max),
+		mentee_id int references [User](user_id),
+		mentor_id int references mentor(mentor_id),
+		request_id int references request(id)
+
+
+	)
