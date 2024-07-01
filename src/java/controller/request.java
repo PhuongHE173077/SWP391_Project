@@ -176,7 +176,8 @@ public class request extends HttpServlet {
 
             double total_menoy = slotNumber * md.getMentorByID(mid).getPrice()*1000;
             if (mentee.getBalance() < total_menoy) {
-                request.setAttribute("tbao", "so du ban ko du");
+                Double Money_Short = total_menoy - mentee.getBalance();
+                request.setAttribute("thongbao", "Your balance is insufficient for this request. You are short "+ Money_Short+ " dollars.");
                 LocalDate today = LocalDate.now();
                 DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 String date = today.format(dateFormat);
@@ -207,7 +208,7 @@ public class request extends HttpServlet {
                     e.printStackTrace();
                 }
                 ScheduleDetailDao scd = new ScheduleDetailDao();
-                List<ScheduleDetail> listsche = scd.getScheduleDtByMid(mid, week.getId());
+                List<ScheduleDetail> listsche = scd.getScheduleDtByMidAppro(mid, week.getId());
                 request.setAttribute("listsch", listsche);
                 request.setAttribute("de", week);
                 request.setAttribute("listw", list);

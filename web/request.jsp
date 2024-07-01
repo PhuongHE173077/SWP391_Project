@@ -36,11 +36,12 @@
                     var timeDifference = endDate.getTime() - fromDate.getTime();
                     var weeks = Math.ceil(timeDifference / (1000 * 3600 * 24 * 7));
 
-                    var totalPrice = weeks * count * mentorPrice;
+                    var totalPrice = weeks * count * mentorPrice * 1000;
                     var totalSlot = weeks * count;
-                    document.getElementById('checkboxCount').innerText = 'Total Price: ' + totalPrice + ' 000VND And Number Slot :'+totalSlot;
+                    var formattedTotalPrice = totalPrice.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+                    document.getElementById('checkboxCount').innerText = 'Total Price: ' + formattedTotalPrice + ' And Number Slot: ' + totalSlot;
                 } else {
-                    document.getElementById('checkboxCount').innerText = 'Total Price: 0 000VND';
+                    document.getElementById('checkboxCount').innerText = 'Total Price: 0 VND';
                 }
             }
 
@@ -58,8 +59,22 @@
 
                 updateCheckboxCount();
             });
-            
+            window.onload = function () {
+                // Retrieve the value of the "thongbao" attribute from the JSP request
+                var error = '<%= request.getAttribute("thongbao") != null ? request.getAttribute("thongbao") : "" %>';
+
+                // If the "error" value is not null or empty, display the confirmation dialog
+                if (error.trim() !== "") {
+                    // Show the confirmation dialog and wait for user response
+                    if (confirm(error + ". Would you like to add funds to your account?")) {
+                        // Redirect to anotherPage.jsp if the user confirms
+                        window.location.href = "wallet";
+                    }
+                }
+            };
+
         </script>
+
 
 
     </head>
@@ -109,7 +124,7 @@
                                                         <div class="text-muted"><small></small></div>
                                                     </div>
                                                     <div class="text-center text-sm-right">
-                                                        <span class="badge badge-secondary">${mentor.price}000 VND/Day</span>
+                                                        <span class="badge badge-secondary">${mentor.price}00 VND/Slot</span>
                                                         <div class="text-muted"><small> </small></div>
                                                     </div>
                                                 </div>
@@ -144,28 +159,28 @@
                                                                         <div class="card">
                                                                             <div class="card-body">
                                                                                 <div class="container mt-5">
-                                                                                    
-                                                                                        <div style="display: flex">
-                                                                                            <div class="col-6">
-                                                                                                <label>From Day</label> 
-                                                                                                <input type="date" name="fromDay" id="fromDay">
-                                                                                            </div>
-                                                                                            <div>
-                                                                                                <label>End Day</label> 
-                                                                                                <input type="date" name="endDay" id="endDay">
-                                                                                            </div>
+
+                                                                                    <div style="display: flex">
+                                                                                        <div class="col-6">
+                                                                                            <label>From Day</label> 
+                                                                                            <input type="date" name="fromDay" id="fromDay">
                                                                                         </div>
+                                                                                        <div>
+                                                                                            <label>End Day</label> 
+                                                                                            <input type="date" name="endDay" id="endDay">
+                                                                                        </div>
+                                                                                    </div>
 
 
 
 
-                                                                                        <!--                                                                            <form id="f2" action="schedule"/>
-                                                                                                                                                                    <select class="form-select form-select-lg mb-3" aria-label="Large select example" name="key" onchange="change()">
-                                                                                        <c:forEach items="${requestScope.listw}" var="lw">
-                                                                                            <option value="${lw.id}">${lw.startDay} to ${lw.endDay}</option>
-                                                                                        </c:forEach>
-                                                                                    </select>
-                                                                                    </form>-->
+                                                                                    <!--                                                                            <form id="f2" action="schedule"/>
+                                                                                                                                                                <select class="form-select form-select-lg mb-3" aria-label="Large select example" name="key" onchange="change()">
+                                                                                    <c:forEach items="${requestScope.listw}" var="lw">
+                                                                                        <option value="${lw.id}">${lw.startDay} to ${lw.endDay}</option>
+                                                                                    </c:forEach>
+                                                                                </select>
+                                                                                </form>-->
                                                                                     <form action="</div>request" method="post">
                                                                                         <input type="hidden" name="week" value="${de.id}"/>
                                                                                         <table class="table table-bordered schedule-table">
@@ -228,10 +243,10 @@
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div class="px-xl-3">
-                                        <button class="btn btn-block btn-secondary">
+                                        <a href="home" style="text-decoration: none; color: white"><a href="home" style="text-decoration: none; color: white"><<button class="btn btn-block btn-secondary">
                                             <i class="fa fa-sign-out"></i>
-                                            <a href="home" style="text-decoration: none; color: white"><span>Home</span></a>
-                                        </button>
+                                            <span>Home</span>
+                                        </button></a>
                                     </div>
                                 </div>
                             </div>

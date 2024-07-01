@@ -56,7 +56,7 @@ public class RequestDao extends DBContext {
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-           
+
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -91,14 +91,14 @@ public class RequestDao extends DBContext {
             PreparedStatement st = connection.prepareStatement(query);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            
+
             MentorDao mentor = new MentorDao();
             MenteeDao mentee = new MenteeDao();
             SkillDao ssd = new SkillDao();
             while (rs.next()) {
 
                 ScheduleRequestDao srd = new ScheduleRequestDao();
-               Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(rs.getInt(9)), rs.getString(10), rs.getString(11), srd.getScheduleRequestsByRid(rs.getInt(1)));
+                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(rs.getInt(9)), rs.getString(10), rs.getString(11), srd.getScheduleRequestsByRid(rs.getInt(1)));
                 list.add(rq);
             }
 
@@ -110,10 +110,7 @@ public class RequestDao extends DBContext {
     }
 
     public List<Request> getAllRequestOfMentor(int id) {
-        String query = "SELECT    request.*\n"
-                + "FROM course INNER JOIN\n"
-                + "request ON course.id = request.course_id\n"
-                + "Where course.status = 'active' and request.mentor_id=?";
+        String query = "select * from request where mentor_id =?";
         List<Request> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(query);
@@ -163,7 +160,7 @@ public class RequestDao extends DBContext {
             st.setInt(8, r.getSkill().getId());
             st.setString(9, r.getDateSent());
             st.setString(10, r.getStatus());
-            result = st.executeUpdate()>0;
+            result = st.executeUpdate() > 0;
         } catch (SQLException ex) {
             Logger.getLogger(RequestDao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -225,6 +222,23 @@ public class RequestDao extends DBContext {
 //        }
 //        return check;
 //    }
+    public boolean updateStatus(String status, int id) {
+        boolean check = false;
+        String sql = "UPDATE [dbo].[request]\n"
+                + "   SET \n"
+                + "      [status] = ?\n"
+                + " WHERE id =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, status);
+            st.setInt(2, id);
+            check = st.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDetailDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return check;
+    }
+
     public static void main(String[] args) {
         RequestDao r = new RequestDao();
         System.out.println(r.getAllRequestOfMentee(1).get(0).getSkill().getSkill());

@@ -113,7 +113,7 @@
                                             <tr>
                                                 <td style="color: blue">${payment.requestId}</td>
                                                 <td style="color: blue">
-                                                <fmt:formatNumber value="${payment.amount}" type="currency" groupingUsed="true"/> VND</td>
+                                                <fmt:formatNumber value="${payment.amount}" type="number" groupingUsed="true"/> VND</td>
                                                 <td style="color: blue">${payment.detail}</td>
                                                 <td style="color: blue">${payment.paymentDate}</td>
                                                 <td style="color: blue">${payment.status}</td>
@@ -140,7 +140,7 @@
                                         <c:if test="${payment.status != 0}">
                                             <tr>
                                                 <td style="color: blue">${payment.id}</td>
-                                                <td style="color: blue"><fmt:formatNumber value="${payment.amount}" type="currency" groupingUsed="true"/> VND</td>
+                                                <td style="color: blue"><fmt:formatNumber value="${payment.amount}" type="number" groupingUsed="true"/> VND</td>
                                                 <td style="color: blue">${payment.detail}</td>
                                                 <td style="color: blue">${payment.paymentDate}</td>
                                                 <td style="color: blue">${payment.txnRef}</td>

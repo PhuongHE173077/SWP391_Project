@@ -86,11 +86,12 @@ public class ScheduleDetailDao extends DBContext {
         }
         return list;
     }
+
     public List<ScheduleDetail> getScheduleDtByMidAppro(int mid, int wid) {
-        String sql = "SELECT    schedule_datail.*\n" +
-"                FROM         schedule INNER JOIN\n" +
-"                                     schedule_datail ON schedule.id = schedule_datail.sid \n" +
-"                				  where schedule.mentor_id =? and schedule_datail.wid =? and schedule.status='Approve'";
+        String sql = "SELECT    schedule_datail.*\n"
+                + "                FROM         schedule INNER JOIN\n"
+                + "                                     schedule_datail ON schedule.id = schedule_datail.sid \n"
+                + "                				  where schedule.mentor_id =? and schedule_datail.wid =? and schedule.status='Approve'";
         List<ScheduleDetail> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -164,6 +165,23 @@ public class ScheduleDetailDao extends DBContext {
             Logger.getLogger(ScheduleDetailDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public boolean updateStatus(String status, int id) {
+        boolean check = false;
+        String sql = "UPDATE [dbo].[schedule_datail]\n"
+                + "   SET \n"
+                + "     [status] = ?\n"
+                + " WHERE id =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, status);
+            st.setInt(2, id);
+            check = st.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleDetailDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return check;
     }
 
     public static void main(String[] args) {

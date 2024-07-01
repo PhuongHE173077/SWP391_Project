@@ -8,7 +8,7 @@ package entity;
  *
  * @author TUF F15
  */
-public class ScheduleRequest {
+ public class ScheduleRequest {
     private int id;
     private ScheduleDetail scd;
 

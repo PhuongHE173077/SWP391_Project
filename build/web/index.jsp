@@ -126,7 +126,7 @@
                                     </select>
                                 </form>
                                 <li><a href="wallet"><i class="fa fa-dollar"></i> 
-                                         <fmt:formatNumber value="${c.balance}" type="currency"  groupingUsed="true"/> VND</li>
+                                         <fmt:formatNumber value="${c.balance}" type="number"  groupingUsed="true"/> VND</li>
                                 </c:otherwise>
 
                         </c:choose>
