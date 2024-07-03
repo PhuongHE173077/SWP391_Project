@@ -6,6 +6,7 @@ package controller;
 
 import dao.RequestDao;
 import dao.ScheduleDetailDao;
+import dao.ScheduleRequestDao;
 import entity.Request;
 import entity.ScheduleRequest;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -67,10 +69,11 @@ public class ApproveRequest extends HttpServlet {
 
         } else if (tid == 2) {
             RequestDao rqd = new RequestDao();
-            Request rq = rqd.getRequestById(rid);
+            ScheduleRequestDao srq = new ScheduleRequestDao();
+            List<ScheduleRequest>list = srq.getScheduleRequestsByRid(rid);
             ScheduleDetailDao sdd = new ScheduleDetailDao();
             rqd.updateStatus("Approve", rid);
-            for (ScheduleRequest scheduleRequest : rq.getList()) {
+            for (ScheduleRequest scheduleRequest : list) {
                 sdd.updateStatus("Booking", scheduleRequest.getScd().getId());
             }
         } else {

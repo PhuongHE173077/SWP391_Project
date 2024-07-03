@@ -23,14 +23,11 @@ public class Request {
     private Skill skill;
     private String dateSent;
     private String status;
-    private List<ScheduleRequest> list;
 
     public Request() {
-        list = new ArrayList<>();
     }
-    
 
-    public Request(int id, String subject, Mentee mentee, Mentor mentor, String content, String startDay, String endDay, int slot_number, Skill skill, String dateSent, String status, List<ScheduleRequest> list) {
+    public Request(int id, String subject, Mentee mentee, Mentor mentor, String content, String startDay, String endDay, int slot_number, Skill skill, String dateSent, String status) {
         this.id = id;
         this.subject = subject;
         this.mentee = mentee;
@@ -42,56 +39,99 @@ public class Request {
         this.skill = skill;
         this.dateSent = dateSent;
         this.status = status;
-        this.list = list;
     }
-    
-    
+
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSubject() {
         return subject;
     }
 
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
     public Mentee getMentee() {
         return mentee;
+    }
+
+    public void setMentee(Mentee mentee) {
+        this.mentee = mentee;
     }
 
     public Mentor getMentor() {
         return mentor;
     }
 
+    public void setMentor(Mentor mentor) {
+        this.mentor = mentor;
+    }
+
     public String getContent() {
         return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getStartDay() {
         return startDay;
     }
 
+    public void setStartDay(String startDay) {
+        this.startDay = startDay;
+    }
+
     public String getEndDay() {
         return endDay;
+    }
+
+    public void setEndDay(String endDay) {
+        this.endDay = endDay;
     }
 
     public int getSlot_number() {
         return slot_number;
     }
 
+    public void setSlot_number(int slot_number) {
+        this.slot_number = slot_number;
+    }
+
     public Skill getSkill() {
         return skill;
+    }
+
+    public void setSkill(Skill skill) {
+        this.skill = skill;
     }
 
     public String getDateSent() {
         return dateSent;
     }
 
+    public void setDateSent(String dateSent) {
+        this.dateSent = dateSent;
+    }
+
     public String getStatus() {
         return status;
     }
 
-    public List<ScheduleRequest> getList() {
-        return list;
+    public void setStatus(String status) {
+        this.status = status;
     }
+    
+
+        
+
+   
     
 }

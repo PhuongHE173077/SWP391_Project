@@ -1,11 +1,10 @@
 <%-- 
-    Document   : index
-    Created on : May 21, 2024, 4:09:43 PM
-    Author     : TUF F15
+    Document   : AllCourses
+    Created on : May 21, 2024, 6:09:09 PM
+    Author     : Dell
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-        <title>Happy programming</title>
+        <title>Happy Programming</title>
 
         <!-- Google font -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -73,29 +72,39 @@
                 color: #D10024;
                 margin-right: 5px;
             }
+            .aside .category a {
+                border: 1px;
+
+                padding: 10px;
+            }
+            .col-md-3 .aside a {
+                display: block;
+                border: 1px solid #000;
+                padding: 10px;
+                margin-bottom: 10px;
+                text-decoration: none;
+                color: #000;
+            }
+            .col-md-3 .aside a.active {
+                text-decoration: underline;
+                text-decoration-color: red;
+                text-decoration-thickness: 3px;
+                margin-top: 2px;
+            }
 
         </style>
-        <script>
-                // This script will run when the page loads
-                window.onload = function () {
-                    // Get the error message from the JSP attribute
-                    var erro = '<%= request.getAttribute("tbao") != null ? request.getAttribute("tbao") : "" %>';
-
-                    // Check if there is an error message
-                    if (erro.trim() !== "") {
-                        // Display the error message
-                        alert(erro);
-                    }
-                }
-            </script>
         <script type="text/javascript">
             function change() {
                 document.getElementById("f2").submit();
             }
+            function changess() {
+                document.getElementById("f3").submit();
+            }
+
         </script>
     </head>
     <body>
-        <!-- HEADER -->
+             <!-- HEADER -->
         <header>
             <!-- TOP HEADER -->
             <div id="top-header">
@@ -121,12 +130,10 @@
                                         <option value="0">${c.name}</option>
                                         <option value="1">My Profile</option>
                                         <option value="2">Change Password</option>
-                                        <option value="3">Payment history</option>
-                                        <option value="4">Logout</option>
+                                        <option value="3">Logout</option>
                                     </select>
                                 </form>
-                                <li><a href="wallet"><i class="fa fa-dollar"></i> 
-                                         <fmt:formatNumber value="${c.balance}" type="number"  groupingUsed="true"/> VND</li>
+                                <li><a href="#"><i class="fa fa-dollar"></i> USD: ${c.balance} $</a></li>
                                 </c:otherwise>
 
                         </c:choose>
@@ -174,10 +181,10 @@
                             <div class="header-ctn">
                                 <!-- Wishlist -->
                                 <div>
-                                    <a href="TimeTableOfMentee">
-                                        <i class="fa fa-calendar-check-o"></i>
-                                        <span>My Schedule</span>
-                                        
+                                    <a href="#">
+                                        <i class="fa fa-heart-o"></i>
+                                        <span>Your Wishlist</span>
+                                        <div class="qty">2</div>
                                     </a>
                                 </div>
                                 <!-- /Wishlist -->
@@ -192,23 +199,22 @@
                                     <c:if test="${cnt > 0}">
                                         <div class="cart-dropdown">
                                             <div class="cart-list">
-                                                <c:forEach items="${requestScope.reList}" var="re">
                                                 <div class="product-widget">
-                                                    
+                                                    <c:forEach items="${requestScope.reList}" var="re">
                                                         <div class="product-img">
                                                             <img src="${re.skill.images}" alt="">
                                                         </div>
                                                         <div class="product-body">
                                                             <h3 class="product-name"><a href="#">${re.skill.skill}</a></h3>
                                                             <h4 class="product-price">
-                                                                <span class="qty">${re.status}</span>
+                                                                <span class="qty">${re.status} </span>
                                                             </h4>
                                                         </div>
-                                                    
+                                                    </c:forEach>
 
 
                                                 </div>
-                                                </c:forEach>
+
 
                                             </div>
                                             <div class="cart-summary">
@@ -243,7 +249,6 @@
             <!-- /MAIN HEADER -->
         </header>
         <!-- /HEADER -->
-
         <!-- NAVIGATION -->
         <nav id="navigation">
             <!-- container -->
@@ -254,10 +259,8 @@
                     <ul class="main-nav nav navbar-nav">
                         <li class="active"><a href="home">Home</a></li>
                         <li><a href="Course?cid=0">All course</a></li>
-                            <c:forEach items="${requestScope.listCs}" var="lsc">
-                            <li><a href="Course?cid=${lsc.id}">${lsc.name}</a></li>
-                            </c:forEach>
-
+                         <li><a href="AllMentor">All Mentor</a></li>   
+                         <li><a href="Course?cid=0">Blogs</a></li>
 
                     </ul>
                     <!-- /NAV -->
@@ -267,137 +270,26 @@
             <!-- /container -->
         </nav>
         <!-- /NAVIGATION -->
-
-        <!-- SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <!-- shop -->
-                    <div class="col-md-4 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="./img/fronEnd.png" alt="">
-                            </div>
-                            <div class="shop-body">
-                                <h3>FrontEnd<br>Courses</h3>
-                                <a href="Course?cid=1" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /shop -->
-
-                    <!-- shop -->
-                    <div class="col-md-4 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="./img/backEnd.png" alt="">
-                            </div>
-                            <div class="shop-body">
-                                <h3>BackEnd<br>Courses</h3>
-                                <a href="Course?cid=2" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /shop -->
-
-                    <!-- shop -->
-                    <div class="col-md-4 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="./img/devOps.png" alt="">
-                            </div>
-                            <div class="shop-body">
-                                <h3>DevOps<br>Course</h3>
-                                <a href="Course?cid=3" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /shop -->
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
-
-        <!-- SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-
-                    <!-- section title -->
-                    <div class="col-md-12">
-                        <div class="section-title">
-                            <h3 class="title">Popular Skill</h3>
-                            <div class="section-nav">
-                                <ul class="section-tab-nav tab-nav">
-
-                                    <li>   </li>
-                                </ul>
-                                <a style="text-decoration: none" href="Course?cid=0">Load More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /section title -->
-
-                    <!-- Products tab & slick -->
-                    <div class="col-md-12">
+        <!-- BREADCRUMB -->
+        <!--        <div id="breadcrumb" class="section">
+                     container 
+                    <div class="container">
+                         row 
                         <div class="row">
-                            <div class="products-tabs">
-                                <!-- tab -->
-                                <div id="tab1" class="tab-pane active">
-                                    <div class="products-slick" data-nav="#slick-nav-1">
-                                        <c:forEach items="${requestScope.listT}" var="listtop">
-                                            <!-- product -->
-                                            <div class="product">
-                                                <div class="product-img">
-                                                    <img src="${listtop.images}" alt="">
-                                                    <div class="product-label">
-                                                        <span class="new">HOT</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-body">
-                                                    <a href="url"><p class="product-category"> ${listtop.cs.name}</p></a>
-                                                    <h3 class="product-name"><a href="ViewMentor?id=${listtop.id}">${listtop.skill}</a></h3><!--view file-->
-
-                                                    <div class="product-btns">
-                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                        <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                    </div>
-                                                </div>
-                                                <div class="add-to-cart">
-                                                    <a href="ViewMentor?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> View all Mentor</button> </a>
-
-                                                </div>
-                                            </div>
-                                            <!-- /product -->
-
-                                            <!-- product -->
-                                        </c:forEach>
-
-
-                                    </div>
-                                    <div id="slick-nav-1" class="products-slick-nav"></div>
-                                </div>
-                                <!-- /tab -->
+                            <div class="col-md-12">
+                                <ul class="breadcrumb-tree">
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">All Categories</a></li>
+                                    <li><a href="#">Accessories</a></li>
+                                    <li class="active">Headphones (227,490 Results)</li>
+                                </ul>
                             </div>
                         </div>
+                         /row 
                     </div>
-                    <!-- Products tab & slick -->
+                     /container 
                 </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
-
-
-        <!-- /HOT DEAL SECTION -->
+                 /BREADCRUMB -->
 
         <!-- SECTION -->
         <div class="section">
@@ -405,76 +297,94 @@
             <div class="container">
                 <!-- row -->
                 <div class="row">
+                    <!-- ASIDE -->
+                    
+                    <!-- /ASIDE -->
 
-                    <!-- section title -->
-                    <div class="col-md-12">
-                        <div class="section-title">
-                            <h3 class="title">New Course</h3>
-                            <div class="section-nav">
-                                <ul class="section-tab-nav tab-nav">
+                    <!-- STORE -->
+                    <div id="store" class="col-md-12">
+                        <!-- store top filter -->
+                       
+                        <!-- /store top filter -->
 
-                                    <li>   </li>
-                                </ul>
-                                <a style="text-decoration: none" href="Course?cid=0">Load More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /section title -->
-
-                    <!-- Products tab & slick -->
-                    <div class="col-md-12">
+                        <!-- store products -->
                         <div class="row">
-                            <div class="products-tabs">
-                                <!-- tab -->
-                                <div id="tab2" class="tab-pane fade in active">
-                                    <div class="products-slick" data-nav="#slick-nav-2">
-                                        <c:forEach items="${requestScope.listT}" var="listtop">
-                                            <!-- product -->
-                                            <div class="product">
-                                                <div class="product-img">
-                                                    <img src="${listtop.images}" alt="">
-                                                    <div class="product-label">
-                                                        <span class="new">HOT</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-body">
-                                                    <a href="url"><p class="product-category"> ${listtop.cs.name}</p></a>
-                                                    <h3 class="product-name"><a href="ViewMentor?id=${listtop.id}">${listtop.skill}</a></h3><!--view file-->
+                            <!-- product -->
+                            <div class="container mt-5">
+                                        <h2 class="mb-4">Schedule Table</h2>
+                                        <form id="f3" action="TimeTableOfMentee"/>
+                                        <select class="form-select form-select-lg mb-3" aria-label="Large select example" name="key" onchange="changess()">
+                                            <c:forEach items="${requestScope.listw}" var="lw">
+                                                <option value="${lw.id}">${lw.startDay} to ${lw.endDay}</option>
+                                            </c:forEach>
+                                        </select>
+                                        </form>
 
-                                                    <div class="product-btns">
-                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                        <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                    </div>
-                                                </div>
-                                                <div class="add-to-cart">
-                                                    <a href="ViewMentor?id=${listtop.id}" > <button class="add-to-cart-btn"><i class="fa fa-book"></i> View all Course</button> </a>
-
-                                                </div>
-                                            </div>
-                                            <!-- /product -->
-
-                                            <!-- product -->
-                                        </c:forEach>
+                                       
+                                            <table class="table table-bordered schedule-table">
+                                                <thead>
+                                                    <tr style="background-color: #6B90DA">
+                                                        <th>WEEKDAY</th>
+                                                        <th>MON</th>
+                                                        <th>TUES</th>
+                                                        <th>WEND</th>
+                                                        <th>THUS</th>
+                                                        <th>FRI</th>
+                                                        <th>SAT</th>
+                                                        <th>SUN</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${timeSlots}" var="slot">
+                                                        <tr>
+                                                            <td>${slot.name}</td>
+                                                            <c:forEach items="${dates}" var="date">
+                                                                <c:set var="hasSchedule" value="false" />
+                                                                <c:forEach items="${requestScope.listsch}" var="lch">
+                                                                    <c:if test="${lch.scd.day == date && slot.id == lch.scd.timeslot.id}">
+                                                                        <c:set var="hasSchedule" value="true" />
+                                                                        <td><p style="color: blueviolet">${lch.rq.skill.skill}</p>
+                                                                            <p style="color: black">${lch.rq.mentor.name}</p>
+                                                                            <c:if test="${lch.status == null}">
+                                                                                <p style="color: red">(Not yet)</p>
+                                                                            </c:if>
+                                                                            <c:if test="${lch.status == 'Attend'}">
+                                                                                <div style="display: flex">
+                                                                                    <p style="color: green">(Attend)</p>
+                                                                                    <a href="url"><button>Report</button></a>
+                                                                                </div>
+                                                                                
+                                                                                
+                                                                            </c:if>
+                                                                                <c:if test="${lch.status == 'Absent'}">
+                                                                                <div style="display: flex">
+                                                                                    <p style="color: red">(Absent)</p>
+                                                                                    <a href="url"><button>Report</button></a>
+                                                                                </div>
+                                                                            </c:if>
+                                                                            
+                                                                        </td>
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                <c:if test="${not hasSchedule}">
+                                                                    <td>
+                                                                       -
+                                                                    </td>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
                                     </div>
-                                    <div id="slick-nav-2" class="products-slick-nav"></div>
-                                </div>
-                                <!-- /tab -->
-                            </div>
                         </div>
+                        <!-- /store products -->
+
+                        
                     </div>
-                    <!-- /Products tab & slick -->
+                    <!-- /STORE -->
                 </div>
                 <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
-
-        <!-- SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
             </div>
             <!-- /container -->
         </div>
@@ -488,10 +398,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="newsletter">
-                            <p>Feed back for wed <strong>SWP391_Group6</strong></p>
+                            <p>Sign Up for the <strong>NEWSLETTER</strong></p>
                             <form>
-                                <input class="input" type="text" placeholder="Enter your feedback">
-                                <button class="newsletter-btn"><i class="fa fa-envelope"></i> Sent</button>
+                                <input class="input" type="email" placeholder="Enter Your Email">
+                                <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
                             </form>
                             <ul class="newsletter-follow">
                                 <li>
@@ -527,11 +437,11 @@
                         <div class="col-md-3 col-xs-6">
                             <div class="footer">
                                 <h3 class="footer-title">About Us</h3>
-                                <p>Welcome you to Happy programming of SWP391_Group6</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
                                 <ul class="footer-links">
-                                    <li><a href="#"><i class="fa fa-map-marker"></i>Fpt university</a></li>
-                                    <li><a href="#"><i class="fa fa-phone"></i>0123456789</a></li>
-                                    <li><a href="#"><i class="fa fa-envelope-o"></i>phuongddhe173077@fpt.edu.vn</a></li>
+                                    <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
+                                    <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
+                                    <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -540,9 +450,11 @@
                             <div class="footer">
                                 <h3 class="footer-title">Categories</h3>
                                 <ul class="footer-links">
-                                    <c:forEach items="${requestScope.listCs}" var="lsc">
-                                        <li><a href="Course?cid=${lsc.id}">${lsc.name}</a></li>
-                                        </c:forEach>
+                                    <li><a href="#">Hot deals</a></li>
+                                    <li><a href="#">Laptops</a></li>
+                                    <li><a href="#">Smartphones</a></li>
+                                    <li><a href="#">Cameras</a></li>
+                                    <li><a href="#">Accessories</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -567,9 +479,9 @@
                                 <h3 class="footer-title">Service</h3>
                                 <ul class="footer-links">
                                     <li><a href="#">My Account</a></li>
-                                    <li><a href="#">View request</a></li>
+                                    <li><a href="#">View Cart</a></li>
                                     <li><a href="#">Wishlist</a></li>
-                                    <li><a href="#">Track My class</a></li>
+                                    <li><a href="#">Track My Order</a></li>
                                     <li><a href="#">Help</a></li>
                                 </ul>
                             </div>
@@ -620,3 +532,4 @@
 
     </body>
 </html>
+

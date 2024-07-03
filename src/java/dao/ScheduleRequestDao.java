@@ -28,8 +28,9 @@ public class ScheduleRequestDao extends DBContext {
             st.setInt(1, rid);
             ResultSet rs = st.executeQuery();
             ScheduleDetailDao sdd = new ScheduleDetailDao();
+            RequestDao rqd = new RequestDao();
             while (rs.next()) {
-                ScheduleRequest sr = new ScheduleRequest(rs.getInt(1), sdd.getScheduleDtById(rs.getInt(3)));
+                ScheduleRequest sr = new ScheduleRequest(rs.getInt(1), sdd.getScheduleDtById(rs.getInt(2)), rqd.getRequestById(rs.getInt(3)),rs.getString(4));
                 list.add(sr);
             }
         } catch (SQLException ex) {
@@ -49,10 +50,42 @@ public class ScheduleRequestDao extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, sd_id);
             st.setInt(2, rid);
-            result = st.executeUpdate()>0;
+            result = st.executeUpdate() > 0;
         } catch (SQLException ex) {
             Logger.getLogger(ScheduleRequestDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
+    }
+
+    public List<ScheduleRequest> getScheduleRequestsOfMentee(int wid, int mid) {
+        String sql = "SELECT    schedule_request.*\n"
+                + "	FROM         schedule_datail INNER JOIN\n"
+                + "						  schedule_request ON schedule_datail.id = schedule_request.scheduledd_id\n"
+                + "						  where schedule_datail.wid = ?";
+        List<ScheduleRequest> listS = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, wid);
+            ResultSet rs = st.executeQuery();
+            ScheduleDetailDao sdd = new ScheduleDetailDao();
+            RequestDao rqd = new RequestDao();
+            while (rs.next()) {
+                ScheduleRequest sr = new ScheduleRequest(rs.getInt(1), sdd.getScheduleDtById(rs.getInt(2)), rqd.getRequestById(rs.getInt(3)),rs.getString(4));
+                if (sr.getRq().getMentee().getId() == mid) {
+                    listS.add(sr);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ScheduleRequestDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listS;
+    }
+
+    public static void main(String[] args) {
+        ScheduleRequestDao srq = new ScheduleRequestDao();
+        List<ScheduleRequest> list = srq.getScheduleRequestsByRid(1);
+        for (ScheduleRequest scheduleRequest : list) {
+            System.out.println(scheduleRequest.getId());
+        }
     }
 }

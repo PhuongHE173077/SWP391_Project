@@ -75,8 +75,14 @@ public class WeeksDao extends DBContext {
     }
 
     public static void main(String[] args) {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+         String date = today.format(dateFormat);
+         System.out.println(date);
         WeeksDao wd = new WeeksDao();
-        WeeksDay w = wd.getWeekNow("2024-06-27");
-        System.out.println(w.getStartDay());
-    }
+        ScheduleDetailDao scd = new ScheduleDetailDao();
+        int wid =scd.widScheduele();
+        WeeksDay week = wd.getWeeksday(wid);    
+        System.out.println(week.getStartDay());
+}
 }

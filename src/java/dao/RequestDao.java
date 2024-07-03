@@ -40,7 +40,7 @@ public class RequestDao extends DBContext {
             SkillDao ssd = new SkillDao();
             while (rs.next()) {
                 ScheduleRequestDao srd = new ScheduleRequestDao();
-                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(rs.getInt(9)), rs.getString(10), rs.getString(11), srd.getScheduleRequestsByRid(rs.getInt(1)));
+                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(rs.getInt(9)), rs.getString(10), rs.getString(11));
                 list.add(rq);
             }
 
@@ -98,7 +98,7 @@ public class RequestDao extends DBContext {
             while (rs.next()) {
 
                 ScheduleRequestDao srd = new ScheduleRequestDao();
-                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(rs.getInt(9)), rs.getString(10), rs.getString(11), srd.getScheduleRequestsByRid(rs.getInt(1)));
+                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(rs.getInt(9)), rs.getString(10), rs.getString(11));
                 list.add(rq);
             }
 
@@ -122,7 +122,7 @@ public class RequestDao extends DBContext {
             SkillDao ssd = new SkillDao();
             while (rs.next()) {
                 ScheduleRequestDao srd = new ScheduleRequestDao();
-                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(rs.getInt(9)), rs.getString(10), rs.getString(11), srd.getScheduleRequestsByRid(rs.getInt(1)));
+                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(rs.getInt(9)), rs.getString(10), rs.getString(11));
                 list.add(rq);
             }
 
@@ -190,7 +190,7 @@ public class RequestDao extends DBContext {
             SkillDao ssd = new SkillDao();
             if (rs.next()) {
                 ScheduleRequestDao srd = new ScheduleRequestDao();
-                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(rs.getInt(9)), rs.getString(10), rs.getString(11), srd.getScheduleRequestsByRid(rs.getInt(1)));
+                Request rq = new Request(rs.getInt(1), rs.getString(2), mentee.getMenteeById(rs.getInt(3)), mentor.getMentorByID(rs.getInt(4)), rs.getString(5), rs.getString(6), rs.getString(7), rs.getInt(8), ssd.searchSkill(rs.getInt(9)), rs.getString(10), rs.getString(11));
                 return rq;
             }
 

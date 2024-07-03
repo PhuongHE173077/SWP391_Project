@@ -221,7 +221,7 @@ public class request extends HttpServlet {
                 LocalDate today = LocalDate.now();
                 DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 String date = today.format(dateFormat);
-                Request rq = new Request(0, subject, mentee, md.getMentorByID(mid), content, startDay, endDay, slotNumber, skd.searchSkill(sid), date, "Processing", null);
+                Request rq = new Request(0, subject, mentee, md.getMentorByID(mid), content, startDay, endDay, slotNumber, skd.searchSkill(sid), date, "Processing");
                 rqd.createRequest(rq);
                 List<ScheduleDetail> list = sdd.getScheduleDtInTime(mid, startDay, endDay);
                 int rid = rqd.getTop1Rq();

@@ -15,6 +15,10 @@
         <title>Admin Page</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
         <style>
             body {
                 font-family: 'Arial', sans-serif;
@@ -104,21 +108,12 @@
 
         </style>
     </head>
-
     <script>
-        function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                var output = document.getElementById('imagePreview');
-                output.src = reader.result;
-                output.style.display = 'block';
-            };
-            reader.readAsDataURL(event.target.files[0]);
+        function openModalWithId(id) {
+            document.getElementById('hiddenInput').value = id;
+            $('#addSkillModal').modal('show');
         }
-
-
     </script>
-
     <body>
         <div class="container-fluid">
             <div class="row">
@@ -159,7 +154,7 @@
                                     List Schedule
                                 </a>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </nav>
@@ -169,7 +164,6 @@
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">List Schedule</h1>
                         <div class="d-flex align-items-center">
-                            
                             <div class="search-bar d-flex align-items-center">
                                 <form action="listScheduleMg" method="post" class="d-flex align-items-center">
                                     <input value="${txtS}" type="text" class="form-control me-2" placeholder="Search Skill now" aria-label="search" aria-describedby="search" name="txt">
@@ -214,19 +208,44 @@
                                                 <td>
 
                                                     <button type="button" class="view btn btn-primary" title="View">
-                                                        <a href="approveSchedule?id=${ls.id}&&tid=1" style="color: white"class="view" title="View" ><i></i> View</a>
+                                                        <a href="viewRequestScheduleMentor?id=${ls.id}&&tid=1" style="color: white"class="view" title="View" ><i></i> View</a>
 
                                                     </button>
-                                                        <c:if test="${ls.status == 'Processing'}">
-                                                             <button type="button" class="edit btn btn-secondary" title="Edit" >
-                                                        <a href="approveSchedule?id=${ls.id}&&tid=2" style="color: white" class="edit" title="Edit" ><i></i> Approve</a>
-                                                    </button>
+                                                    <c:if test="${ls.status == 'Processing'}">
+                                                        <button type="button" class="edit btn btn-secondary" title="Edit" >
+                                                            <a href="approveSchedule?id=${ls.id}&&tid=2" style="color: white" class="edit" title="Edit" ><i></i> Approve</a>
+                                                        </button>
 
-                                                    <button type="button" class="delete btn btn-danger" title="Reject" data-toggle="tooltip" onclick="window.location.href = 'approveSchedule?id=${ls.id}&&tid=3'">
-                                                        <i class="mdi mdi-delete"></i> Reject
-                                                    </button>
-                                                        </c:if>
-                                                   
+                                                        <button type="button" class="delete btn btn-danger" title="Reject" onclick="openModalWithId(${ls.id})">
+                                                            <i class="mdi mdi-delete"></i> Reject
+                                                        </button>
+
+                                                    </c:if>
+                                                    <!-- Add Note Modal -->
+                                                    <div class="modal fade" id="addSkillModal" tabindex="-1" role="dialog" aria-labelledby="addSkillModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="addSkillModalLabel">Note</h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form action="approveSchedule" method="post">
+                                                                        <input type="hidden" id="hiddenInput" name="id" />
+                                                                        <div class="form-group">
+                                                                            <label for="noteDescription">Description</label>
+                                                                            <textarea class="form-control" id="noteDescription" name="NoteDescription" rows="3" required></textarea>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -236,7 +255,7 @@
                         </div>
                     </div>
 
-                    
+
 
                     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -262,6 +281,9 @@
                             </li>
                         </ul>
                     </nav>
+
+
+
                 </main>
             </div>
         </div>
