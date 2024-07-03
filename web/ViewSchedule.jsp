@@ -1,9 +1,3 @@
-<%-- 
-    Document   : viewSchedule
-    Created on : Jun 28, 2024, 10:48:06 AM
-    Author     : Dell
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -15,12 +9,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <style>
-            .button-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100px;
-            }
+            
 
             .save-button {
                 background-color: #4CAF50;
@@ -66,11 +55,12 @@
                 margin: 0; /* Remove default margin */
             }
             .button-container {
-                display: flex;
+                
                 justify-content: right; /* Center align the buttons horizontally */
                 align-items: center; /* Center align the buttons vertically if needed */
-                gap: 10px; /* Space between buttons */
+               
             }
+            
         </style>
         <script>
             // This script will run when the page loads
@@ -141,14 +131,21 @@
                                 <div class="card-body">
                                     <div class="container mt-5">
                                         <h2 class="mb-4">Schedule Table</h2>
-                                        <form id="f2" action="schedule"/>
+                                        <div id="abc">
+                                            <form id="f2" action="ViewSchedule"/>
                                         <select class="form-select form-select-lg mb-3" aria-label="Large select example" name="key" onchange="change()">
                                             <c:forEach items="${requestScope.listw}" var="lw">
                                                 <option value="${lw.id}">${lw.startDay} to ${lw.endDay}</option>
                                             </c:forEach>
                                         </select>
                                         </form>
-
+                                        <div class="button-container">
+                                            <a href="url">
+                                                <button type="submit" class="btn btn-primary btn-save">Send</button>
+                                            </a>
+                                        </div>
+                                        </div>
+                                        
                                         <form id="mainForm" action="schedule" method="post">
                                             <input type="hidden" name="week" value="${de.id}"/>
                                             <table class="table table-bordered schedule-table">
@@ -164,31 +161,34 @@
                                                         <th>SUN</th>
                                                     </tr>
                                                 </thead>
-                                                
-                                                    
-                                                    </table>
+                                                <tbody>
+                                                    <c:forEach items="${timeSlots}" var="slot">
                                                         <tr>
-                                                            <td></td>
-                                                            
+                                                            <td>${slot.name}</td>
+                                                            <c:forEach items="${dates}" var="date">
+                                                                <c:set var="hasSchedule" value="false" />
+                                                                <c:forEach items="${requestScope.listsch}" var="lch">
+                                                                    <c:if test="${lch.day == date && slot.id == lch.timeslot.id}">
+                                                                        <c:set var="hasSchedule" value="true" />
                                                                         <td>
-                                                                            <p type="checkbox" class="form-check-input" name="schedule" value="" checked><p/>
+                                                                            <p>${lch.status}</p>
                                                                         </td>
-                                                                    
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                <c:if test="${not hasSchedule}">
                                                                     <td>
-                                                                        <p type="checkbox" class="form-check-input" name="schedule" value=""><p/>
+                                                                        -
                                                                     </td>
-                                                                
+                                                                </c:if>
+                                                            </c:forEach>
                                                         </tr>
-                                                    
-                                                
+                                                    </c:forEach>
+                                                </tbody>
                                             </table>
                                     </div>
                                 </div>
                             </div> 
-<!--                            <div class="button-container">
-                                <button type="button" class="btn btn-primary" onclick="showSelectedSlots()">Gender</button>           
-                                <button type="submit" class="btn btn-primary btn-save">Send</button>
-                            </div>-->
+
                             <div class="modal fade" id="checkboxModal" tabindex="-1" role="dialog" aria-labelledby="checkboxModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -213,14 +213,10 @@
 
                                             <ul id="checkboxValuesList"></ul>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" id="submitModal">Send</button>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
-</form>                        
                             <script>
                                 const today = new Date().toISOString().split('T')[0];
 
@@ -247,7 +243,16 @@
                                 </div>
                             </div>
                             <div class="card">
-                                
+                                <c:if test="${empty listS}">
+                                    <p style="color: red">(You haven't yet update schedule)</p>
+                                </c:if>
+                                <c:forEach items="${requestScope.listS}" var="ls">
+                                    <span>${ls.startDay} to ${ls.endDay}</span></br>
+                                    <span>${ls.status}</span></br>
+                                    <c:if test="${ls.status=='Reject'}">
+                                        <a href="url"><button>Update</button></a>
+                                            </c:if>
+                                        </c:forEach> 
                             </div>
                         </div>
                     </div>

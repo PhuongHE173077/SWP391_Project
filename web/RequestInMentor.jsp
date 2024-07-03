@@ -258,56 +258,59 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                            <c:forEach items="${requestScope.listR}" var="lr">
-                                                                <tr>
-                                                                    <td class="py-1">
-                                                                        ${lr.subject}
-                                                                    </td>
-                                                                    <td>
-                                                                        ${lr.mentee.name}
-                                                                    </td>
-                                                                    <td>
-                                                                        ${lr.skill.skill}
-                                                                    </td>
-                                                                    <td>
-                                                                        ${lr.slot_number}
-                                                                    </td>
-                                                                    <td>
-                                                                        ${lr.startDay}
-                                                                    </td>
-                                                                    <td>
-                                                                        ${lr.endDay}
-                                                                    </td>
-                                                                    <td>
-                                                                        ${lr.status}
-                                                                    </td>
-                                                                    <td>
-                                                                        <a href="approveRequest?tid=1&rid=${lr.id}"><button>View</button></a>
+                                                        <c:forEach items="${requestScope.listR}" var="lr">
+                                                            <tr>
+                                                                <td class="py-1">
+                                                                    ${lr.subject}
+                                                                </td>
+                                                                <td>
+                                                                    ${lr.mentee.name}
+                                                                </td>
+                                                                <td>
+                                                                    ${lr.skill.skill}
+                                                                </td>
+                                                                <td>
+                                                                    ${lr.slot_number}
+                                                                </td>
+                                                                <td>
+                                                                    ${lr.startDay}
+                                                                </td>
+                                                                <td>
+                                                                    ${lr.endDay}
+                                                                </td>
+                                                                <td>
+                                                                    ${lr.status}
+                                                                </td>
+                                                                <td>
+                                                                    <a href="approveRequest?tid=1&rid=${lr.id}"><button>View</button></a>
+                                                                    <c:if test="${lr.status == 'Processing'}">
                                                                         <a href="approveRequest?tid=2&rid=${lr.id}"><button>Approve</button></a>
                                                                         <a href="approveRequest?tid=3&rid=${lr.id}"><button>Reject</button></a>
-                                                                    </td>
-                                                                </tr>
-                                                            <div class="modal fade" id="checkboxModal" tabindex="-1" role="dialog" aria-labelledby="checkboxModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="checkboxModalLabel">Week gender</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            
-                                                                                <p>
-                                                                            
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                        </div>
+                                                                    </c:if>
+
+                                                                </td>
+                                                            </tr>
+                                                        <div class="modal fade" id="checkboxModal" tabindex="-1" role="dialog" aria-labelledby="checkboxModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="checkboxModalLabel">Week gender</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+
+                                                                        <p>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </c:forEach>
+                                                        </div>
+                                                    </c:forEach>
 
                                                     </tbody>
                                                 </table>
